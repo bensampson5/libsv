@@ -1,2 +1,2 @@
-# ip_catalog
-Catalog for my HDL IP
+# OpenHDL
+HDL IP library
