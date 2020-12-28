@@ -2,9 +2,9 @@
 
 module counter #(parameter N = 8)
 (
-    input  wire       clk,
-    input  wire       aresetn,
-    output reg[N-1:0] q
+    input  logic        clk,
+    input  logic        aresetn,
+    output logic[N-1:0] q
 );
 
     always @ (posedge clk or negedge aresetn)
