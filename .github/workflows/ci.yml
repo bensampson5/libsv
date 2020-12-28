@@ -1,11 +1,10 @@
-name: Docker publish
+name: ci
 
-on:
-  push:
-    branches: ["main", "docker-*"]
+on: push
 
 jobs:
-  publish:
+  docker:
+    if: startsWith(github.ref, refs/heads/main) || startsWith(github.ref, refs/heads/docker-)
     runs-on: ubuntu-latest
     steps:
       -
