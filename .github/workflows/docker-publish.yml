@@ -1,11 +1,11 @@
-name: ci
+name: Docker publish
 
 on:
   push:
-    branches: "*"
+    branches: [ "main", "docker-*"]
 
 jobs:
-  main:
+  publish:
     runs-on: ubuntu-latest
     steps:
       -
