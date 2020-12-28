@@ -1,0 +1,23 @@
+ARG BRANCH=main
+
+FROM bensampson5/openhdl:${BRANCH}
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
+                        gdb \
+                        sudo \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG UNAME=developer
+ARG UID=1000
+ARG GID=1000
+RUN groupadd -g $GID -o $UNAME
+RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME \
+    && adduser $UNAME sudo \
+    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER $UNAME
+
+WORKDIR /code
+CMD /bin/bash
