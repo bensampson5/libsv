@@ -2,7 +2,7 @@ name: Docker publish
 
 on:
   push:
-    branches: [ "main", "docker-*"]
+    branches: ["main", "docker-*"]
 
 jobs:
   publish:
