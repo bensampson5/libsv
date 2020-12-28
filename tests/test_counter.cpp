@@ -1,9 +1,9 @@
 #include "Vcounter.h"
 #include "verilated.h"
-#include "catch_amalgamated.hpp"
+#include "catch2/catch.hpp"
 #include <cstdio>
 
-TEST_CASE("Test Counter 2") 
+TEST_CASE("Test Counter") 
 {
     Vcounter* top = new Vcounter;
 
@@ -14,8 +14,6 @@ TEST_CASE("Test Counter 2")
     top->aresetn = 1;
     top->eval();
 
-    // printf("N = %i\n", top->N);
-
     int i = 0;
     while (i < 16)
     { 
@@ -23,9 +21,6 @@ TEST_CASE("Test Counter 2")
         top->eval();
         top->clk = 0;
         top->eval();
-
-        printf("q = %i\n", top->q);
-
         ++i;
     }
 

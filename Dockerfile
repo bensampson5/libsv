@@ -25,14 +25,14 @@ WORKDIR /tmp
 # Build and install Verilator from source using git (use most recent 'stable' release)
 ARG REPO=https://github.com/verilator/verilator
 ARG TAG=stable
-RUN git clone --depth 1 --branch "${TAG}" "${REPO}" verilator && \
-    cd verilator && \
-    autoconf && \
-    ./configure && \
-    make -j "$(nproc)" && \
-    make install && \
-    cd .. && \
-    rm -rf verilator
+RUN git clone --depth 1 --branch "${TAG}" "${REPO}" verilator \
+    && cd verilator \
+    && autoconf \
+    && ./configure \
+    && make -j "$(nproc)" \
+    && make install \
+    && cd .. \
+    && rm -rf verilator
 
 # Install Catch2 (use v2.x branch)
 ARG REPO=https://github.com/catchorg/Catch2
