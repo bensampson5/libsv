@@ -4,7 +4,7 @@ on: push
 
 jobs:
   docker:
-    if: ${{ startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/heads/docker-'') }}
+    if: ${{ startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/heads/docker-') }}
     runs-on: ubuntu-latest
     steps:
       -
