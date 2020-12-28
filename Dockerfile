@@ -27,22 +27,22 @@ RUN apt-get update \
 WORKDIR /tmp
 
 # Build and install Verilator from source
-ARG REPO=https://github.com/verilator/verilator
-ARG SOURCE_COMMIT=master
-RUN git clone "${REPO}" verilator && \
-    cd verilator && \
-    git checkout "${SOURCE_COMMIT}" && \
-    autoconf && \
-    ./configure && \
-    make -j "$(nproc)" && \
-    make install && \
-    cd .. && \
-    rm -rf verilator
+# ARG REPO=https://github.com/verilator/verilator
+# ARG SOURCE_COMMIT=master
+# RUN git clone "${REPO}" verilator && \
+#     cd verilator && \
+#     git checkout "${SOURCE_COMMIT}" && \
+#     autoconf && \
+#     ./configure && \
+#     make -j "$(nproc)" && \
+#     make install && \
+#     cd .. && \
+#     rm -rf verilator
 
 # Create user
-RUN groupadd -g $GID -o $UNAME
-RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
-USER $UNAME
+# RUN groupadd -g $GID -o $UNAME
+# RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
+# USER $UNAME
 
-WORKDIR /code
-CMD /bin/bash
+# WORKDIR /code
+# CMD /bin/bash
