@@ -1,2 +1,2 @@
-*.vcd
 build/
+.vscode/
