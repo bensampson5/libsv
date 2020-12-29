@@ -49,3 +49,10 @@ jobs:
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+  test:
+    runs-on: ubuntu-latest
+    container: bensampson5/openhdl:main
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
