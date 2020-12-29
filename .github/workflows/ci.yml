@@ -50,6 +50,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
   test:
     runs-on: ubuntu-latest
+    needs: docker
     container: bensampson5/openhdl:main
     steps:
       -
