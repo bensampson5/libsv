@@ -67,4 +67,4 @@ jobs:
         name: Run tests
         run: |
           cd build/tests \
-          && ./test_main || 1
+          && ./test_main

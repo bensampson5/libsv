@@ -11,7 +11,7 @@ module counter #(
 
     always_ff @(posedge clk or negedge aresetn)
         if (!aresetn)
-            q <= 0;
+            q <= 1;
         else
             q <= q + 1;
 
