@@ -1,13 +1,15 @@
 // Author: Ben Sampson
 
-module counter #(parameter N = 8)
+module counter #(
+    parameter N /* verilator public_flat_rd */ = 16
+)
 (
-    input  logic        clk,
-    input  logic        aresetn,
+    input logic clk,
+    input logic aresetn,
     output logic[N-1:0] q
 );
 
-    always @ (posedge clk or negedge aresetn)
+    always_ff @(posedge clk or negedge aresetn)
         if (!aresetn)
             q <= 0;
         else

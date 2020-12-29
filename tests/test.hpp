@@ -1,0 +1,1 @@
+int get_module_parameter(const char* const handle);
