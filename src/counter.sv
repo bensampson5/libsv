@@ -1,11 +1,11 @@
 // Author: Ben Sampson
 
 module counter #(
-                parameter N /* verilator public_flat_rd */ = 16
-                )
+    parameter N /* verilator public_flat_rd */ = 16
+)
 (
-    input  logic        clk,
-    input  logic        aresetn,
+    input logic clk,
+    input logic aresetn,
     output logic[N-1:0] q
 );
 
