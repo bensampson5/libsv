@@ -63,3 +63,6 @@ jobs:
           && cd build \
           && cmake -G Ninja .. \
           && ninja
+      -
+        name: Run tests
+        run: ls -la; pwd;
