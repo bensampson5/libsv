@@ -65,4 +65,6 @@ jobs:
           && ninja
       -
         name: Run tests
-        run: ls -la; pwd;
+        run: |
+          cd build/tests \
+          && ./test_main
