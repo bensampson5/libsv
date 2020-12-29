@@ -8,7 +8,13 @@ SCENARIO("Counter can be reset")
 {
     GIVEN("A counter") 
     {
+        // Create a counter with initial state:
+        //    - Reset de-asserted
+        //    - Clock low
         Vcounter* counter = new Vcounter;
+        counter->aresetn = 1;
+        counter->clk = 0;
+        counter->eval();
 
         WHEN("reset is asserted")
         {
@@ -29,7 +35,13 @@ SCENARIO("Counter can increment and wraparound")
 {
     GIVEN("A counter")
     {
+        // Create a counter module with initial state:
+        //    - Reset de-asserted
+        //    - Clock low
         Vcounter* counter = new Vcounter;
+        counter->aresetn = 1;
+        counter->clk = 0;
+        counter->eval();
 
         // Get parameter N (number of bits in counter)
         const int N = get_module_parameter("TOP.counter.N");
@@ -37,9 +49,8 @@ SCENARIO("Counter can increment and wraparound")
         REQUIRE(N <= 64);
         const uint64_t COUNTER_MAX_VALUE = UINT64_MAX >> (64 - N);
 
-        // Assert reset and set clk low
+        // Assert reset
         counter->aresetn = 0;
-        counter->clk = 0;
         counter->eval();
 
         // De-assert reset
