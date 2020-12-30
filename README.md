@@ -1,4 +1,4 @@
-# OpenHDL {#mainpage}
+# OpenHDL
 HDL IP library
 
 ## Build
