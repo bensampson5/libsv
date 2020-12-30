@@ -1,6 +1,5 @@
-// Author: Ben Sampson
-
-module counter #(
+module counter
+#(
     parameter N /* verilator public_flat_rd */ = 16
 )
 (

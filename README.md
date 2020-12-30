@@ -3,9 +3,13 @@ HDL IP library
 
 ## Build
 
-`docker build --pull -f Dockerfile.dev --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t openhdl .`
+```bash
+docker build --pull -f Dockerfile.dev --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t openhdl .
+```
 
-`docker run --rm -it -v $(pwd):/code openhdl`
+```bash
+docker run --rm -it -v $(pwd):/code openhdl
+```
 
 ```bash
 mkdir build
@@ -16,6 +20,8 @@ ninja
 
 ## Run tests
 
-`./tests/test_counter`
+```bash
+./tests/test_main
+```
 
 
