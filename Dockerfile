@@ -23,7 +23,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install sphinx sphinx-rtd-theme
+RUN pip3 install sphinx sphinx-rtd-theme sphinxcontrib-hdl-diagrams
 
 WORKDIR /tmp
 

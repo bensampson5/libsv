@@ -5,6 +5,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import sphinx_rtd_theme
+import sphinxcontrib_hdl_diagrams
 
 # -- Path setup --------------------------------------------------------------
 
@@ -30,7 +31,8 @@ author = 'Ben Sampson'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinx_rtd_theme"
+    "sphinx_rtd_theme",
+    "sphinxcontrib_hdl_diagrams"
 ]
 
 # Add any paths that contain templates here, relative to this directory.

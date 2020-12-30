@@ -1,22 +1,17 @@
 Counter
 =======
 
-This is a new file.
+This module implements a parameterized counter with an active-low asynchronous reset.
 
-.. code-block:: systemverilog
+With every clock rising, the counter's output ``q`` is incremented by 1. And with an 
+assertion of the active-low reset, ``aresetn``, ``q`` is set to 0.
 
-   module counter
-   #(
-      parameter N /* verilator public_flat_rd */ = 16
-   )
-   (
-      input logic clk,
-      input logic aresetn,
-      output logic[N-1:0] q
-   );
+Parameters:
+ - ``N`` number of bits
+ - ``clk`` clock
+ - ``aresetn`` asynchoronous active-low reset
+ - ``q`` count
 
-      always_ff @(posedge clk or negedge aresetn)
-         if (!aresetn)
-               q <= 0;
-         else
-               q <= q + 1;
+.. no-license:: ../../src/core/counter.sv
+    :language: systemverilog
+    :caption: counter.sv
