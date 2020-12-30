@@ -18,6 +18,7 @@ RUN apt-get update \
                         cmake \
                         gtkwave \
                         ninja-build \
+                        doxygen \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
