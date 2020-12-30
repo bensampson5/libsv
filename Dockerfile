@@ -9,18 +9,21 @@ RUN apt-get update \
                         build-essential \
                         ca-certificates \
                         ccache \
+                        cmake \
+                        doxygen \
                         flex \
                         git \
+                        gtkwave \
                         libfl-dev \
                         libgoogle-perftools-dev \
+                        ninja-build \
                         perl \
                         python3 \
-                        cmake \
-                        gtkwave \
-                        ninja-build \
-                        doxygen \
+                        python3-pip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install sphinx
 
 WORKDIR /tmp
 
