@@ -2,9 +2,10 @@
 #include "catch2/catch.hpp"
 #include "verilated.h"
 #include "verilated_vpi.h"
-#include <cstdint>
+#include "test.hpp"
+#include <string>
 
-// For verilator's VPI
+// Verilator VPI needs these
 vluint64_t main_time = 0;
 double sc_time_stamp() { return main_time; }
 
@@ -17,26 +18,13 @@ int get_module_parameter(const char* const handle)
     return v.value.integer;
 }
 
-// template<class MODULE> class TESTBENCH {
-//     uint64_t m_tickcount;
-//     MODULE *m_module;
-
-//     TESTBENCH(void)
-//     {
-//         m_module = new MODULE;
-//         m_tickcount = 0;
-//     }
-
-//     virtual ~TESTBENCH(void)
-//     {
-//         delete m_module;
-//         m_module = nullptr;
-//     }
-
-//     virtual void reset(int dir)
-//     {
-//         m_module->
-//         this->tick();
-//     }
-
-// }
+std::string scenario_name_to_vcd_file_name(const std::string scenario_name)
+{
+    std::string vcd_name = scenario_name;
+    std::for_each(vcd_name.begin(), vcd_name.end(), [](char& c) {
+        c = ::tolower(c);
+        if (c == ' ') c = '_';
+    });
+    vcd_name += ".vcd";
+    return vcd_name;
+}

@@ -1,47 +1,36 @@
 #include "Vcounter.h"
 #include "verilated.h"
-#include "verilated_vpi.h"
 #include "catch2/catch.hpp"
 #include "test.hpp"
+#include <string>
 
-SCENARIO("Counter can be reset") 
+const std::string S1 = "Counter can be reset";
+SCENARIO("" + S1)
 {
-    GIVEN("A counter") 
+    GIVEN("A counter with a non-zero count") 
     {
-        // Create a counter with initial state:
-        //    - Reset de-asserted
-        //    - Clock low
-        Vcounter* counter = new Vcounter;
-        counter->aresetn = 1;
-        counter->clk = 0;
-        counter->eval();
+        ModuleWrapper<Vcounter>* counter = new ModuleWrapper<Vcounter>;
+        counter->openTrace(scenario_name_to_vcd_file_name(S1).c_str());
 
-        WHEN("reset is asserted")
+        WHEN("Counter is reset")
         {
-            counter->aresetn = 0;
-            counter->eval();
+            counter->reset();
 
             THEN("q is set to 0")
             {
-                REQUIRE(counter->q == 0);
+                REQUIRE(counter->m_core->q == 0);
             }
         }
-
-        delete counter;
     }
 }
 
-SCENARIO("Counter can increment and wraparound")
+const std::string S2 = "Counter can increment and wraparound";
+SCENARIO("" + S2)
 {
     GIVEN("A counter")
     {
-        // Create a counter module with initial state:
-        //    - Reset de-asserted
-        //    - Clock low
-        Vcounter* counter = new Vcounter;
-        counter->aresetn = 1;
-        counter->clk = 0;
-        counter->eval();
+        ModuleWrapper<Vcounter>* top = new ModuleWrapper<Vcounter>;
+        top->openTrace(scenario_name_to_vcd_file_name(S2).c_str());
 
         // Get parameter N (number of bits in counter)
         const int N = get_module_parameter("TOP.counter.N");
@@ -49,43 +38,27 @@ SCENARIO("Counter can increment and wraparound")
         REQUIRE(N <= 64);
         const uint64_t COUNTER_MAX_VALUE = UINT64_MAX >> (64 - N);
 
-        // Assert reset
-        counter->aresetn = 0;
-        counter->eval();
+        // Reset counter so that 'q' is 0
+        top->reset();
+        REQUIRE(top->m_core->q == 0);
 
-        // De-assert reset
-        counter->aresetn = 1;
-        counter->eval();
-
-        REQUIRE(counter->q == 0);
-
-        uint64_t prev_q = static_cast<uint64_t>(counter->q);
+        uint64_t prev_q = static_cast<uint64_t>(top->m_core->q);
         WHEN("Clocked")
         {
-            THEN("q increments by 1 on every rising edge of clock and wraps around if at max value")
+            THEN("q increments by 1 with every clock cycle and wraps around if at max value")
             {
+                // Increment 'q' by clocking the counter until it reaches its max value
                 for (uint64_t i = 0; i < COUNTER_MAX_VALUE; ++i)
                 {
-                    counter->clk = 1;
-                    counter->eval();
-
-                    REQUIRE(static_cast<uint64_t>(counter->q) == prev_q + 1);
-                    prev_q = static_cast<uint64_t>(counter->q);
-
-                    counter->clk = 0;
-                    counter->eval();
+                    top->tick();
+                    REQUIRE(top->m_core->q == prev_q + 1);
+                    prev_q = static_cast<uint64_t>(top->m_core->q);
                 }
 
-                counter->clk = 1;
-                counter->eval();
-
-                REQUIRE(counter->q == 0);
-
-                counter->clk = 0;
-                counter->eval();
+                // Increment q one more time and check that it wrapped around to 0
+                top->tick();
+                REQUIRE(top->m_core->q == 0);
             }
         }
-        
-        delete counter;
     }
 }
