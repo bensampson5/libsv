@@ -13,7 +13,6 @@ RUN apt-get update \
                         doxygen \
                         flex \
                         git \
-                        gtkwave \
                         libfl-dev \
                         libgoogle-perftools-dev \
                         ninja-build \
