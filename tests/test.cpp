@@ -2,8 +2,10 @@
 #include "catch2/catch.hpp"
 #include "verilated.h"
 #include "verilated_vpi.h"
+#include "test.hpp"
+#include <string>
 
-// For verilator's VPI
+// Verilator VPI needs these
 vluint64_t main_time = 0;
 double sc_time_stamp() { return main_time; }
 
@@ -14,4 +16,15 @@ int get_module_parameter(const char* const handle)
     v.format = vpiIntVal;
     vpi_get_value(vh, &v);
     return v.value.integer;
+}
+
+std::string scenario_name_to_vcd_file_name(const std::string scenario_name)
+{
+    std::string vcd_name = scenario_name;
+    std::for_each(vcd_name.begin(), vcd_name.end(), [](char& c) {
+        c = ::tolower(c);
+        if (c == ' ') c = '_';
+    });
+    vcd_name += ".vcd";
+    return vcd_name;
 }
