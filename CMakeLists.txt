@@ -6,4 +6,5 @@ find_package(Catch2 REQUIRED)
 
 get_filename_component(SRC_DIR src ABSOLUTE)
 
+include_directories(tests)
 add_subdirectory(tests)
