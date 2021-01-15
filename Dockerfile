@@ -10,7 +10,6 @@ RUN apt-get update \
                         ca-certificates \
                         ccache \
                         cmake \
-                        doxygen \
                         flex \
                         git \
                         libfl-dev \
