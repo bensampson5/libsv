@@ -87,14 +87,13 @@ def format_hdl():
             for line in f:
                 if line[0] != "#" and len(line.rstrip()) > 0: # ignore comments and empty lines
                     format_args.append(line.rstrip())
-
     cmd += format_args
 
+    # Add all SystemVerilog or Verilog files in src directory
     hdl_search_patterns = ["**/*.sv", "**/*.v"]
     hdl_files = []
     for sp in hdl_search_patterns:
         hdl_files += src_dir.glob(sp)
-
     cmd += [str(f) for f in hdl_files]
 
     run(cmd)
@@ -120,6 +119,7 @@ if __name__ == "__main__":
             build()
 
             if not args.skip_test:
+                print("Testing...")
                 test()
         
         if not args.skip_format:
