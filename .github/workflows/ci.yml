@@ -61,7 +61,7 @@ jobs:
         run: |
           mkdir build \
           && cd build \
-          && cmake -G Ninja .. \
+          && cmake -GNinja .. \
           && ninja
       -
         name: Run tests
