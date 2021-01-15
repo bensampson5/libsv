@@ -87,7 +87,6 @@ def format_hdl():
             for line in f:
                 if line[0] != "#" and len(line.rstrip()) > 0: # ignore comments and empty lines
                     format_args.append(line.rstrip())
-                    print(len(line))
 
     cmd += format_args
 
