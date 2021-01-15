@@ -30,7 +30,7 @@ RUN apt-get update \
 # Add Bazel distribution URI as a package source
 RUN curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg \
     && mv bazel.gpg /etc/apt/trusted.gpg.d/ \
-    && echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+    && echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
 
 # Install Bazel
 RUN apt-get update \
