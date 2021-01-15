@@ -20,7 +20,11 @@ OpenHDL is unique in that it takes advantage of state-of-the-art development bes
 - [OpenHDL docker images][OPENHDL_DOCKER_HUB] published to [Docker Hub][DOCKER_HUB]
 - Fast, automated unit testing using [Verilator][VERILATOR] and [Catch2][CATCH2] with [VCD][VCD] outputs for waveform viewing
 - Automated formatting used [Verible][VERIBLE]
+<<<<<<< HEAD
 - [Extensive documention][DOCS] using [Sphinx][SPHINX]
+=======
+- [Extensive documention][DOCS] using Sphinx
+>>>>>>> bd19d72... Major updates to README
 - Useful examples that are easily built and run so you can get started with OpenHDL in minutes
 
 ## Getting Started
