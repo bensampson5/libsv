@@ -21,7 +21,7 @@ import sphinxcontrib_hdl_diagrams
 # -- Project information -----------------------------------------------------
 
 project = 'OpenHDL'
-copyright = '2020, Ben Sampson'
+copyright = '2021, Ben Sampson'
 author = 'Ben Sampson'
 
 
