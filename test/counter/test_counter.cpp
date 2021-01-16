@@ -1,13 +1,13 @@
 #include "Vcounter.h"
-#include "verilated.h"
 #include "catch2/catch.hpp"
 #include "test.hpp"
+#include "verilated.h"
 #include <string>
 
 const std::string S1 = "Counter can be reset";
 SCENARIO("" + S1)
 {
-    GIVEN("A counter with a non-zero count") 
+    GIVEN("A counter with a non-zero count")
     {
         ModuleWrapper<Vcounter>* counter = new ModuleWrapper<Vcounter>;
         counter->openTrace(scenario_name_to_vcd_file_name(S1).c_str());
@@ -48,8 +48,7 @@ SCENARIO("" + S2)
             THEN("q increments by 1 with every clock cycle and wraps around if at max value")
             {
                 // Increment 'q' by clocking the counter until it reaches its max value
-                for (uint64_t i = 0; i < COUNTER_MAX_VALUE; ++i)
-                {
+                for (uint64_t i = 0; i < COUNTER_MAX_VALUE; ++i) {
                     top->tick();
                     REQUIRE(top->m_core->q == prev_q + 1);
                     prev_q = static_cast<uint64_t>(top->m_core->q);

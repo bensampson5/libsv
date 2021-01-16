@@ -6,6 +6,7 @@ import shutil
 import argparse
 import errno
 import subprocess
+import yaml
 
 PROJECT_ROOT = Path("/code")
 BUILD_DIR = PROJECT_ROOT / "build"
@@ -31,7 +32,7 @@ def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
         else:
             raise e
 
-def cmake(flags=["-GNinja"]):
+def cmake(flags=None):
     
     # Delete entire build directory if it exists
     if BUILD_DIR.exists():
@@ -41,62 +42,73 @@ def cmake(flags=["-GNinja"]):
     BUILD_DIR.mkdir()
 
     # Create cmake command
-    cmd = ["cmake"]
+    cmd = ["cmake", "-GNinja"]
     if flags is not None:
         cmd += flags
     cmd += [".."]
 
     run(cmd, cwd=BUILD_DIR)
 
-def build(flags=None, cwd=BUILD_DIR):
+def build(flags=None):
 
-    if not cwd.exists():
+    if not BUILD_DIR.exists():
         raise FileNotFoundError("Could not find build directory to run build")
 
     cmd = ["ninja"]
     if flags is not None:
         cmd += flags
 
-    run(cmd, cwd=cwd)
+    run(cmd, cwd=BUILD_DIR)
 
-def test():
+def test(flags=None):
 
     if not BUILD_DIR.exists():
         raise FileNotFoundError("Could not find build directory to run tests")
 
     cmd = ["ninja", "check"]
+    if flags is not None:
+        cmd += flags
 
     run(cmd, cwd=BUILD_DIR)
 
 def format():
     format_hdl()
+    format_cpp_cmake()
 
 def format_hdl():
-    src_dir = PROJECT_ROOT / "src"
+    """ Format SystemVerilog and Verilog files """
 
-    if not src_dir.exists():
-        raise FileNotFoundError("Could not find src directory to format HDL")
-
+    # Use --inplace flag to overwrite existing files
     cmd = ["verible-verilog-format", "--inplace"]
 
-    # Add options from .verible-verilog-format if specified
-    verible_verilog_format_file = PROJECT_ROOT / ".verible-verilog-format"
+    # Add options from .verible-verilog-format.yaml if specified
+    verible_verilog_format_yaml = PROJECT_ROOT / ".verible-verilog-format.yaml"
+    yaml_data = None
+    if verible_verilog_format_yaml.exists():
+        with open(verible_verilog_format_yaml, "r") as f:
+            yaml_data = yaml.safe_load(f.read())
+
     format_args = []
-    if verible_verilog_format_file.exists():
-        with open(verible_verilog_format_file, "r") as f:
-            for line in f:
-                if line[0] != "#" and len(line.rstrip()) > 0: # ignore comments and empty lines
-                    format_args.append(line.rstrip())
+    for k, v in yaml_data.items():
+        format_args.append(f"--{k}={v}")
+
     cmd += format_args
 
-    # Add all SystemVerilog or Verilog files in src directory
+    # Add all SystemVerilog or Verilog files in any project directory
     hdl_search_patterns = ["**/*.sv", "**/*.v"]
     hdl_files = []
     for sp in hdl_search_patterns:
-        hdl_files += src_dir.glob(sp)
+        hdl_files += PROJECT_ROOT.glob(sp)
     cmd += [str(f) for f in hdl_files]
 
     run(cmd)
+
+def format_cpp_cmake():
+    """ Format C++ and cmake files """
+    cmake()
+
+    cmd = ["ninja", "fix-format"]
+    run(cmd, cwd=BUILD_DIR)
 
 if __name__ == "__main__":
     if not in_docker():
@@ -113,6 +125,10 @@ if __name__ == "__main__":
             parser.add_argument(arg, action="store_true")
         args = parser.parse_args()
 
+        if not args.skip_format:
+            print("Formatting...")
+            format()
+
         if not args.skip_build:
             print("Building...")
             cmake()
@@ -122,6 +138,3 @@ if __name__ == "__main__":
                 print("Testing...")
                 test()
         
-        if not args.skip_format:
-            print("Formatting...")
-            format()
