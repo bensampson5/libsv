@@ -1,9 +1,6 @@
 name: docker-retag
 
-on:
-  push:
-    branches:
-      - '**'
+on: create
 
 jobs:
   docker-retag:
@@ -11,5 +8,5 @@ jobs:
     steps:
       - 
         name: Echo branch name
-        run: echo "GITHUB_REF = ${{ GITHUB_REF }}"
+        run: echo "GITHUB_SHA = $ {{ GITHUB_SHA }}, GITHUB_REF = ${{ GITHUB_REF }}"
 
