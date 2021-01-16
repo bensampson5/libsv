@@ -14,5 +14,5 @@ jobs:
     steps:
       - 
         name: Echo branch name
-        run: echo "github.sha = $ {{ github.sha }}, github.ref = ${{ github.ref }}"
+        run: echo "github.sha = ${{ github.sha }}, github.ref = ${{ github.ref }}"
 
