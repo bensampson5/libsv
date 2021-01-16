@@ -31,7 +31,7 @@ def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
         else:
             raise e
 
-def cmake(flags=["-GNinja"]):
+def cmake(flags=None):
     
     # Delete entire build directory if it exists
     if BUILD_DIR.exists():
@@ -41,37 +41,42 @@ def cmake(flags=["-GNinja"]):
     BUILD_DIR.mkdir()
 
     # Create cmake command
-    cmd = ["cmake"]
+    cmd = ["cmake", "-GNinja"]
     if flags is not None:
         cmd += flags
     cmd += [".."]
 
     run(cmd, cwd=BUILD_DIR)
 
-def build(flags=None, cwd=BUILD_DIR):
+def build(flags=None):
 
-    if not cwd.exists():
+    if not BUILD_DIR.exists():
         raise FileNotFoundError("Could not find build directory to run build")
 
     cmd = ["ninja"]
     if flags is not None:
         cmd += flags
 
-    run(cmd, cwd=cwd)
+    run(cmd, cwd=BUILD_DIR)
 
-def test():
+def test(flags=None):
 
     if not BUILD_DIR.exists():
         raise FileNotFoundError("Could not find build directory to run tests")
 
     cmd = ["ninja", "check"]
+    if flags is not None:
+        cmd += flags
 
     run(cmd, cwd=BUILD_DIR)
 
 def format():
     format_hdl()
+    format_cpp_cmake()
 
 def format_hdl():
+    """ Format SystemVerilog and Verilog source files """
+
     src_dir = PROJECT_ROOT / "src"
 
     if not src_dir.exists():
@@ -98,6 +103,13 @@ def format_hdl():
 
     run(cmd)
 
+def format_cpp_cmake():
+    """ Format C++ and cmake files """
+    cmake()
+
+    cmd = ["ninja", "fix-format"]
+    run(cmd, cwd=BUILD_DIR)
+
 if __name__ == "__main__":
     if not in_docker():
         raise OSError("Not in a docker container. This script must be run from within a docker container. See README.md for instructions.")
@@ -113,6 +125,10 @@ if __name__ == "__main__":
             parser.add_argument(arg, action="store_true")
         args = parser.parse_args()
 
+        if not args.skip_format:
+            print("Formatting...")
+            format()
+
         if not args.skip_build:
             print("Building...")
             cmake()
@@ -122,6 +138,3 @@ if __name__ == "__main__":
                 print("Testing...")
                 test()
         
-        if not args.skip_format:
-            print("Formatting...")
-            format()
