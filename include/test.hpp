@@ -12,13 +12,13 @@ double sc_time_stamp();
 int get_module_parameter(const char* const handle);
 std::string scenario_name_to_vcd_file_name(const std::string scenario_name);
 
-template<class Module> class ModuleWrapper
-{
+template <class Module>
+class ModuleWrapper {
     uint64_t m_simTime;
 
-    public:
-        Module* m_core;
-        VerilatedVcdC* m_trace;
+public:
+    Module* m_core;
+    VerilatedVcdC* m_trace;
 
     ModuleWrapper(void)
     {
@@ -42,8 +42,7 @@ template<class Module> class ModuleWrapper
 
     virtual void openTrace(const char* const vcdName)
     {
-        if (!m_trace)
-        {
+        if (!m_trace) {
             m_trace = new VerilatedVcdC;
             m_core->trace(m_trace, 99);
             m_trace->open(vcdName);
@@ -53,8 +52,7 @@ template<class Module> class ModuleWrapper
 
     virtual void closeTrace(void)
     {
-        if (m_trace)
-        {
+        if (m_trace) {
             m_trace->close();
             m_trace = nullptr;
         }
@@ -70,24 +68,23 @@ template<class Module> class ModuleWrapper
 
     virtual void tick(bool clock = true, uint64_t tick_count = 1)
     {
-        if (clock)
-        {
-            for (uint64_t i = 0; i < tick_count; ++i)
-            {
+        if (clock) {
+            for (uint64_t i = 0; i < tick_count; ++i) {
                 m_core->clk = 1;
                 m_core->eval();
-                if (m_trace) m_trace->dump(++m_simTime);
+                if (m_trace)
+                    m_trace->dump(++m_simTime);
 
                 m_core->clk = 0;
                 m_core->eval();
-                if (m_trace) m_trace->dump(++m_simTime);
+                if (m_trace)
+                    m_trace->dump(++m_simTime);
             }
-        }
-        else
-        {
+        } else {
             m_simTime += tick_count;
             m_core->eval();
-            if (m_trace) m_trace->dump(m_simTime);
+            if (m_trace)
+                m_trace->dump(m_simTime);
         }
 
         m_trace->flush();
