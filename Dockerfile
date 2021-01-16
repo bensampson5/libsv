@@ -12,6 +12,7 @@ RUN apt-get update \
                         build-essential \
                         ca-certificates \
                         ccache \
+                        clang-format \
                         cmake \
                         curl \
                         flex \
