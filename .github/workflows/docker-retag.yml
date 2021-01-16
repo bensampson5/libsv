@@ -13,6 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - 
-        name: Echo branch name
-        run: echo "github.sha = ${{ github.sha }}, github.ref = ${{ github.ref }}"
+        name: Print branch name
+        run: echo ${ ${{github.ref}}##*/ }
 
