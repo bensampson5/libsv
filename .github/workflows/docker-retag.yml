@@ -14,5 +14,5 @@ jobs:
     steps:
       - 
         name: Print branch name
-        run: echo ${ ${{github.ref}}##*/ }
+        run: echo $(basename -- "${{ github.ref }}")
 
