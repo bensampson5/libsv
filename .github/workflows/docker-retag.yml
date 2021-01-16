@@ -9,17 +9,12 @@ on:
       - 'v*'
 
 jobs:
-  get-branch-name:
+  docker-retag:
     runs-on: ubuntu-latest
     steps:
       -
         name: Get branch name and push to GITHUB_ENV
         run: echo "BRANCH_NAME=$(basename -- "${{ github.ref }}")" >> $GITHUB_ENV
-  docker-retag:
-    needs: get-branch-name
-    runs-on: ubuntu-latest
-    steps:
       - 
         name: Print branch name
         run: echo $BRANCH_NAME
-
