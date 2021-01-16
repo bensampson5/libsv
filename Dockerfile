@@ -41,7 +41,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install python packages using pip
-RUN pip3 install sphinx sphinx-rtd-theme sphinxcontrib-hdl-diagrams
+RUN pip3 install cmake-format sphinx sphinx-rtd-theme sphinxcontrib-hdl-diagrams
 
 # Link python3 to system python
 RUN ln -s /usr/bin/python3 /usr/bin/python
