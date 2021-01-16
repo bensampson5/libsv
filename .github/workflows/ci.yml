@@ -8,7 +8,7 @@ on:
       - 'v*'
 
 jobs:
-  docker:
+  docker-build:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/docker-')
     steps:
@@ -50,7 +50,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
   test:
     if: always()
-    needs: [docker]
+    needs: [docker-build]
     runs-on: ubuntu-latest
     container: bensampson5/openhdl:main
     steps:
