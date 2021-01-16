@@ -1,0 +1,83 @@
+# Yaml configuration file for verible-verilog-format.
+# Generated from `verible-verilog-format --helpfull` output and
+# then formatted into a yaml file for convenience.
+
+# assignment_statement_alignment - Format various assignments: {align,flush-left,preserve,infer};
+# default: infer;
+assignment_statement_alignment: align
+
+# case_items_alignment - Format case items: {align,flush-left,preserve,infer}; default: infer;
+case_items_alignment: align
+
+# class_member_variables_alignment - Format class member variables:
+# {align,flush-left,preserve,infer}; default: infer;
+class_member_variables_alignment: align
+
+# failsafe_success - If true, always exit with 0 status, even if there were input errors or
+# internal errors. In all error conditions, the original text is always preserved. This is
+# useful in deploying services where fail-safe behaviors should be considered a success.;
+# default: true;
+failsafe_success: true
+
+# formal_parameters_alignment - Format formal parameters: {align,flush-left,preserve,infer};
+# default: infer;
+formal_parameters_alignment: align
+
+# formal_parameters_indentation - Indent formal parameters: {indent,wrap}; default: wrap;
+formal_parameters_indentation: wrap
+
+# max_search_states - Limits the number of search states explored during line wrap
+# optimization.; default: 100000;
+max_search_states: 100000
+
+# named_parameter_alignment - Format named actual parameters: {align,flush-left,preserve,infer};
+# default: infer;
+named_parameter_alignment: align
+
+# named_parameter_indentation - Indent named parameter assignments: {indent,wrap};
+# default: wrap;
+named_parameter_indentation: wrap
+
+# named_port_alignment - Format named port connections: {align,flush-left,preserve,infer};
+# default: infer;
+named_port_alignment: align
+
+# named_port_indentation - Indent named port connections: {indent,wrap}; default: wrap;
+named_port_indentation: wrap
+
+# net_variable_alignment - Format net/variable declarations: {align,flush-left,preserve,infer};
+# default: infer;
+net_variable_alignment: align
+
+# port_declarations_alignment - Format port declarations: {align,flush-left,preserve,infer};
+# default: infer;
+port_declarations_alignment: align
+
+# port_declarations_indentation - Indent port declarations: {indent,wrap}; default: wrap;
+port_declarations_indentation: wrap
+
+# show_equally_optimal_wrappings - If true, print when multiple optimal solutions are found
+# (stderr), but continue to operate normally.; default: false;
+show_equally_optimal_wrappings: false
+
+# show_inter_token_info - If true, along with show_token_partition_tree, include inter-token
+# information such as spacing and break penalties.; default: false;
+show_inter_token_info: false
+
+# show_largest_token_partitions - If > 0, print token partitioning and then exit without
+# formatting output.; default: 0;
+show_largest_token_partitions: 0
+
+# show_token_partition_tree - If true, print diagnostics after token partitioning and then
+# exit without formatting output.; default: false;
+show_token_partition_tree: false
+
+# try_wrap_long_lines - If true, let the formatter attempt to optimize line wrapping decisions
+# where wrapping is needed, else leave them unformatted. This is a short-term measure to reduce
+# risk-of-harm.; default: false;
+try_wrap_long_lines: false
+
+# verify_convergence - If true, and not incrementally formatting with --lines, verify that
+# re-formatting the formatted output yields no further changes, i.e. formatting is convergent.;
+# default: true;
+verify_convergence: true

@@ -6,6 +6,7 @@ import shutil
 import argparse
 import errno
 import subprocess
+import yaml
 
 PROJECT_ROOT = Path("/code")
 BUILD_DIR = PROJECT_ROOT / "build"
@@ -75,30 +76,29 @@ def format():
     format_cpp_cmake()
 
 def format_hdl():
-    """ Format SystemVerilog and Verilog source files """
+    """ Format SystemVerilog and Verilog files """
 
-    src_dir = PROJECT_ROOT / "src"
-
-    if not src_dir.exists():
-        raise FileNotFoundError("Could not find src directory to format HDL")
-
+    # Use --inplace flag to overwrite existing files
     cmd = ["verible-verilog-format", "--inplace"]
 
-    # Add options from .verible-verilog-format if specified
-    verible_verilog_format_file = PROJECT_ROOT / ".verible-verilog-format"
+    # Add options from .verible-verilog-format.yaml if specified
+    verible_verilog_format_yaml = PROJECT_ROOT / ".verible-verilog-format.yaml"
+    yaml_data = None
+    if verible_verilog_format_yaml.exists():
+        with open(verible_verilog_format_yaml, "r") as f:
+            yaml_data = yaml.safe_load(f.read())
+
     format_args = []
-    if verible_verilog_format_file.exists():
-        with open(verible_verilog_format_file, "r") as f:
-            for line in f:
-                if line[0] != "#" and len(line.rstrip()) > 0: # ignore comments and empty lines
-                    format_args.append(line.rstrip())
+    for k, v in yaml_data.items():
+        format_args.append(f"--{k}={v}")
+
     cmd += format_args
 
-    # Add all SystemVerilog or Verilog files in src directory
+    # Add all SystemVerilog or Verilog files in any project directory
     hdl_search_patterns = ["**/*.sv", "**/*.v"]
     hdl_files = []
     for sp in hdl_search_patterns:
-        hdl_files += src_dir.glob(sp)
+        hdl_files += PROJECT_ROOT.glob(sp)
     cmd += [str(f) for f in hdl_files]
 
     run(cmd)
