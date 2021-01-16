@@ -1,0 +1,15 @@
+name: docker-retag
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  docker-retag:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Echo branch name
+        run: echo "GITHUB_SHA = ${{ GITHUB_SHA }}, GITHUB_REF = ${{ GITHUB_REF }}"
+
