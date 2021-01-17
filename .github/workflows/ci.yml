@@ -19,10 +19,7 @@ jobs:
       - 
         name: Check if Dockerfile changed
         run: | 
-          echo "DOCKERFILE_CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -c Dockerfile)" >> $GITHUB_ENV
-      - 
-        name: Get branch name
-        run: echo "BRANCH_NAME=$(basename -- "${{ github.ref }}")" >> $GITHUB_ENV          
+          echo "DOCKERFILE_CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -c Dockerfile)" >> $GITHUB_ENV       
       - 
         name: Docker meta
         id: docker_meta
@@ -30,7 +27,7 @@ jobs:
         with:
           images: bensampson5/openhdl
       - 
-        name: Determine if docker image already exists
+        name: Check if docker image already exists
         run: | 
           echo '{"experimental": "enabled"}' > ~/.docker/config.json;
           if [[ $(docker manifest inspect ${{ steps.docker_meta.outputs.tags }} 2>/dev/null) ]]; then
@@ -38,9 +35,6 @@ jobs:
           else
             echo "DOCKER_IMAGE_EXISTS=0" >> $GITHUB_ENV;
           fi;
-      - 
-        name: Print DOCKER_IMAGE_EXISTS
-        run: echo "DOCKER_IMAGE_EXISTS=$DOCKER_IMAGE_EXISTS"
       - 
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -56,6 +50,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push
+        if: env.DOCKER_IMAGES_EXISTS == '0' || env.DOCKERFILE_CHANGED == '1'
         id: docker_build
         uses: docker/build-push-action@v2
         with:
