@@ -1,6 +1,5 @@
 FROM ubuntu:20.04
 
-
 WORKDIR /tmp
 
 # Baseline apt-get installs
