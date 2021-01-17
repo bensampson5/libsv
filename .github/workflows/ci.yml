@@ -81,7 +81,6 @@ jobs:
     if: always()
     needs: [docker-build]
     runs-on: ubuntu-latest
-    container: bensampson5/openhdl:main
     steps:
       -
         name: Checkout
@@ -92,15 +91,19 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: bensampson5/openhdl
-      -
-        name: Build
+      - 
+        name: Pull and build docker image
         run: |
-          mkdir build \
-          && cd build \
-          && cmake -GNinja .. \
-          && ninja
-      -
-        name: Run tests
-        run: |
-          cd build/test \
-          && ./test_main
+          docker pull ${{ steps.docker_meta.outputs.tags }}
+      # -
+      #   name: Build
+      #   run: |
+      #     mkdir build \
+      #     && cd build \
+      #     && cmake -GNinja .. \
+      #     && ninja
+      # -
+      #   name: Run tests
+      #   run: |
+      #     cd build/test \
+      #     && ./test_main
