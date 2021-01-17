@@ -10,7 +10,6 @@ on:
 jobs:
   docker-build:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/docker-')
     steps:
       - 
         name: Checkout
