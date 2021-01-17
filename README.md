@@ -10,7 +10,7 @@
 [VCD]: https://en.wikipedia.org/wiki/Value_change_dump
 [GTKWAVE]: http://gtkwave.sourceforge.net/
 # OpenHDL
-Welcome to OpenHDL! [Click here to go to OpenHDL's documentation][DOCS].
+Welcome to OpenHDL! [Click here to go to OpenHDL's documentation][DOCS]. 
 
 ## About
 
