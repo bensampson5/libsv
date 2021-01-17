@@ -50,7 +50,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push
-        if: env.DOCKER_IMAGES_EXISTS == '0' || env.DOCKERFILE_CHANGED == '1'
+        if: env.DOCKERFILE_CHANGED || !env.DOCKER_IMAGE_EXISTS
         id: docker_build
         uses: docker/build-push-action@v2
         with:
