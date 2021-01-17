@@ -22,11 +22,7 @@ jobs:
           echo "DOCKERFILE_CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -c Dockerfile)" >> $GITHUB_ENV
       - 
         name: Get branch name
-        run: echo "BRANCH_NAME=$(basename -- "${{ github.ref }}")" >> $GITHUB_ENV
-      - 
-        name: Check if docker image for this branch already exists on Docker Hub
-        run: |
-          echo "$(docker manifest inspect bensampson5/openhdl:$BRANCH_NAME)"
+        run: echo "BRANCH_NAME=$(basename -- "${{ github.ref }}")" >> $GITHUB_ENV          
       - 
         name: Docker meta
         id: docker_meta
@@ -34,12 +30,10 @@ jobs:
         with:
           images: bensampson5/openhdl
       - 
-        name: Print out stuff
+        name: Determine if docker image already exists
         run: | 
-          echo "DOCKERFILE_CHANGED = $DOCKERFILE_CHANGED";
-          echo "BRANCH_NAME = $BRANCH_NAME";
-          echo "docker meta tags = ${{ steps.docker_meta.outputs.tags }}"
-          echo "docker_meta_labels = ${{ steps.docker_meta.outputs.labels }}" 
+          echo '{"experimental": "enabled"}' > ~/.docker/config.json;
+          echo "$(docker manifest inspect ${{ steps.docker_meta.outputs.tags }})"
       - 
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
