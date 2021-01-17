@@ -33,7 +33,12 @@ jobs:
         name: Determine if docker image already exists
         run: | 
           echo '{"experimental": "enabled"}' > ~/.docker/config.json;
-          echo "$(docker manifest inspect ${{ steps.docker_meta.outputs.tags }})"
+          if [[ $(docker manifest inspect ${{ steps.docker_meta.outputs.tags }} 2>/dev/null ]] then
+            echo "DOCKER_IMAGE_EXISTS=1" >> $GITHUB_ENV;
+          else
+            echo "DOCKER_IMAGE_EXISTS=0" >> $GITHUB_END;
+          fi;
+          echo "DOCKER_IMAGE_EXISTS=$DOCKER_IMAGE_EXISTS";
       - 
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
