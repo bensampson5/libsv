@@ -107,4 +107,4 @@ jobs:
       -
         name: Run OpenHDL tests
         run: |
-          docker run --rm -v $(pwd):/code -w /code/build/test ${{ steps.docker_meta.outputs.tags }} ./test_main
+          docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check
