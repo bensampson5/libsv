@@ -16,6 +16,16 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       - 
+        name: Check if Dockerfile changed
+        run: | 
+          echo "DOCKERFILE_CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -c Dockerfile)" >> $GITHUB_ENV \
+          && echo $DOCKERFILE_CHANGED
+      - 
+        name: Get branch name
+        run: | 
+          echo "BRANCH_NAME=$(basename -- "${{ github.ref }}")" >> $GITHUB_ENV \
+          && echo $BRANCH_NAME
+      - 
         name: Docker meta
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v1
