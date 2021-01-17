@@ -17,13 +17,13 @@ jobs:
       - 
         name: Check if Dockerfile changed
         run: | 
-          echo "DOCKERFILE_CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -c Dockerfile)" >> $GITHUB_ENV \
-          && echo $DOCKERFILE_CHANGED
+          echo "DOCKERFILE_CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -c Dockerfile)" >> $GITHUB_ENV
       - 
         name: Get branch name
-        run: | 
-          echo "BRANCH_NAME=$(basename -- "${{ github.ref }}")" >> $GITHUB_ENV \
-          && echo $BRANCH_NAME
+        run: echo "BRANCH_NAME=$(basename -- "${{ github.ref }}")" >> $GITHUB_ENV
+      - 
+        name: Print out stuff
+        run: echo "DOCKERFILE_CHANGED=$DOCKERFILE_CHANGED, BRANCH_NAME=$BRANCH_NAME"
       - 
         name: Docker meta
         id: docker_meta
