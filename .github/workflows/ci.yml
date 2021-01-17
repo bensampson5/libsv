@@ -82,7 +82,7 @@ jobs:
           images: bensampson5/openhdl
       - 
         name: Use openhdl container
-        uses: steps.docker_meta.outputs.tags
+        uses: ${{ steps.docker_meta.outputs.tags }}
       -
         name: Build
         run: |
