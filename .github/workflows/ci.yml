@@ -80,9 +80,11 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: bensampson5/openhdl
+      - 
+        name: Use openhdl container
+        uses: steps.docker_meta.outputs.tags
       -
         name: Build
-        uses: steps.docker_meta.outputs.tags
         run: |
           mkdir build \
           && cd build \
