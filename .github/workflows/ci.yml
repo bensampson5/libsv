@@ -36,9 +36,11 @@ jobs:
           if [[ $(docker manifest inspect ${{ steps.docker_meta.outputs.tags }} 2>/dev/null) ]]; then
             echo "DOCKER_IMAGE_EXISTS=1" >> $GITHUB_ENV;
           else
-            echo "DOCKER_IMAGE_EXISTS=0" >> $GITHUB_END;
+            echo "DOCKER_IMAGE_EXISTS=0" >> $GITHUB_ENV;
           fi;
-          echo "DOCKER_IMAGE_EXISTS=$DOCKER_IMAGE_EXISTS";
+      - 
+        name: Print DOCKER_IMAGE_EXISTS
+        run: echo "DOCKER_IMAGE_EXISTS=$DOCKER_IMAGE_EXISTS"
       - 
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
