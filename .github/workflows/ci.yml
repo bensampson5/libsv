@@ -92,18 +92,19 @@ jobs:
         with:
           images: bensampson5/openhdl
       - 
-        name: Pull and build docker image
+        name: Pull docker image
         run: |
           docker pull ${{ steps.docker_meta.outputs.tags }}
-      # -
-      #   name: Build
-      #   run: |
-      #     mkdir build \
-      #     && cd build \
-      #     && cmake -GNinja .. \
-      #     && ninja
-      # -
-      #   name: Run tests
-      #   run: |
-      #     cd build/test \
-      #     && ./test_main
+      - 
+        name: Build OpenHDL
+        run: |
+          echo "rm -rf build \
+                && mkdir build \
+                && cd build \
+                && cmake -GNinja .. \
+                && ninja" > build.sh \
+          && docker run --rm -v $(pwd):/code -w /code ${{ steps.docker_meta.outputs.tags }} /bin/bash build.sh
+      -
+        name: Run OpenHDL tests
+        run: |
+          docker run --rm -v $(pwd):/code -w /code/build/test ${{ steps.docker_meta.outputs.tags }} ./test_main
