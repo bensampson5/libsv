@@ -92,7 +92,6 @@ jobs:
           && ninja
       -
         name: Run tests
-        uses: steps.docker_meta.outputs.tags
         run: |
           cd build/test \
           && ./test_main
