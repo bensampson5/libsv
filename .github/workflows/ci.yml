@@ -114,6 +114,13 @@ jobs:
       - 
         name: Print test
         run: echo "Test"
+  analyze:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Print analyze
+        run: echo "Analyze"
   docs:
     needs: [test]
     runs-on: ubuntu-latest
