@@ -8,6 +8,12 @@ on:
       - 'v*'
 
 jobs:
+
+  # This job builds and updates the docker images on the OpenHDL's Docker Hub. It will create and push a 
+  # new image if any of the following conditions apply:
+  #   1. This is a new commit to the 'main' branch.
+  #   2. If a tag for this branch does not already exist on OpenHDL's Docker Hub.
+  #   3. If the Dockerfile in the top project directory changed in the most recent commit.
   docker:
     runs-on: ubuntu-latest
     steps:
@@ -77,7 +83,9 @@ jobs:
         name: Image digest
         if: env.DOCKERFILE_CHANGED == '1' || env.DOCKER_IMAGE_EXISTS == '0' || github.ref == 'refs/heads/main'
         run: echo ${{ steps.docker_build.outputs.digest }}
-  build:
+  
+  # This job checks that OpenHDL tests can be built and pass.
+  build-and-test:
     needs: [docker]
     runs-on: ubuntu-latest
     steps:
@@ -107,26 +115,19 @@ jobs:
         name: Run OpenHDL tests
         run: |
           docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check
-  test:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - 
-        name: Print test
-        run: echo "Test"
-      -
-        name: Run OpenHDL tests
-        run: |
-          docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check
+
+  # This job checks that this commit passes formatting, linting, and other style checks
   analyze:
-    needs: [test]
+    needs: [build-and-test]
     runs-on: ubuntu-latest
     steps:
       - 
         name: Print analyze
         run: echo "Analyze"
+
+  # This job checks that documentation can be built successfully using Sphinx
   docs:
-    needs: [test]
+    needs: [anaylze]
     runs-on: ubuntu-latest
     steps:
       - 
