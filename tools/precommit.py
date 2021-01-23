@@ -104,12 +104,23 @@ def format_hdl(flags=None):
 
 def format_cpp_cmake():
     """ Format C++ and cmake files """
-    cmake()
 
     cmd = ["ninja", "fix-format"]
     run(cmd, cwd=BUILD_DIR)
 
 if __name__ == "__main__":
+
+    # Parse input args
+    parser = argparse.ArgumentParser()
+    arg_list = ["--build", "--test", "--format", "--format-cpp-cmake", "--format-hdl", "--docs"]
+    for arg in arg_list:
+        parser.add_argument(arg, action="store_true")
+    args = parser.parse_args()
+    
+    # If no arguments are passed then do everything
+    ALL = len(sys.argv) == 1
+
+    # Check if in docker container
     if not in_docker():
         raise OSError("Not in a docker container. This script must be run from within a docker container. See README.md for instructions.")
     else:
@@ -118,23 +129,31 @@ if __name__ == "__main__":
         if not PROJECT_ROOT.is_dir():
             raise FileNotFoundError(f"Cannot find project root directory: {PROJECT_ROOT}")
 
-        parser = argparse.ArgumentParser()
-        arg_list = ["--skip-build", "--skip-test", "--skip-format"]
-        for arg in arg_list:
-            parser.add_argument(arg, action="store_true")
-        args = parser.parse_args()
-
-        if not args.skip_format:
-            print("Formatting...")
-            format_hdl()
-            format_cpp_cmake()
-
-        if not args.skip_build:
-            print("Building...")
+        # Run cmake if --build, --test, or --format
+        if ALL or args.build or args.test or args.format:
             cmake()
-            build()
 
-            if not args.skip_test:
-                print("Testing...")
-                test()
+            # Run build if --build or --test
+            if ALL or args.build or args.test:
+                print("\nBuilding...")
+                build()
+
+                # Run test if --test
+                if ALL or args.test:
+                    print("\nTesting...")
+                    test()
+
+            # Run format_hdl if --format or --format_hdl
+            if ALL or args.format or args.format_hdl:
+                print("\nFormatting HDL...")
+                format_hdl()
+            
+            # Run format_cpp_cmake if --format or --format-cpp-cmake
+            if ALL or args.format or args.format_cpp_cmake:
+                print("\nFormatting C++/cmake...")
+                format_cpp_cmake()
+
+        # Run docs is --docs
+        if ALL or args.docs:
+            print("\nGenerating documentation...")
         
