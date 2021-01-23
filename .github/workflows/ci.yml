@@ -118,7 +118,7 @@ jobs:
 
   # This job checks that this commit passes formatting, linting, and other style checks
   analyze:
-    needs: [build-and-test]
+    needs: [docker]
     runs-on: ubuntu-latest
     steps:
       - 
@@ -127,7 +127,7 @@ jobs:
 
   # This job checks that documentation can be built successfully using Sphinx
   docs:
-    needs: [anaylze]
+    needs: [docker]
     runs-on: ubuntu-latest
     steps:
       - 
