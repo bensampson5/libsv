@@ -85,7 +85,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
   
   # This job checks that OpenHDL tests can be built and pass.
-  build-and-test:
+  openhdl:
     needs: [docker]
     runs-on: ubuntu-latest
     steps:
@@ -103,7 +103,7 @@ jobs:
         run: |
           docker pull ${{ steps.docker_meta.outputs.tags }}
       - 
-        name: Build OpenHDL
+        name: Build OpenHDL tests
         run: |
           echo "rm -rf build \
                 && mkdir build \
@@ -115,21 +115,10 @@ jobs:
         name: Run OpenHDL tests
         run: |
           docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check
-
-  # This job checks that this commit passes formatting, linting, and other style checks
-  analyze:
-    needs: [docker]
-    runs-on: ubuntu-latest
-    steps:
       - 
-        name: Print analyze
-        run: echo "Analyze"
-
-  # This job checks that documentation can be built successfully using Sphinx
-  docs:
-    needs: [docker]
-    runs-on: ubuntu-latest
-    steps:
+        name: Check C++ & cmake formatting
+        run: |
+          docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check-format
       - 
-        name: Print docs
-        run: echo "Docs"
+        name: Build docs
+        run: echo "build docs"
