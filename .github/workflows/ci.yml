@@ -114,6 +114,10 @@ jobs:
       - 
         name: Print test
         run: echo "Test"
+      -
+        name: Run OpenHDL tests
+        run: |
+          docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check
   analyze:
     needs: [test]
     runs-on: ubuntu-latest
