@@ -71,15 +71,14 @@ def test(flags=None):
 
     run(cmd, cwd=BUILD_DIR)
 
-def format():
-    format_hdl()
-    format_cpp_cmake()
-
-def format_hdl():
+def format_hdl(flags=None):
     """ Format SystemVerilog and Verilog files """
 
     # Use --inplace flag to overwrite existing files
     cmd = ["verible-verilog-format", "--inplace"]
+
+    if flags is not None:
+        cmd += flags
 
     # Add options from .verible-verilog-format.yaml if specified
     verible_verilog_format_yaml = PROJECT_ROOT / ".verible-verilog-format.yaml"
@@ -127,7 +126,8 @@ if __name__ == "__main__":
 
         if not args.skip_format:
             print("Formatting...")
-            format()
+            format_hdl()
+            format_cpp_cmake()
 
         if not args.skip_build:
             print("Building...")
