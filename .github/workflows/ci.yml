@@ -125,7 +125,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v2
         with:
-          path: build/cpp-cmake-format.txt
+          path: cpp-cmake-format.txt
       - 
         name: Build docs
         run: echo "build docs"
