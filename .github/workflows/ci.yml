@@ -116,16 +116,20 @@ jobs:
         run: |
           docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check
       - 
-        name: Check C++ & cmake formatting
+        name: Check C++ and cmake formatting
         run: |
           docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja format > cpp-cmake-format.txt \
           && docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check-format
       - 
-        name: Upload artifact for C++ & cmake formatting issues if previous step failed
+        name: Upload artifact for C++/cmake formatting issues if previous step failed
         if: failure()
         uses: actions/upload-artifact@v2
         with:
           path: cpp-cmake-format.txt
+      - 
+        name: Check HDL formatting
+        run: |
+          echo "Check HDL formatting"
       - 
         name: Build docs
         run: echo "build docs"

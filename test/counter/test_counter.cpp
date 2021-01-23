@@ -4,7 +4,7 @@
 #include "verilated.h"
 #include <string>
 
-const std::string S1 =  "Counter can be reset";
+const std::string S1 = "Counter can be reset";
 SCENARIO("" + S1)
 {
     GIVEN("A counter with a non-zero count")
