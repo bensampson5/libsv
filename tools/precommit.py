@@ -131,6 +131,24 @@ def format_cpp_cmake():
     run(cmd, cwd=BUILD_DIR)
 
 
+def docs():
+    """ Make documentation """
+
+    DOCS_DIR = PROJECT_ROOT / "docs"
+    DOCS_BUILD_DIR = DOCS_DIR / "build"
+
+    # Delete entire docs build directory if it exists
+    if DOCS_BUILD_DIR.exists():
+        shutil.rmtree(DOCS_BUILD_DIR)
+
+    # Create new docs build directory
+    DOCS_BUILD_DIR.mkdir()
+
+    cmd = ["make", "html"]
+
+    run(cmd, cwd=DOCS_DIR)
+
+
 if __name__ == "__main__":
 
     # Parse input args
@@ -200,5 +218,6 @@ if __name__ == "__main__":
 
         # Run docs is --docs
         if ALL or args.docs:
-            print("\nGenerating documentation...", flush=FLUSH)
+            print("\nMaking documentation...", flush=FLUSH)
+            docs()
 

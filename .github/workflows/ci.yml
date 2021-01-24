@@ -88,7 +88,6 @@ jobs:
       - name: Setup GitHub environment
         run: |
           echo "DOCKER_RUN_PRECOMMIT=docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py" >> $GITHUB_ENV;
-          echo "BUILD_TEST_REPORT_FILENAME=build-test-report.txt" >> $GITHUB_ENV;
           echo "FORMAT_ERRORS_FILENAME=format-errors.txt" >> $GITHUB_ENV;
       - name: Pull docker image
         run: docker pull ${{ steps.docker_meta.outputs.tags }}
