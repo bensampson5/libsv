@@ -93,15 +93,14 @@ jobs:
       - name: Pull docker image
         run: docker pull ${{ steps.docker_meta.outputs.tags }}
       - name: Build and run OpenHDL tests
-        run: ${{ env.DOCKER_RUN_PRECOMMIT }} --test | tee ${{ env.BUILD_TEST_REPORT_FILENAME }}
+        run: ${{ env.DOCKER_RUN_PRECOMMIT }} --test
       - name: Check format
         run: |
           ${{ env.DOCKER_RUN_PRECOMMIT }} --format && \
-          git diff HEAD > ${{ env.FORMAT_ERRORS_FILENAME }} && \
+          git diff HEAD | tee ${{ env.FORMAT_ERRORS_FILENAME }} && \
           git reset --hard HEAD && \
           if [ -s ${{ env.FORMAT_ERRORS_FILENAME }} ]; then \
-              echo "Format check failed (see below). Please run './tools/precommit.py --format' locally then recommit and push changes to fix."; \
-              cat ${{ env.FORMAT_ERRORS_FILENAME }}; \
+              echo "Format check failed. Please run './tools/precommit.py --format' locally then recommit and push changes to fix."; \
               exit 1; \
           fi
       - name: Build docs
