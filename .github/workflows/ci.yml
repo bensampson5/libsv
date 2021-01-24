@@ -129,11 +129,11 @@ jobs:
               exit 1; \
           fi
       - 
-        name: If previous step failed, upload artifact with format errors.
+        name: If previous step failed, upload format errors artifact.
         if: failure()
         uses: actions/upload-artifact@v2
         with:
-          path: format-errors.txt
+          path: ${{ env.FORMAT_ERRORS_FILENAME }}
       - 
         name: Build docs
         run: echo "build docs"
