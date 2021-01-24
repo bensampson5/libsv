@@ -89,6 +89,10 @@ jobs:
     needs: [docker]
     runs-on: ubuntu-latest
     steps:
+      - 
+        name: Setup GitHub environment
+        run: |
+          echo "FORMAT_ERRORS_FILENAME=format-errors.txt" >> $GITHUB_ENV
       -
         name: Checkout
         uses: actions/checkout@v2
@@ -102,30 +106,28 @@ jobs:
         name: Pull docker image
         run: |
           docker pull ${{ steps.docker_meta.outputs.tags }}
-      - 
-        name: Build and run OpenHDL tests
-        run: |
-          echo "rm -rf build \
-                && mkdir build \
-                && cd build \
-                && cmake -GNinja .. \
-                && ninja" > build.sh \
-          && docker run --rm -v $(pwd):/code -w /code ${{ steps.docker_meta.outputs.tags }} /bin/bash build.sh
-      -
-        name: Run OpenHDL tests
-        run: |
-          docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check
+      # - 
+      #   name: Build and run OpenHDL tests
+      #   run: |
+      #     echo "rm -rf build \
+      #           && mkdir build \
+      #           && cd build \
+      #           && cmake -GNinja .. \
+      #           && ninja" > build.sh \
+      #     && docker run --rm -v $(pwd):/code -w /code ${{ steps.docker_meta.outputs.tags }} /bin/bash build.sh
+      # -
+      #   name: Run OpenHDL tests
+      #   run: |
+      #     docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check
       - 
         name: Check format
         run: |
-          FORMAT_ERRORS_FILENAME=format-errors.txt && \
-          echo "FORMAT_ERRORS_FILENAME=$FORMAT_ERRORS_FILENAME" >> $GITHUB_ENV && \
           docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --format && \
-          git diff HEAD > $FORMAT_ERRORS_FILENAME && \
+          git diff HEAD > ${{ env.FORMAT_ERRORS_FILENAME }} && \
           git reset --hard HEAD && \
-          if [ -s $FORMAT_ERRORS_FILENAME ]; then \
+          if [ -s ${{ env.FORMAT_ERRORS_FILENAME }} ]; then \
               echo "Format check failed (see below). Please run './tools/precommit.py --format' locally then recommit and push changes to fix."; \
-              cat $FORMAT_ERRORS_FILENAME; \
+              cat ${{ env.FORMAT_ERRORS_FILENAME }}; \
               exit 1; \
           fi
       - 
