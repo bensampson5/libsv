@@ -87,15 +87,17 @@ jobs:
           images: bensampson5/openhdl
       - name: Setup GitHub environment
         run: |
+          echo "DOCKER_RUN_PRECOMMIT=docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py" >> $GITHUB_ENV;
           echo "BUILD_TEST_REPORT_FILENAME=build-test-report.txt" >> $GITHUB_ENV;
           echo "FORMAT_ERRORS_FILENAME=format-errors.txt" >> $GITHUB_ENV;
-          echo "DOCKER_RUN_PRECOMMIT=docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py" >> $GITHUB_ENV;
       - name: Pull docker image
-        run: |
-          docker pull ${{ steps.docker_meta.outputs.tags }}
+        run: docker pull ${{ steps.docker_meta.outputs.tags }}
       - name: Build and run OpenHDL tests
-        run: |
-          ${{ env.DOCKER_RUN_PRECOMMIT }} --test | tee ${{ env.BUILD_TEST_REPORT_FILENAME }}
+        run: ${{ env.DOCKER_RUN_PRECOMMIT }} --test | tee ${{ env.BUILD_TEST_REPORT_FILENAME }}
+      - name: Upload build and test report artifact.
+        uses: actions/upload-artifact@v2
+        with:
+          path: ${{ env.BUILD_TEST_REPORT_FILENAME }}
       - name: Check format
         run: |
           ${{ env.DOCKER_RUN_PRECOMMIT }} --format && \
