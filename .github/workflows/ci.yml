@@ -129,7 +129,8 @@ jobs:
       - 
         name: Check HDL formatting
         run: |
-          echo "Check HDL formatting"
+          docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} ./tools/precommit.py --format-hdl \
+          && git diff HEAD > format-hdl.txt
       - 
         name: Build docs
         run: echo "build docs"
