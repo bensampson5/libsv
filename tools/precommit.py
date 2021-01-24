@@ -12,6 +12,7 @@ PROJECT_ROOT = Path("/code")
 BUILD_DIR = PROJECT_ROOT / "build"
 FLUSH = True
 
+
 def in_docker():
     """ Returns: True if running in a docker container, else False """
     try:
@@ -21,17 +22,23 @@ def in_docker():
     except:
         return False
 
+
 def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
     try:
-        p = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                             universal_newlines=True)
+        p = subprocess.Popen(
+            cmd,
+            cwd=cwd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+        )
 
         while True:
-            output = p.stdout.readline()
-            if output == "" and p.poll() is not None:
+            stdout = p.stdout.readline()
+            if stdout == "" and p.poll() is not None:
                 break
-            if output:
-                print(output, end="", flush=FLUSH)
+            if stdout:
+                print(stdout, end="", flush=FLUSH)
 
         if check_exit and p.returncode != 0:
             print(f"{' '.join(cmd)} exited with non-zero {p.returncode}", flush=FLUSH)
@@ -42,8 +49,9 @@ def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
         else:
             raise e
 
+
 def cmake(flags=None):
-    
+
     # Delete entire build directory if it exists
     if BUILD_DIR.exists():
         shutil.rmtree(BUILD_DIR)
@@ -59,6 +67,7 @@ def cmake(flags=None):
 
     run(cmd, cwd=BUILD_DIR)
 
+
 def build(flags=None):
 
     if not BUILD_DIR.exists():
@@ -70,6 +79,7 @@ def build(flags=None):
 
     run(cmd, cwd=BUILD_DIR)
 
+
 def test(flags=None):
 
     if not BUILD_DIR.exists():
@@ -80,6 +90,7 @@ def test(flags=None):
         cmd += flags
 
     run(cmd, cwd=BUILD_DIR)
+
 
 def format_hdl(flags=None):
     """ Format SystemVerilog and Verilog files """
@@ -112,35 +123,57 @@ def format_hdl(flags=None):
 
     run(cmd)
 
+
 def format_cpp_cmake():
     """ Format C++ and cmake files """
 
     cmd = ["ninja", "fix-format"]
     run(cmd, cwd=BUILD_DIR)
 
+
 if __name__ == "__main__":
 
     # Parse input args
     parser = argparse.ArgumentParser()
-    arg_list = ["--build", "--test", "--format", "--format-cpp-cmake", "--format-hdl", "--docs"]
+    arg_list = [
+        "--build",
+        "--test",
+        "--format",
+        "--format-cpp-cmake",
+        "--format-hdl",
+        "--docs",
+    ]
     for arg in arg_list:
         parser.add_argument(arg, action="store_true")
     args = parser.parse_args()
-    
+
     # If no arguments are passed then do everything
     ALL = len(sys.argv) == 1
 
     # Check if in docker container
     if not in_docker():
-        raise OSError("Not in a docker container. This script must be run from within a docker container. See README.md for instructions.")
+        raise OSError(
+            "Not in a docker container. This script must be run from within a docker container. See README.md for instructions."
+        )
     else:
 
         # Resolve project root directory before proceeding
         if not PROJECT_ROOT.is_dir():
-            raise FileNotFoundError(f"Cannot find project root directory: {PROJECT_ROOT}")
+            raise FileNotFoundError(
+                f"Cannot find project root directory: {PROJECT_ROOT}"
+            )
 
         # Run cmake if --build, --test, --format, --format-hdl, or --format-cpp-cmake
-        run_cmake = any([ALL, args.build, args.test, args.format, args.format_hdl, args.format_cpp_cmake])
+        run_cmake = any(
+            [
+                ALL,
+                args.build,
+                args.test,
+                args.format,
+                args.format_hdl,
+                args.format_cpp_cmake,
+            ]
+        )
         if run_cmake:
             print("\nRunning cmake...", flush=FLUSH)
             cmake()
@@ -159,7 +192,7 @@ if __name__ == "__main__":
             if ALL or args.format or args.format_hdl:
                 print("\nFormatting HDL...", flush=FLUSH)
                 format_hdl()
-            
+
             # Run format_cpp_cmake if --format or --format-cpp-cmake
             if ALL or args.format or args.format_cpp_cmake:
                 print("\nFormatting C++/cmake...", flush=FLUSH)
@@ -168,4 +201,4 @@ if __name__ == "__main__":
         # Run docs is --docs
         if ALL or args.docs:
             print("\nGenerating documentation...", flush=FLUSH)
-        
+
