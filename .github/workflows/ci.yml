@@ -118,12 +118,13 @@ jobs:
       - 
         name: Check format
         run: |
-          echo "FORMAT_ERRORS_FILENAME=format-errors.txt" >> $GITHUB_ENV && \
+          FORMAT_ERRORS_FILENAME="format-errors.txt" && \
+          echo "FORMAT_ERRORS_FILENAME=$FORMAT_ERRORS_FILENAME" >> $GITHUB_ENV && \
           docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --format && \
           git diff HEAD > $FORMAT_ERRORS_FILENAME && \
           git reset --hard HEAD && \
           if [ -s $FORMAT_ERRORS_FILENAME ]; then \
-              echo "HDL formatting check failed (see below). Please run './tools/precommit.py --format' locally then recommit and push changes to fix."; \
+              echo "Format check failed (see below). Please run './tools/precommit.py --format' locally then recommit and push changes to fix."; \
               cat $FORMAT_ERRORS_FILENAME; \
               exit 1; \
           fi
@@ -132,7 +133,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v2
         with:
-          path: $FORMAT_ERRORS_FILENAME
+          path: env.FORMAT_ERRORS_FILENAME
       - 
         name: Build docs
         run: echo "build docs"
