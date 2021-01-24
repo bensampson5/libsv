@@ -121,16 +121,22 @@ jobs:
           docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja format > cpp-cmake-format.txt \
           && docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check-format
       - 
-        name: Upload artifact for C++/cmake formatting issues if previous step failed
+        name: If previous step failed, upload artifact with C++/cmake formatting issues.
         if: failure()
         uses: actions/upload-artifact@v2
         with:
-          path: cpp-cmake-format.txt
+          path: format-check-cpp-cmake.txt
       - 
         name: Check HDL formatting
         run: |
-          docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} ./tools/precommit.py --format-hdl \
+          docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --format-hdl \
           && git diff HEAD > format-hdl.txt
+      - 
+        name: If previous step failed, upload artifact with HDL formatting issues.
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          path: format-check-hdl.txt
       - 
         name: Build docs
         run: echo "build docs"
