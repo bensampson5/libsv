@@ -118,7 +118,7 @@ jobs:
       - 
         name: Check C++ and cmake formatting
         run: |
-          docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja format > cpp-cmake-format.txt \
+          docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja format > format-check-cpp-cmake.txt \
           && docker run --rm -v $(pwd):/code -w /code/build ${{ steps.docker_meta.outputs.tags }} ninja check-format
       - 
         name: If previous step failed, upload artifact with C++/cmake formatting issues.
@@ -130,7 +130,7 @@ jobs:
         name: Check HDL formatting
         run: |
           docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --format-hdl \
-          && git diff HEAD > format-hdl.txt
+          && git diff HEAD > format-check-hdl.txt
       - 
         name: If previous step failed, upload artifact with HDL formatting issues.
         if: failure()
