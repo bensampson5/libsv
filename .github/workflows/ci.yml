@@ -78,11 +78,6 @@ jobs:
     needs: [docker]
     runs-on: ubuntu-latest
     steps:
-      - name: Setup GitHub environment
-        run: |
-          echo "BUILD_TEST_REPORT_FILENAME=build-test-report.txt" >> $GITHUB_ENV;
-          echo "FORMAT_ERRORS_FILENAME=format-errors.txt" >> $GITHUB_ENV;
-          echo "DOCKER_RUN_PRECOMMIT=docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py" >> $GITHUB_ENV;
       - name: Checkout
         uses: actions/checkout@v2
       - name: Docker meta
@@ -90,6 +85,11 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: bensampson5/openhdl
+      - name: Setup GitHub environment
+        run: |
+          echo "BUILD_TEST_REPORT_FILENAME=build-test-report.txt" >> $GITHUB_ENV;
+          echo "FORMAT_ERRORS_FILENAME=format-errors.txt" >> $GITHUB_ENV;
+          echo "DOCKER_RUN_PRECOMMIT=docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py" >> $GITHUB_ENV;
       - name: Pull docker image
         run: |
           docker pull ${{ steps.docker_meta.outputs.tags }}
