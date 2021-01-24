@@ -1,7 +1,7 @@
 module counter #(
     parameter N  /* verilator public_flat_rd */ = 16
 ) (
-    input  logic        clk,
+    input  logic         clk,
     input  logic         aresetn,
     output logic [N-1:0] q
 );
