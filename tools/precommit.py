@@ -24,30 +24,23 @@ def in_docker():
 
 
 def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
-    try:
-        p = subprocess.Popen(
-            cmd,
-            cwd=cwd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            universal_newlines=True,
-        )
+    p = subprocess.Popen(
+        cmd,
+        cwd=cwd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        universal_newlines=True,
+    )
 
-        while True:
-            stdout = p.stdout.readline()
-            if stdout == "" and p.poll() is not None:
-                break
-            if stdout:
-                print(stdout, end="", flush=FLUSH)
+    while True:
+        stdout = p.stdout.readline()
+        if stdout == "" and p.poll() is not None:
+            break
+        if stdout:
+            print(stdout, end="", flush=FLUSH)
 
-        if check_exit and p.returncode != 0:
-            print(f"{' '.join(cmd)} exited with non-zero {p.returncode}", flush=FLUSH)
-    except OSError as e:
-        if e.errno == errno.ENOENT:
-            print(f"Command {cmd[0]} not found", flush=FLUSH)
-            raise e
-        else:
-            raise e
+    if check_exit and p.returncode != 0:
+        raise subprocess.CalledProcessError(p.returncode, " ".join(cmd))
 
 
 def cmake(flags=None):
