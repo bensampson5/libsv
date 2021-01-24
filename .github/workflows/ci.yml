@@ -129,7 +129,7 @@ jobs:
       - 
         name: Check HDL formatting
         run: |
-          docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} ./tools/precommit.py --format-hdl \
+          docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --format-hdl \
           && git diff HEAD > format-check-hdl.txt \
           && git reset --hard HEAD \
           && cat format-check-hdl.txt \
