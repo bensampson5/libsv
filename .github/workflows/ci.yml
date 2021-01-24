@@ -73,7 +73,7 @@ jobs:
         if: env.DOCKERFILE_CHANGED == '1' || env.DOCKER_IMAGE_EXISTS == '0' || github.ref == 'refs/heads/main'
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  # This job checks that OpenHDL tests can be built and pass.
+  # This job runs all the OpenHDL builds, tests, and checks
   openhdl:
     needs: [docker]
     runs-on: ubuntu-latest
