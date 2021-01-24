@@ -98,7 +98,7 @@ jobs:
           ${{ env.DOCKER_RUN_PRECOMMIT }} --test | tee ${{ env.BUILD_TEST_REPORT_FILENAME }}
       - name: Check format
         run: |
-          docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --format && \
+          ${{ env.DOCKER_RUN_PRECOMMIT }} --format && \
           git diff HEAD > ${{ env.FORMAT_ERRORS_FILENAME }} && \
           git reset --hard HEAD && \
           if [ -s ${{ env.FORMAT_ERRORS_FILENAME }} ]; then \
