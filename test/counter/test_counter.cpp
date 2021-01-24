@@ -19,8 +19,6 @@ SCENARIO("" + S1)
             THEN("q is set to 0")
             {
                 REQUIRE(counter->m_core->q == 0);
-
-                REQUIRE(1 == 0);
             }
         }
     }
