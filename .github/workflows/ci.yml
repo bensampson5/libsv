@@ -132,7 +132,7 @@ jobs:
           docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --format-hdl \
           && git diff HEAD > format-check-hdl.txt \
           && cat format-check-hdl.txt \
-          && if [ ! -s format-check-hdl.txt ]; then echo "Issues!"; exit 1; fi
+          && test -s format-check-hdl.txt
       - 
         name: If previous step failed, upload artifact with HDL formatting issues.
         if: failure()
