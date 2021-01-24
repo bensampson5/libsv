@@ -16,7 +16,8 @@ def in_docker():
     """ Returns: True if running in a docker container, else False """
     try:
         with open("/proc/1/cgroup", "rt") as ifh:
-            return "docker" in ifh.read()
+            contents = ifh.read()
+            return any([word in contents for word in ["actions_job", "docker"]])
     except:
         return False
 
