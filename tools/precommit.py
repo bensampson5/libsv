@@ -134,6 +134,7 @@ if __name__ == "__main__":
         # Run cmake if --build, --test, --format, --format-hdl, or --format-cpp-cmake
         run_cmake = any([ALL, args.build, args.test, args.format, args.format_hdl, args.format_cpp_cmake])
         if run_cmake:
+            print("\nRunning cmake...")
             cmake()
 
             # Run build if --build or --test
