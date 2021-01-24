@@ -126,8 +126,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: format-check-cpp-cmake.txt
-      - run: cat /proc/1/cgroup
-      - run: docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} cat /proc/1/cgroup
       - 
         name: Check HDL formatting
         run: |
