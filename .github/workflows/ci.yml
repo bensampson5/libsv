@@ -95,7 +95,7 @@ jobs:
           docker pull ${{ steps.docker_meta.outputs.tags }}
       - name: Build and run OpenHDL tests
         run: |
-          docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --test > ${{ env.BUILD_TEST_REPORT_FILENAME }}
+          docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --test | tee ${{ env.BUILD_TEST_REPORT_FILENAME }}
       - name: Check format
         run: |
           docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --format && \
