@@ -13,7 +13,7 @@ BUILD_DIR = PROJECT_ROOT / "build"
 FLUSH = True
 
 def in_docker():
-    """ Returns: True if runnning in a docker container, else False """
+    """ Returns: True if running in a docker container, else False """
     try:
         with open("/proc/1/cgroup", "rt") as ifh:
             return "docker" in ifh.read()
