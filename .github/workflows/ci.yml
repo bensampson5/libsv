@@ -133,7 +133,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v2
         with:
-          path: env.FORMAT_ERRORS_FILENAME
+          path: format-errors.txt
       - 
         name: Build docs
         run: echo "build docs"
