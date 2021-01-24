@@ -94,10 +94,6 @@ jobs:
         run: docker pull ${{ steps.docker_meta.outputs.tags }}
       - name: Build and run OpenHDL tests
         run: ${{ env.DOCKER_RUN_PRECOMMIT }} --test | tee ${{ env.BUILD_TEST_REPORT_FILENAME }}
-      - name: Upload build and test report artifact.
-        uses: actions/upload-artifact@v2
-        with:
-          path: ${{ env.BUILD_TEST_REPORT_FILENAME }}
       - name: Check format
         run: |
           ${{ env.DOCKER_RUN_PRECOMMIT }} --format && \
@@ -108,10 +104,5 @@ jobs:
               cat ${{ env.FORMAT_ERRORS_FILENAME }}; \
               exit 1; \
           fi
-      - name: If previous step failed, upload format errors artifact.
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          path: ${{ env.FORMAT_ERRORS_FILENAME }}
       - name: Build docs
         run: echo "build docs"
