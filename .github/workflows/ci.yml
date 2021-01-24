@@ -92,7 +92,7 @@ jobs:
           echo "FORMAT_ERRORS_FILENAME=format-errors.txt" >> $GITHUB_ENV;
       - name: Pull docker image
         run: docker pull ${{ steps.docker_meta.outputs.tags }}
-      - name: Build and run OpenHDL tests
+      - name: Build and run tests
         run: ${{ env.DOCKER_RUN_PRECOMMIT }} --test
       - name: Check format
         run: |
@@ -104,4 +104,4 @@ jobs:
               exit 1; \
           fi
       - name: Build docs
-        run: echo "build docs"
+        run: ${{ env.DOCKER_RUN_PRECOMMIT }} --docs
