@@ -118,7 +118,7 @@ jobs:
       - 
         name: Check format
         run: |
-          FORMAT_ERRORS_FILENAME="format-errors.txt" && \
+          FORMAT_ERRORS_FILENAME=format-errors.txt && \
           echo "FORMAT_ERRORS_FILENAME=$FORMAT_ERRORS_FILENAME" >> $GITHUB_ENV && \
           docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --format && \
           git diff HEAD > $FORMAT_ERRORS_FILENAME && \
