@@ -132,8 +132,11 @@ jobs:
           docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py --format-hdl \
           && git diff HEAD > format-check-hdl.txt \
           && git reset --hard HEAD \
-          && cat format-check-hdl.txt \
-          && if [ -s format-check-hdl.txt ]; then exit 1; fi
+          && if [ -s format-check-hdl.txt ]; then \
+                 echo "HDL formatting check failed (see below). Please run `./tools/precommit.py --format-hdl` locally then recommit and push changes to fix."; \
+                 cat format-check-hdl.txt; \
+                 exit 1; 
+             fi
       - 
         name: If previous step failed, upload artifact with HDL formatting issues.
         if: failure()
