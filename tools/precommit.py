@@ -10,6 +10,7 @@ import yaml
 
 PROJECT_ROOT = Path("/code")
 BUILD_DIR = PROJECT_ROOT / "build"
+FLUSH = True
 
 def in_docker():
     """ Returns: True if runnning in a docker container, else False """
@@ -24,10 +25,10 @@ def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
         exit_code = subprocess.call(cmd, cwd=cwd)
 
         if check_exit and exit_code != 0:
-            print(f"{' '.join(cmd)} exited with non-zero {exit_code}")
+            print(f"{' '.join(cmd)} exited with non-zero {exit_code}", flush=FLUSH)
     except OSError as e:
         if e.errno == errno.ENOENT:
-            print(f"Command {cmd[0]} not found")
+            print(f"Command {cmd[0]} not found", flush=FLUSH)
             raise e
         else:
             raise e
@@ -129,31 +130,32 @@ if __name__ == "__main__":
         if not PROJECT_ROOT.is_dir():
             raise FileNotFoundError(f"Cannot find project root directory: {PROJECT_ROOT}")
 
-        # Run cmake if --build, --test, or --format
-        if ALL or args.build or args.test or args.format:
+        # Run cmake if --build, --test, --format, --format-hdl, or --format-cpp-cmake
+        run_cmake = any([ALL, args.build, args.test, args.format, args.format_hdl, args.format_cpp_cmake])
+        if run_cmake:
             cmake()
 
             # Run build if --build or --test
             if ALL or args.build or args.test:
-                print("\nBuilding...")
+                print("\nBuilding...", flush=FLUSH)
                 build()
 
                 # Run test if --test
                 if ALL or args.test:
-                    print("\nTesting...")
+                    print("\nTesting...", flush=FLUSH)
                     test()
 
             # Run format_hdl if --format or --format_hdl
             if ALL or args.format or args.format_hdl:
-                print("\nFormatting HDL...")
+                print("\nFormatting HDL...", flush=FLUSH)
                 format_hdl()
             
             # Run format_cpp_cmake if --format or --format-cpp-cmake
             if ALL or args.format or args.format_cpp_cmake:
-                print("\nFormatting C++/cmake...")
+                print("\nFormatting C++/cmake...", flush=FLUSH)
                 format_cpp_cmake()
 
         # Run docs is --docs
         if ALL or args.docs:
-            print("\nGenerating documentation...")
+            print("\nGenerating documentation...", flush=FLUSH)
         
