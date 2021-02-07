@@ -24,7 +24,6 @@ get_filename_component(SRC_DIR src ABSOLUTE)
 find_package(verilator REQUIRED)
 find_package(Catch2 REQUIRED)
 
-include_directories(include)
 add_subdirectory(test)
 
 enable_testing()
