@@ -21,6 +21,7 @@ RUN apt-get update \
                         libfl-dev \
                         libgoogle-perftools-dev \
                         ninja-build \
+                        npm \
                         perl \
                         python3 \
                         python3-pip \
@@ -77,6 +78,8 @@ RUN wget ${VERIBLE_URL} -O verible.tar.gz \
     && cp -r verible/bin/* /usr/local/bin \
     && rm -rf verible verible.tar.gz
 
+# Install netlistsvg using npm
+RUN npm install -g netlistsvg
 
 WORKDIR /root
 CMD /bin/bash
