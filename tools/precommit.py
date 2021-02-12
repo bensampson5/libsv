@@ -171,7 +171,7 @@ def generate_hdl_svgs():
 
     # Run yosys to output jsons and then use netlistsvg to create svgs for each module
     for i in range(len(hdl_files)):
-        cmd = ["yosys", "-p", f"read -sv {hdl_files[i]}; proc; opt; clean; json -o {json_files[i]}"]
+        cmd = ["yosys", "-p", f"read -sv {hdl_files[i]}; json -o {json_files[i]}"]
         run(cmd, cwd=DOCS_DIR)
         cmd = ["netlistsvg", f"{json_files[i]}", "-o", f"{svg_files[i]}"]
         run(cmd, cwd=DOCS_DIR)
