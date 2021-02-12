@@ -43,7 +43,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install python packages using pip
-RUN pip3 install cmake_format cmakelint pyyaml sphinx sphinx-rtd-theme
+RUN pip3 install cmake_format cmakelint pyyaml sphinx sphinx-rtd-theme rtds-action
 
 # Link python3 to system python
 RUN ln -s /usr/bin/python3 /usr/bin/python
