@@ -9,17 +9,18 @@
 class CounterWrapper {
 private:
     uint64_t m_simTime;
+    VerilatedVcdC* m_trace;
 
 public:
     std::string m_scenarioName;
     Vcounter* m_counter;
-    VerilatedVcdC* m_trace;
     uint32_t m_N;
 
-    CounterWrapper(const std::string scenarioName);
+    CounterWrapper(std::string scenarioName);
     ~CounterWrapper();
     void reset();
     void tick(bool clock = true, uint64_t tickCount = 1);
+    void setQ(int value);
 };
 
 #endif // COUNTER_WRAPPER_HPP

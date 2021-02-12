@@ -4,13 +4,15 @@
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 #include <string>
+#include <cstdint>
 
-CounterWrapper::CounterWrapper(const std::string scenarioName)
+CounterWrapper::CounterWrapper(std::string scenarioName)
 {
     m_scenarioName = scenarioName;
     m_counter = new Vcounter;
     m_simTime = 0;
 
+    // setup trace
     Verilated::traceEverOn(true);
     m_trace = new VerilatedVcdC;
     m_counter->trace(m_trace, 99);
@@ -18,11 +20,6 @@ CounterWrapper::CounterWrapper(const std::string scenarioName)
 
     // Save parameter 'N' to class member variable
     m_N = getModuleParameter("TOP.counter.N");
-
-    // Start with clk low and reset de-asserted
-    m_counter->clk = 0;
-    m_counter->aresetn = 1;
-    this->tick(false, 0); // initialize trace
 }
 
 CounterWrapper::~CounterWrapper()

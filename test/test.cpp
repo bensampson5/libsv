@@ -9,9 +9,9 @@
 vluint64_t main_time = 0;
 double sc_time_stamp() { return main_time; }
 
-int getModuleParameter(const char* const handle)
+int getModuleParameter(const std::string handle)
 {
-    vpiHandle vh = vpi_handle_by_name((PLI_BYTE8*)handle, NULL);
+    vpiHandle vh = vpi_handle_by_name((PLI_BYTE8*)handle.c_str(), NULL);
     s_vpi_value v;
     v.format = vpiIntVal;
     vpi_get_value(vh, &v);

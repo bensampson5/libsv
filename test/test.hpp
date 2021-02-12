@@ -9,7 +9,7 @@
 extern vluint64_t main_time;
 double sc_time_stamp();
 
-int getModuleParameter(const char* const handle);
+int getModuleParameter(const std::string handle);
 std::string scenarioNameToVcdFilename(const std::string scenario_name);
 
 #endif // TEST_HPP

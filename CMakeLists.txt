@@ -20,6 +20,7 @@ cpmaddpackage(
   "CMAKE_FORMAT_EXCLUDE cmake/CPM.cmake")
 
 get_filename_component(SRC_DIR src ABSOLUTE)
+get_filename_component(TEST_DIR test ABSOLUTE)
 
 find_package(verilator REQUIRED)
 find_package(Catch2 REQUIRED)
