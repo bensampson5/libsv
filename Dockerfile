@@ -26,6 +26,7 @@ RUN apt-get update \
                         python3 \
                         python3-pip \
                         wget \
+                        yosys \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -42,7 +43,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install python packages using pip
-RUN pip3 install cmake_format cmakelint pyyaml sphinx sphinx-rtd-theme sphinxcontrib-hdl-diagrams
+RUN pip3 install cmake_format cmakelint pyyaml sphinx sphinx-rtd-theme
 
 # Link python3 to system python
 RUN ln -s /usr/bin/python3 /usr/bin/python
