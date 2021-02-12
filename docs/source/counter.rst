@@ -12,6 +12,6 @@ Parameters:
  - ``aresetn`` asynchoronous active-low reset
  - ``q`` count
 
-.. no-license:: ../../src/counter/counter.sv
+.. literalinclude:: ../../src/counter/counter.sv
     :language: systemverilog
     :caption: counter.sv
