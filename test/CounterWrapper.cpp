@@ -1,11 +1,12 @@
 #include "CounterWrapper.hpp"
-#include "test.hpp"
 #include "Vcounter.h"
+#include "test.hpp"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 #include <string>
 
-CounterWrapper::CounterWrapper(const std::string scenarioName) {
+CounterWrapper::CounterWrapper(const std::string scenarioName)
+{
     m_scenarioName = scenarioName;
     m_counter = new Vcounter;
     m_simTime = 0;
@@ -24,21 +25,24 @@ CounterWrapper::CounterWrapper(const std::string scenarioName) {
     this->tick(false, 0); // initialize trace
 }
 
-CounterWrapper::~CounterWrapper() {
+CounterWrapper::~CounterWrapper()
+{
     m_trace->close();
     m_trace = nullptr;
     delete m_counter;
     m_counter = nullptr;
 }
 
-void CounterWrapper::reset() {
+void CounterWrapper::reset()
+{
     m_counter->aresetn = 0;
     this->tick(false);
     m_counter->aresetn = 1;
     this->tick(false);
 }
 
-void CounterWrapper::tick(bool clock, uint64_t tickCount) {
+void CounterWrapper::tick(bool clock, uint64_t tickCount)
+{
     if (clock) {
         for (uint64_t i = 0; i < tickCount; ++i) {
             m_counter->clk = 1;

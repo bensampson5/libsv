@@ -1,10 +1,10 @@
 #ifndef COUNTER_WRAPPER_HPP
 #define COUNTER_WRAPPER_HPP
 
-#include <cstdint>
-#include <string>
 #include "Vcounter.h"
 #include "verilated_vcd_c.h"
+#include <cstdint>
+#include <string>
 
 class CounterWrapper {
 private:
