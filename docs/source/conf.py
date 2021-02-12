@@ -28,8 +28,7 @@ author = 'Ben Sampson'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinx_rtd_theme",
-    "rtds_action"
+    "sphinx_rtd_theme"
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -52,24 +51,3 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-
-# -- RTDS Action Configuration -----------------------------------------------
-
-# The name of your GitHub repository
-rtds_action_github_repo = "bensampson5/openhdl"
-
-# The path where the artifact should be extracted
-# Note: this is relative to the conf.py file!
-rtds_action_path = "build"
-
-# The "prefix" used in the `upload-artifact` step of the action
-rtds_action_artifact_prefix = "openhdl-docs-"
-
-# A GitHub personal access token is required, more info below
-rtds_action_github_token = os.environ.get("GITHUB_TOKEN")
-
-# -- SVG Block Diagram Generation --------------------------------------------
-
-# Generate svg images from HDL source files
-from helper import gen_hdl_svg
-gen_hdl_svg()

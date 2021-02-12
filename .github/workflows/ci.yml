@@ -118,16 +118,3 @@ jobs:
 
       - name: Build docs
         run: ${{ env.DOCKER_RUN_PRECOMMIT }} --docs
-
-      - name: Upload docs artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: openhdl-docs-${{ github.sha }}
-          path: docs/build
-
-      - name: Trigger Read The Docs build
-        uses: dfm/rtds-action@v1
-        with:
-          webhook_url: ${{ secrets.RTDS_WEBHOOK_URL }}
-          webhook_token: ${{ secrets.RTDS_WEBHOOK_TOKEN }}
-          commit_ref: ${{ github.ref }}
