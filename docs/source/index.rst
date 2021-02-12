@@ -27,7 +27,7 @@ OpenHDL is unique in that it takes advantage of state-of-the-art development bes
 `Click here to go to OpenHDL's GitHub repository <https://github.com/bensampson5/openhdl>`_
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Table of Contents:
 
    counter
