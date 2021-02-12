@@ -3,8 +3,8 @@
 #include "test.hpp"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
-#include <string>
 #include <cstdint>
+#include <string>
 
 CounterWrapper::CounterWrapper(std::string scenarioName)
 {
