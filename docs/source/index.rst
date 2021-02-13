@@ -17,7 +17,7 @@ Welcome to OpenHDL's documentation!
 OpenHDL is a library of open source, parameterized digital hardware designs. While other similar libraries do exist,
 OpenHDL is unique in that it takes advantage of state-of-the-art development best practices and tools from the software community including:
 
-- `Continuous integration (CI) workflows <https://github.com/bensampson5/openhdl/actions>`_ integrated with Docker_.
+- `Continuous integration (CI) workflows <https://github.com/bensampson5/openhdl/actions>`_ integrated with Docker_
 - `OpenHDL docker images <https://hub.docker.com/repository/docker/bensampson5/openhdl>`_ published to `Docker Hub <https://hub.docker.com/>`_
 - Fast, automated unit testing using Verilator_ and Catch2_ with VCD_ outputs for waveform viewing
 - Automated formatting used Verible_
@@ -27,7 +27,7 @@ OpenHDL is unique in that it takes advantage of state-of-the-art development bes
 `Click here to go to OpenHDL's GitHub repository <https://github.com/bensampson5/openhdl>`_
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Table of Contents:
 
    counter

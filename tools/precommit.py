@@ -10,6 +10,8 @@ import yaml
 
 PROJECT_ROOT = Path("/code")
 BUILD_DIR = PROJECT_ROOT / "build"
+SRC_DIR = PROJECT_ROOT / "src"
+DOCS_DIR = PROJECT_ROOT / "docs"
 FLUSH = True
 
 
@@ -127,7 +129,6 @@ def format_cpp_cmake():
 def docs():
     """ Make documentation """
 
-    DOCS_DIR = PROJECT_ROOT / "docs"
     DOCS_BUILD_DIR = DOCS_DIR / "build"
 
     # Delete entire docs build directory if it exists
@@ -137,10 +138,46 @@ def docs():
     # Create new docs build directory
     DOCS_BUILD_DIR.mkdir()
 
-    cmd = ["make", "html"]
+    # Generature SVG block diagram graphics
+    generate_hdl_svgs()
 
+    cmd = ["make", "html"]
     run(cmd, cwd=DOCS_DIR)
 
+def generate_hdl_svgs():
+    svg_path = DOCS_DIR / "source" / "svg"
+    json_path = DOCS_DIR / "source" / "json"
+
+    # Clear everything out of svg directory
+    if svg_path.exists():
+        shutil.rmtree(svg_path)
+    svg_path.mkdir()
+
+    # Create temporary json directory if it doesn't already exist
+    if not json_path.exists():
+        json_path.mkdir()
+
+    # Add all SystemVerilog files in the src directory
+    hdl_search_patterns = ["**/*.sv"]
+    hdl_files = []
+    for sp in hdl_search_patterns:
+        hdl_files += SRC_DIR.glob(sp)
+    
+    svg_files = []
+    json_files = []
+    for f in hdl_files:
+        svg_files += [svg_path / (f.stem + ".svg")]
+        json_files += [json_path / (f.stem + ".json")]
+
+    # Run yosys to output jsons and then use netlistsvg to create svgs for each module
+    for i in range(len(hdl_files)):
+        cmd = ["yosys", "-p", f"read -sv {hdl_files[i]}; proc; clean; json -o {json_files[i]}"]
+        run(cmd, cwd=DOCS_DIR)
+        cmd = ["netlistsvg", f"{json_files[i]}", "-o", f"{svg_files[i]}"]
+        run(cmd, cwd=DOCS_DIR)
+
+    # Remove temporary json directory
+    shutil.rmtree(json_path)
 
 if __name__ == "__main__":
 
