@@ -100,6 +100,8 @@ jobs:
         run: |
           echo "DOCKER_RUN_PRECOMMIT=docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }} /code/tools/precommit.py" >> $GITHUB_ENV;
           echo "FORMAT_ERRORS_FILENAME=format-errors.txt" >> $GITHUB_ENV;
+          echo "DOC_ERRORS_FILENAME=doc-errors.txt" >> $GITHUB_ENV;
+
       - name: Pull docker image
         run: docker pull ${{ steps.docker_meta.outputs.tags }}
 
@@ -112,9 +114,16 @@ jobs:
           git diff HEAD | tee ${{ env.FORMAT_ERRORS_FILENAME }} && \
           git reset --hard HEAD && \
           if [ -s ${{ env.FORMAT_ERRORS_FILENAME }} ]; then \
-              echo "Format check failed. Please run './tools/precommit.py --format' locally then recommit and push changes to fix."; \
+              echo "Format check failed. Please run './tools/precommit.py --format' locally then commit and push changes to fix."; \
               exit 1; \
           fi
 
       - name: Build docs
-        run: ${{ env.DOCKER_RUN_PRECOMMIT }} --docs
+        run: |
+          ${{ env.DOCKER_RUN_PRECOMMIT }} --docs && \
+          git diff HEAD | tee ${{ env.DOC_ERRORS_FILENAME }} && \
+          git reset --hard HEAD && \
+          if [ -s ${{ env.DOC_ERRORS_FILENAME }} ]; then \
+              echo "Build docs failed. Please run './tools/precommit.py --docs' locally, resolve any errors if necessary, then commit and push changes to fix."; \
+              exit 1; \
+          fi
