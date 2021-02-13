@@ -27,8 +27,3 @@ Block Diagram
     :width: 100 %
 
     counter.sv
-
-Simulations
------------
-
-To be added later.
