@@ -16,7 +16,7 @@ Parameters
 
 Implementation
 --------------
-.. literalinclude:: ../../src/counter/counter.sv
+.. literalinclude:: ../../src/base/counter/counter.sv
     :language: systemverilog
     :caption: counter.sv
 

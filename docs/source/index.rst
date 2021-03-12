@@ -31,6 +31,7 @@ OpenHDL is unique in that it takes advantage of state-of-the-art development bes
    :caption: Table of Contents:
 
    counter
+   mux
 
 Indices and tables
 ==================
