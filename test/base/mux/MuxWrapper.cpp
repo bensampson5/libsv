@@ -20,6 +20,7 @@ MuxWrapper::MuxWrapper(std::string scenarioName)
 
     // Save parameter 'N' to class member variable
     m_N = getModuleParameter("TOP.mux.N");
+    m_DW = getModuleParameter("TOP.mux.DW");
 }
 
 MuxWrapper::~MuxWrapper()

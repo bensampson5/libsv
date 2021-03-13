@@ -12,6 +12,7 @@ PROJECT_ROOT = Path("/code")
 BUILD_DIR = PROJECT_ROOT / "build"
 SRC_DIR = PROJECT_ROOT / "src"
 DOCS_DIR = PROJECT_ROOT / "docs"
+INCLUDE_DIR = PROJECT_ROOT / "include"
 FLUSH = True
 
 
@@ -171,7 +172,7 @@ def generate_hdl_svgs():
 
     # Run yosys to output jsons and then use netlistsvg to create svgs for each module
     for i in range(len(hdl_files)):
-        cmd = ["yosys", "-p", f"read -sv {hdl_files[i]}; proc; clean; json -o {json_files[i]}"]
+        cmd = ["yosys", "-p", f"read -sv -I{INCLUDE_DIR} {hdl_files[i]}; proc; clean; json -o {json_files[i]}"]
         run(cmd, cwd=DOCS_DIR)
         cmd = ["netlistsvg", f"{json_files[i]}", "-o", f"{svg_files[i]}"]
         run(cmd, cwd=DOCS_DIR)

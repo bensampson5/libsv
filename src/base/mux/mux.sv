@@ -1,13 +1,18 @@
+`include "functions.svh"
+
 module mux #(
-    parameter N  /* verilator public_flat_rd */ = 2
+    parameter DW  /* verilator public_flat_rd */ = 1,  // width of data inputs
+    parameter N  /* verilator public_flat_rd */  = 2  // number of inputs
 ) (
-    input  logic [1:0] in,
-    input  logic       sel,
-    output logic       out
+    input  logic [   N-1:0] sel,  // select vector
+    input  logic [N*DW-1:0] in,  // concatenated input {..,in1[DW-1:0],in0[DW-1:0]
+    output logic [  DW-1:0] out  // output
 );
 
-  always_comb begin : blockName
-    out = sel ? in[0] : in[1];
+  integer i;
+  always_comb begin
+    out[DW-1:0] = 'b0;
+    for (i = 0; i < N; i = i + 1) out[DW-1:0] |= {(DW) {sel[i]}} & in[((i+1)*DW-1)-:DW];
   end
 
-endmodule
+endmodule  // mux

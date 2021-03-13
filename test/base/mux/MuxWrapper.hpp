@@ -15,6 +15,7 @@ public:
     std::string m_scenarioName;
     Vmux* m_mux;
     uint32_t m_N;
+    uint64_t m_DW;
 
     MuxWrapper(std::string scenarioName);
     ~MuxWrapper();
