@@ -1,6 +1,6 @@
-===
-Mux
-===
+===========
+One-Hot Mux
+===========
 
 TBD
 
@@ -10,13 +10,13 @@ Parameters
 
 Implementation
 --------------
-.. literalinclude:: ../../src/base/mux/mux.sv
+.. literalinclude:: ../../src/base/mux/onehot_mux.sv
     :language: systemverilog
-    :caption: mux.sv
+    :caption: onehot_mux.sv
 
 Block Diagram
 -------------
-.. figure:: svg/mux.svg
+.. figure:: svg/onehot_mux.svg
     :align: center
     :width: 100 %
 

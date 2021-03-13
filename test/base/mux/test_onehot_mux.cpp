@@ -1,4 +1,4 @@
-#include "MuxWrapper.hpp"
+#include "OneHotMuxWrapper.hpp"
 #include "catch2/catch.hpp"
 #include <string>
 
@@ -7,7 +7,7 @@ SCENARIO("" + S1)
 {
     GIVEN("A mux")
     {
-        MuxWrapper* mw = new MuxWrapper(S1);
+        OneHotMuxWrapper* mw = new OneHotMuxWrapper(S1);
 
         WHEN("Something is done to the mux")
         {

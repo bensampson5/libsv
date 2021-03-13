@@ -7,4 +7,4 @@ Base
     :caption: Modules:
  
     counter
-    mux
+    onehot_mux
