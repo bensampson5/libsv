@@ -30,3 +30,7 @@ OneHotMuxWrapper::~OneHotMuxWrapper()
     delete m_onehot_mux;
     m_onehot_mux = nullptr;
 }
+
+void OneHotMuxWrapper::select(uint64_t sel) {
+    return;
+}

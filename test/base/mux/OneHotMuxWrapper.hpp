@@ -19,6 +19,8 @@ public:
 
     OneHotMuxWrapper(std::string scenarioName);
     ~OneHotMuxWrapper();
+
+    void select(uint64_t sel);
 };
 
 #endif // MUX_WRAPPER_HPP
