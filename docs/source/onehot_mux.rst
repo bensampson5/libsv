@@ -2,7 +2,8 @@
 One-Hot Mux
 ===========
 
-TBD
+A parameterized implementation of a one-hot mux. Takes ``N`` inputs each of width ``DW`` as a concatenated input vector ``in``
+and given a one-hot ``sel`` input, routes the selected input vector to the output vector ``out``.
 
 Parameters
 ----------
