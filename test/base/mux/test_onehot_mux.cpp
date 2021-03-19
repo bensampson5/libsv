@@ -2,7 +2,7 @@
 #include "catch2/catch.hpp"
 #include <string>
 
-const std::string S1 = "One-hot mux states";
+const std::string S1 = "One-hot mux can mux";
 SCENARIO("" + S1)
 {
     GIVEN("A one-hot mux")

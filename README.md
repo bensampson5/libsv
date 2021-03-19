@@ -61,28 +61,40 @@ ninja
 
 After building, unit test executables are available for running all or specific unit tests.
 
-A `test_main` executable is provided for running all unit tests for all designs in OpenHDL. It can be run using:
+All unit tests can be run using the `ctest` command which is linked to the Catch2 unit testing framework. All tests can be run in the build directory using:
 
 ```bash
-./test/test_main
+ctest
 ```
 
-To run all unit tests for a specific design in OpenHDL, run the specific test executable for that design. As an example, for [counter.sv](https://github.com/bensampson5/openhdl/blob/main/src/counter/counter.sv) this would be:
+To list all available tests, run:
 
 ```bash
-./test/counter/test_counter
+ctest -N
+```
+
+To run a specific test, use the `-R` flag:
+```bash
+ctest -R "Scenario: Counter can reset"
+```
+
+To run all unit tests for a specific design, run the test executable for that design. For example, for [counter.sv](https://github.com/bensampson5/openhdl/blob/main/src/base/counter/counter.sv) this would be:
+
+```bash
+cd ./test/base/counter
+./test_counter
 ```
 
 Most designs in OpenHDL have more then one unit test scenario, to see all the unit test scenarios for a specific design, use the `-l` flag:
 
 ```bash
-./test/counter/test_counter -l
+./test_counter -l
 ```
 
-Then a specific unit test scenario for a specific OpenHDL design can be run with:
+Then a specific unit test scenario for a specific OpenHDL design can be run using the module-specific executable with:
 
 ```bash
-./test/counter/test_counter "Scenario: Counter can be reset"
+./test_counter "Scenario: Counter can be reset"
 ```
 
 ### Viewing the Simulation Waveform Output
