@@ -73,7 +73,7 @@ To list all available tests, run:
 ctest -N
 ```
 
-To run a specific test, use the `-R` flag:
+To run a specific test, use ctest's `-R` (test regex) flag:
 ```bash
 ctest -R "Scenario: Counter can reset"
 ```
