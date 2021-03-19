@@ -6,7 +6,14 @@ TBD
 
 Parameters
 ----------
- - ``TBD`` tbd
+- ``DW`` data width (per input vector)
+- ``N`` number of inputs
+
+Inputs/Outputs
+--------------
+- ``sel`` select (N bits)
+- ``in`` concatenated input vector (DW*N bits)
+- ``out`` output vector (DW bits)
 
 Implementation
 --------------
@@ -16,8 +23,5 @@ Implementation
 
 Block Diagram
 -------------
-.. figure:: svg/onehot_mux.svg
-    :align: center
-    :width: 100 %
 
-    mux.sv
+Not available.

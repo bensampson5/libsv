@@ -9,10 +9,13 @@ assertion of the active-low reset, ``aresetn``, ``q`` is set to 0.
 
 Parameters
 ----------
- - ``N`` number of bits
- - ``clk`` clock
- - ``aresetn`` asynchoronous active-low reset
- - ``q`` count
+- ``N`` number of bits
+
+Inputs/Outputs
+--------------
+- ``clk`` clock
+- ``aresetn`` asynchoronous active-low reset
+- ``q`` count (N bits)
 
 Implementation
 --------------
