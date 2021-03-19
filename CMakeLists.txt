@@ -21,6 +21,7 @@ cpmaddpackage(
 
 get_filename_component(SRC_DIR src ABSOLUTE)
 get_filename_component(TEST_DIR test ABSOLUTE)
+get_filename_component(INCLUDE_DIR include ABSOLUTE)
 
 find_package(verilator REQUIRED)
 find_package(Catch2 REQUIRED)

@@ -20,7 +20,6 @@ public:
     ~CounterWrapper();
     void reset();
     void tick(bool clock = true, uint64_t tickCount = 1);
-    void setQ(int value);
 };
 
 #endif // COUNTER_WRAPPER_HPP
