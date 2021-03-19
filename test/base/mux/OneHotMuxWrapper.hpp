@@ -20,7 +20,7 @@ public:
     OneHotMuxWrapper(std::string scenarioName);
     ~OneHotMuxWrapper();
 
-    void select(uint64_t sel);
+    void tick(uint64_t tickCount = 1);
 };
 
 #endif // MUX_WRAPPER_HPP

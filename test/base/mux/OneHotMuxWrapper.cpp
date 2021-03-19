@@ -31,6 +31,12 @@ OneHotMuxWrapper::~OneHotMuxWrapper()
     m_onehot_mux = nullptr;
 }
 
-void OneHotMuxWrapper::select(uint64_t sel) {
-    return;
+void OneHotMuxWrapper::tick(uint64_t tickCount)
+{
+    m_simTime += tickCount;
+    m_onehot_mux->eval();
+    if (m_trace)
+        m_trace->dump(m_simTime);
+
+    m_trace->flush();
 }
