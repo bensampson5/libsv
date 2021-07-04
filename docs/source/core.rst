@@ -1,5 +1,5 @@
 ====
-core
+Core
 ====
 
 .. toctree::
