@@ -45,10 +45,6 @@ RUN apt-get update \
 # Install python packages using pip
 RUN pip3 install cmake_format cmakelint pyyaml sphinx sphinx-rtd-theme
 
-# Link python3 to system python
-RUN ln -s /usr/bin/python3 /usr/bin/python
-RUN ln -s /usr/bin/pip3 /usr/bin/pip
-
 # Build and install Verilator from source using git (use most recent 'stable' release)
 ARG REPO=https://github.com/verilator/verilator
 ARG TAG=stable
