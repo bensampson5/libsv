@@ -78,10 +78,10 @@ To run a specific test, use ctest's `-R` (test regex) flag:
 ctest -R "Scenario: Counter can reset"
 ```
 
-To run all unit tests for a specific design, run the test executable for that design. For example, for [counter.sv](https://github.com/bensampson5/openhdl/blob/main/src/base/counter/counter.sv) this would be:
+To run all unit tests for a specific design, run the test executable for that design. For example, for [counter.sv](https://github.com/bensampson5/openhdl/blob/main/src/core/counter/counter.sv) this would be:
 
 ```bash
-cd ./test/base/counter
+cd ./test/core/counter
 ./test_counter
 ```
 

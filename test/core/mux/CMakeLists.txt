@@ -1,6 +1,6 @@
 project(mux)
 
-set(MUX_DIR ${SRC_DIR}/base/mux)
+set(MUX_DIR ${SRC_DIR}/core/mux)
 
 add_executable(test_onehot_mux ${TEST_DIR}/test.cpp test_onehot_mux.cpp
                                OneHotMuxWrapper.cpp)

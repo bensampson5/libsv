@@ -6,4 +6,5 @@ Modules
     :maxdepth: 2
     :caption: Module Categories:
  
-    base
+    core
+    math
