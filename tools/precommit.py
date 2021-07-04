@@ -1,10 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 from pathlib import Path
 import shutil
 import argparse
-import errno
 import subprocess
 import yaml
 
