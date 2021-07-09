@@ -16,7 +16,7 @@ FLUSH = True
 
 
 def in_docker():
-    """ Returns: True if running in a docker container, else False """
+    """Returns: True if running in a docker container, else False"""
     try:
         with open("/proc/1/cgroup", "rt") as ifh:
             contents = ifh.read()
@@ -88,7 +88,7 @@ def test(flags=None):
 
 
 def format_hdl(flags=None):
-    """ Format SystemVerilog and Verilog files """
+    """Format SystemVerilog and Verilog files"""
 
     # Use --inplace flag to overwrite existing files
     cmd = ["verible-verilog-format", "--inplace"]
@@ -120,14 +120,14 @@ def format_hdl(flags=None):
 
 
 def format_cpp_cmake():
-    """ Format C++ and cmake files """
+    """Format C++ and cmake files"""
 
     cmd = ["ninja", "fix-format"]
     run(cmd, cwd=BUILD_DIR)
 
 
 def docs():
-    """ Make documentation """
+    """Make documentation"""
 
     DOCS_BUILD_DIR = DOCS_DIR / "build"
 
@@ -143,6 +143,7 @@ def docs():
 
     cmd = ["make", "html"]
     run(cmd, cwd=DOCS_DIR)
+
 
 def generate_hdl_svgs():
     svg_path = DOCS_DIR / "source" / "svg"
@@ -171,7 +172,7 @@ def generate_hdl_svgs():
     hdl_files = [f for f in hdl_files if f.name not in ignore_hdl_files]
 
     print(hdl_files)
-    
+
     svg_files = []
     json_files = []
     for f in hdl_files:
@@ -180,13 +181,18 @@ def generate_hdl_svgs():
 
     # Run yosys to output jsons and then use netlistsvg to create svgs for each module
     for i in range(len(hdl_files)):
-        cmd = ["yosys", "-p", f"read -sv -I{INCLUDE_DIR} {hdl_files[i]}; proc; clean; json -o {json_files[i]}"]
+        cmd = [
+            "yosys",
+            "-p",
+            f"read -sv -I{INCLUDE_DIR} {hdl_files[i]}; proc; clean; json -o {json_files[i]}",
+        ]
         run(cmd, cwd=DOCS_DIR)
         cmd = ["netlistsvg", f"{json_files[i]}", "-o", f"{svg_files[i]}"]
         run(cmd, cwd=DOCS_DIR)
 
     # Remove temporary json directory
     shutil.rmtree(json_path)
+
 
 if __name__ == "__main__":
 
@@ -259,4 +265,3 @@ if __name__ == "__main__":
         if ALL or args.docs:
             print("\nMaking documentation...", flush=FLUSH)
             docs()
-

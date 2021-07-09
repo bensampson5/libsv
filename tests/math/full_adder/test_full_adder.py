@@ -2,8 +2,9 @@ from cocotb_test.simulator import run
 import os
 from pathlib import Path
 
+
 def test_full_adder(pytestconfig):
-    """ Full adder test. """
+    """Full adder test."""
 
     os.environ["SIM"] = "verilator"
     proj_path = Path(pytestconfig.rootpath)

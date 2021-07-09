@@ -2,6 +2,7 @@ from cocotb_test.simulator import run
 import os
 from pathlib import Path
 
+
 def test_half_adder(pytestconfig):
 
     os.environ["SIM"] = "verilator"
@@ -18,5 +19,4 @@ def test_half_adder(pytestconfig):
 
     wavefile = build_dir / "dump.fst"
     if wavefile.exists():
-        wavefile.rename(build_dir / "test_half_adder.rst")
-
+        wavefile.rename(build_dir / "test_half_adder.fst")
