@@ -1,0 +1,7 @@
+black
+cocotb
+cocotb-test
+flake8
+pyyaml
+sphinx
+sphinx-rtd-theme

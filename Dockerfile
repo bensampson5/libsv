@@ -9,21 +9,28 @@ RUN apt-get update \
                         autoconf \
                         bc \
                         bison \
-                        build-essential \
                         ca-certificates \
                         ccache \
                         curl \
                         flex \
+                        g++ \
                         git \
                         gnupg \
+                        libfl2 \
                         libfl-dev \
                         libgoogle-perftools-dev \
+                        make \
                         npm \
+                        numactl \
                         perl \
+                        perl-doc \
                         python3 \
                         python3-pip \
                         wget \
                         yosys \
+                        zlibc \
+                        zlib1g \
+                        zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -39,8 +46,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install python packages using pip
-RUN pip3 install pyyaml sphinx sphinx-rtd-theme
+# Install python packages using pip from requirements.txt
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt
 
 # Build and install Verilator v4.106 from source
 ARG REPO=https://github.com/verilator/verilator
@@ -49,7 +57,7 @@ RUN git clone --depth 1 --branch "${TAG}" "${REPO}" verilator \
     && cd verilator \
     && autoconf \
     && ./configure \
-    && make -j "$(nproc)" \
+    && make -j \
     && make install \
     && cd .. \
     && rm -rf verilator
