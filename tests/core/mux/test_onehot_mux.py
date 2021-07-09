@@ -20,4 +20,4 @@ def test_onehot_mux(pytestconfig):
 
     wavefile = build_dir / "dump.fst"
     if wavefile.exists():
-        wavefile.rename(build_dir / "onehot_mux.fst")
+        wavefile.rename(build_dir / "test_onehot_mux.fst")
