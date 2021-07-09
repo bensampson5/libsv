@@ -6,31 +6,31 @@ WORKDIR /tmp
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-                        autoconf \
-                        bc \
-                        bison \
-                        ca-certificates \
-                        ccache \
-                        curl \
-                        flex \
-                        g++ \
-                        git \
-                        gnupg \
-                        libfl2 \
-                        libfl-dev \
-                        libgoogle-perftools-dev \
-                        make \
-                        npm \
-                        numactl \
-                        perl \
-                        perl-doc \
-                        python3 \
-                        python3-pip \
-                        wget \
-                        yosys \
-                        zlibc \
-                        zlib1g \
-                        zlib1g-dev \
+    autoconf \
+    bc \
+    bison \
+    ca-certificates \
+    ccache \
+    curl \
+    flex \
+    g++ \
+    git \
+    gnupg \
+    libfl2 \
+    libfl-dev \
+    libgoogle-perftools-dev \
+    make \
+    npm \
+    numactl \
+    perl \
+    perl-doc \
+    python3-dev \
+    python3-pip \
+    wget \
+    yosys \
+    zlibc \
+    zlib1g \
+    zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -42,7 +42,7 @@ RUN curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel
 # Install Bazel
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-                        bazel \
+    bazel \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
