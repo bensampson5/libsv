@@ -1,5 +1,6 @@
 black
 click
+colorama
 cocotb
 cocotb-test
 flake8

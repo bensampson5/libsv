@@ -4,7 +4,10 @@ import click
 from pathlib import Path
 import shutil
 import subprocess
+import colorama
 import yaml
+from difflib import unified_diff
+from colorama import Fore, Style
 
 PROJECT_ROOT = Path("/code")
 SRC_DIR = PROJECT_ROOT / "src"
@@ -22,7 +25,7 @@ def in_docker():
         return False
 
 
-def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
+def run(cmd, cwd=PROJECT_ROOT, check_exit=True, print_output=True):
     p = subprocess.Popen(
         cmd,
         cwd=cwd,
@@ -31,12 +34,14 @@ def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
         universal_newlines=True,
     )
 
+    output = ""
     while True:
         stdout = p.stdout.readline()
         if stdout == "" and p.poll() is not None:
             break
         if stdout:
-            print(stdout, end="", flush=FLUSH)
+            if print_output:
+                print(stdout, end="", flush=FLUSH)
 
     if check_exit and p.returncode != 0:
         raise subprocess.CalledProcessError(p.returncode, " ".join(cmd))
@@ -48,9 +53,78 @@ def run_test():
     run(cmd)
 
 
+def find_project_hdl_files(dir=SRC_DIR):
+    # Add all SystemVerilog or Verilog files within project
+    hdl_search_patterns = ["**/*.sv", "**/*.v"]
+    hdl_files = []
+    for sp in hdl_search_patterns:
+        hdl_files += dir.glob(sp)
+    return hdl_files
+
+
 def run_check_format():
     """Check formatting in all files"""
+    run_check_format_hdl()
     run_check_format_python()
+
+
+def run_check_format_hdl():
+    """Check formatting in HDL files"""
+
+    print("\nChecking HDL formatting...\n", flush=FLUSH)
+
+    hdl_files = find_project_hdl_files()
+
+    # Make a copy of original HDL code
+    hdl_file_code_original = []
+    for hdl_file in hdl_files:
+        with open(hdl_file, "r") as f:
+            hdl_file_code_original.append(f.readlines())
+
+    # Run hdl formatter
+    run_fix_format_hdl(print_output=False)
+
+    # Make a copy of the formatted HDL code
+    hdl_file_code_formatted = []
+    for hdl_file in hdl_files:
+        with open(hdl_file, "r") as f:
+            hdl_file_code_formatted.append(f.readlines())
+
+    colorama.init()
+    is_diff = False
+    for i in range(len(hdl_file_code_original)):
+        original = hdl_file_code_original[i]
+        formatted = hdl_file_code_formatted[i]
+        fname = str(hdl_files[i])
+        diff = list(
+            unified_diff(original, formatted, fromfile=fname, tofile=fname, n=5)
+        )
+        if diff:
+            is_diff = True
+            print_unified_diff_in_color(diff)
+    colorama.deinit()
+
+    # Restore original HDL code
+    for i in range(len(hdl_files)):
+        with open(hdl_files[i], "w") as f:
+            f.write("".join(hdl_file_code_original[i]))
+
+    if is_diff:
+        raise RuntimeError("HDL format check failed")
+
+
+def print_unified_diff_in_color(diff):
+    for line in diff:
+        if line.startswith("---") or line.startswith("+++"):
+            line = f"{Style.BRIGHT}{line}{Style.RESET_ALL}"
+        elif line.startswith("@@"):
+            line = f"{Fore.CYAN}{line}{Style.RESET_ALL}"
+        elif line.startswith("-"):
+            line = f"{Fore.RED}{line}{Style.RESET_ALL}"
+        elif line.startswith("+"):
+            line = f"{Fore.GREEN}{line}{Style.RESET_ALL}"
+        print(line, end="", flush=FLUSH)
+    print()
 
 
 def run_check_format_python():
@@ -62,14 +136,13 @@ def run_check_format_python():
 
 def run_fix_format():
     """Fix formatting in all files"""
+    print("\nFixing HDL formatting...\n", flush=FLUSH)
     run_fix_format_hdl()
     run_fix_format_python()
 
 
-def run_fix_format_hdl():
-    """Fix formatting in SystemVerilog and Verilog files"""
-
-    print("\nFixing SystemVerilog/Verilog formatting...\n", flush=FLUSH)
+def run_fix_format_hdl(print_output=True):
+    """Fix formatting in HDL files"""
 
     # Use --inplace flag to overwrite existing files
     cmd = ["verible-verilog-format", "--inplace"]
@@ -87,14 +160,10 @@ def run_fix_format_hdl():
 
     cmd += format_args
 
-    # Add all SystemVerilog or Verilog files in any project directory
-    hdl_search_patterns = ["**/*.sv", "**/*.v"]
-    hdl_files = []
-    for sp in hdl_search_patterns:
-        hdl_files += PROJECT_ROOT.glob(sp)
+    hdl_files = find_project_hdl_files()
     cmd += [str(f) for f in hdl_files]
 
-    run(cmd)
+    run(cmd, print_output=print_output)
 
 
 def run_fix_format_python():
@@ -208,23 +277,23 @@ def precommit(test, check_format, fix_format, lint, docs):
             )
 
         if test:
-            print("\nRunning tests...", flush=FLUSH)
+            print("\nRunning tests...\n", flush=FLUSH)
             run_test()
 
         if check_format:
-            print("Checking formatting...", flush=FLUSH)
+            print("\nChecking formatting...\n", flush=FLUSH)
             run_check_format()
 
         if fix_format:
-            print("\nFixing formatting...", flush=FLUSH)
+            print("\nFixing formatting...\n", flush=FLUSH)
             run_fix_format()
 
         if lint:
-            print("\nLinting...", flush=FLUSH)
+            print("\nLinting...\n", flush=FLUSH)
             run_lint()
 
         if docs:
-            print("\nBuilding documentation...", flush=FLUSH)
+            print("\nBuilding documentation...\n", flush=FLUSH)
             run_docs()
 
 
