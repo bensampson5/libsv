@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import click
 import sys
 from pathlib import Path
 import shutil
@@ -43,23 +44,37 @@ def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
         raise subprocess.CalledProcessError(p.returncode, " ".join(cmd))
 
 
-def test(flags=None):
-
+def run_test():
+    """ Run tests """
     cmd = ["pytest"]
-    if flags is not None:
-        cmd += flags
-
-    run(cmd, cwd=PROJECT_ROOT)
+    run(cmd)
 
 
-def format_hdl(flags=None):
-    """Format SystemVerilog and Verilog files"""
+def run_check_format():
+    """ Check formatting in all files """
+    run_check_format_python()
+
+
+def run_check_format_python():
+    """Check formatting in Python files"""
+    print("\nChecking Python formatting...\n", flush=FLUSH)
+    cmd = ["black", "--diff", "--check", "--color", "."]
+    run(cmd)
+
+
+def run_fix_format():
+    """ Fix formatting in all files """
+    run_fix_format_hdl()
+    run_fix_format_python()
+
+
+def run_fix_format_hdl():
+    """Fix formatting in SystemVerilog and Verilog files"""
+
+    print("\nFixing SystemVerilog/Verilog formatting...\n", flush=FLUSH)
 
     # Use --inplace flag to overwrite existing files
     cmd = ["verible-verilog-format", "--inplace"]
-
-    if flags is not None:
-        cmd += flags
 
     # Add options from .verible-verilog-format.yaml if specified
     verible_verilog_format_yaml = PROJECT_ROOT / ".verible-verilog-format.yaml"
@@ -84,7 +99,19 @@ def format_hdl(flags=None):
     run(cmd)
 
 
-def docs():
+def run_fix_format_python():
+    """Fix formatting in Python files"""
+
+    print("\nFixing Python formatting...\n", flush=FLUSH)
+    cmd = ["black", "."]
+    run(cmd)
+
+
+def run_lint():
+    pass
+
+
+def run_docs():
     """Make documentation"""
 
     DOCS_BUILD_DIR = DOCS_DIR / "build"
@@ -97,13 +124,13 @@ def docs():
     DOCS_BUILD_DIR.mkdir()
 
     # Generature SVG block diagram graphics
-    generate_hdl_svgs()
+    run_generate_hdl_svgs()
 
     cmd = ["make", "html"]
     run(cmd, cwd=DOCS_DIR)
 
 
-def generate_hdl_svgs():
+def run_generate_hdl_svgs():
     svg_path = DOCS_DIR / "source" / "svg"
     json_path = DOCS_DIR / "source" / "json"
 
@@ -152,21 +179,21 @@ def generate_hdl_svgs():
     shutil.rmtree(json_path)
 
 
-if __name__ == "__main__":
+@click.command()
+@click.option("--test", is_flag=True, help="Run tests")
+@click.option("--check-format", is_flag=True, help="Check formatting")
+@click.option("--fix-format", is_flag=True, help="Fix formatting")
+@click.option("--lint", is_flag=True, help="Run linting")
+@click.option("--docs", is_flag=True, help="Build documentation")
+def precommit(test, check_format, fix_format, lint, docs):
 
-    # Parse input args
-    parser = argparse.ArgumentParser()
-    arg_list = [
-        "--test",
-        "--format",
-        "--docs",
-    ]
-    for arg in arg_list:
-        parser.add_argument(arg, action="store_true")
-    args = parser.parse_args()
-
-    # If no arguments are passed then do everything
-    ALL = len(sys.argv) == 1
+    # if no flags are provided, then run default configuration (everything but fix format)
+    if not any([test, check_format, fix_format, lint, docs]):
+        test = True
+        check_format = True
+        fix_format = False
+        lint = True
+        docs = True
 
     # Check if in docker container
     if not in_docker():
@@ -181,17 +208,26 @@ if __name__ == "__main__":
                 f"Cannot find project root directory: {PROJECT_ROOT}"
             )
 
-        # Run test if --test
-        if ALL or args.test:
-            print("\nTesting...", flush=FLUSH)
-            test()
+        if test:
+            print("\nRunning tests...", flush=FLUSH)
+            run_test()
 
-        # Run format if --format
-        if ALL or args.format:
-            print("\nFormatting...", flush=FLUSH)
-            format_hdl()
+        if check_format:
+            print("Checking formatting...", flush=FLUSH)
+            run_check_format()
 
-        # Run docs if --docs
-        if ALL or args.docs:
-            print("\nMaking documentation...", flush=FLUSH)
-            docs()
+        if fix_format:
+            print("\nFixing formatting...", flush=FLUSH)
+            run_fix_format()
+
+        if lint:
+            print("\nLinting...", flush=FLUSH)
+            run_lint()
+
+        if docs:
+            print("\nBuilding documentation...", flush=FLUSH)
+            run_docs()
+
+
+if __name__ == "__main__":
+    precommit()

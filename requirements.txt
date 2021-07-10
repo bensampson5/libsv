@@ -1,4 +1,5 @@
 black
+click
 cocotb
 cocotb-test
 flake8
