@@ -31,7 +31,7 @@ RUN apt-get update \
         zlibc \
         zlib1g \
         zlib1g-dev \
-    && apt-get clean \ 
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Add Bazel distribution URI as a package source
