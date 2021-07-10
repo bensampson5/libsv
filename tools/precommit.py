@@ -90,6 +90,7 @@ def run_check_format_hdl():
         with open(hdl_file, "r") as f:
             hdl_file_code_formatted.append(f.readlines())
 
+    # Do a diff and print diff output in pretty colors
     colorama.init()
     is_diff = False
     for i in range(len(hdl_file_code_original)):
