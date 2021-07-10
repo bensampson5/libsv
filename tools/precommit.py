@@ -4,9 +4,9 @@ import click
 from pathlib import Path
 import shutil
 import subprocess
-import colorama
 import yaml
 from difflib import unified_diff
+import colorama
 from colorama import Fore, Style
 
 PROJECT_ROOT = Path("/code")
@@ -34,7 +34,6 @@ def run(cmd, cwd=PROJECT_ROOT, check_exit=True, print_output=True):
         universal_newlines=True,
     )
 
-    output = ""
     while True:
         stdout = p.stdout.readline()
         if stdout == "" and p.poll() is not None:
@@ -176,7 +175,16 @@ def run_fix_format_python():
 
 
 def run_lint():
+    run_lint_python()
     pass
+
+
+def run_lint_python():
+    """Run Python linter"""
+
+    print("\nLinting Python...\n", flush=FLUSH)
+    cmd = ["flake8", "."]
+    run(cmd)
 
 
 def run_docs():
