@@ -74,4 +74,4 @@ RUN wget ${VERIBLE_URL} -O verible.tar.gz \
 RUN npm install -g netlistsvg
 
 WORKDIR /root
-CMD /bin/bash
+CMD /bin/bash 
