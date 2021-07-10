@@ -11,7 +11,9 @@ def test_full_adder(pytestconfig):
     build_dir = proj_path / "build" / "math" / "full_adder"
 
     run(
-        verilog_sources=[proj_path / "src" / "math" / "full_adder" / "full_adder.sv"],
+        verilog_sources=[
+            proj_path / "src" / "math" / "full_adder" / "full_adder.sv"
+        ],
         toplevel="full_adder",
         module="full_adder_cocotb",
         sim_build=build_dir,

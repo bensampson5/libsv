@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
 import click
-import sys
 from pathlib import Path
 import shutil
-import argparse
 import subprocess
 import yaml
 
@@ -19,7 +17,9 @@ def in_docker():
     try:
         with open("/proc/1/cgroup", "rt") as ifh:
             contents = ifh.read()
-            return any([word in contents for word in ["actions_job", "docker"]])
+            return any(
+                [word in contents for word in ["actions_job", "docker"]]
+            )
     except OSError:
         return False
 
@@ -45,13 +45,13 @@ def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
 
 
 def run_test():
-    """ Run tests """
+    """Run tests"""
     cmd = ["pytest"]
     run(cmd)
 
 
 def run_check_format():
-    """ Check formatting in all files """
+    """Check formatting in all files"""
     run_check_format_python()
 
 
@@ -63,7 +63,7 @@ def run_check_format_python():
 
 
 def run_fix_format():
-    """ Fix formatting in all files """
+    """Fix formatting in all files"""
     run_fix_format_hdl()
     run_fix_format_python()
 

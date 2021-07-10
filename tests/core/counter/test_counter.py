@@ -11,7 +11,9 @@ def test_counter(pytestconfig):
     build_dir = proj_path / "build" / "core" / "counter"
 
     run(
-        verilog_sources=[proj_path / "src" / "core" / "counter" / "counter.sv"],
+        verilog_sources=[
+            proj_path / "src" / "core" / "counter" / "counter.sv"
+        ],
         toplevel="counter",
         module="counter_cocotb",
         sim_build=build_dir,

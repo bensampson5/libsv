@@ -10,7 +10,9 @@ def test_half_adder(pytestconfig):
     build_dir = proj_path / "build" / "math" / "half_adder"
 
     run(
-        verilog_sources=[proj_path / "src" / "math" / "half_adder" / "half_adder.sv"],
+        verilog_sources=[
+            proj_path / "src" / "math" / "half_adder" / "half_adder.sv"
+        ],
         toplevel="half_adder",
         module="half_adder_cocotb",
         sim_build=build_dir,
