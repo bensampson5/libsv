@@ -11,7 +11,6 @@ PROJECT_ROOT = Path("/code")
 BUILD_DIR = PROJECT_ROOT / "build"
 SRC_DIR = PROJECT_ROOT / "src"
 DOCS_DIR = PROJECT_ROOT / "docs"
-INCLUDE_DIR = PROJECT_ROOT / "include"
 FLUSH = True
 
 
@@ -45,42 +44,9 @@ def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
         raise subprocess.CalledProcessError(p.returncode, " ".join(cmd))
 
 
-def cmake(flags=None):
-
-    # Delete entire build directory if it exists
-    if BUILD_DIR.exists():
-        shutil.rmtree(BUILD_DIR)
-
-    # Create new build directory
-    BUILD_DIR.mkdir()
-
-    # Create cmake command
-    cmd = ["cmake", "-GNinja"]
-    if flags is not None:
-        cmd += flags
-    cmd += [".."]
-
-    run(cmd, cwd=BUILD_DIR)
-
-
-def build(flags=None):
-
-    if not BUILD_DIR.exists():
-        raise FileNotFoundError("Could not find build directory to run build")
-
-    cmd = ["ninja"]
-    if flags is not None:
-        cmd += flags
-
-    run(cmd, cwd=BUILD_DIR)
-
-
 def test(flags=None):
 
-    if not BUILD_DIR.exists():
-        raise FileNotFoundError("Could not find build directory to run tests")
-
-    cmd = ["ninja", "check"]
+    cmd = ["pytest", f"{PROJECT_ROOT}"]
     if flags is not None:
         cmd += flags
 
@@ -117,13 +83,6 @@ def format_hdl(flags=None):
     cmd += [str(f) for f in hdl_files]
 
     run(cmd)
-
-
-def format_cpp_cmake():
-    """Format C++ and cmake files"""
-
-    cmd = ["ninja", "fix-format"]
-    run(cmd, cwd=BUILD_DIR)
 
 
 def docs():
@@ -184,7 +143,7 @@ def generate_hdl_svgs():
         cmd = [
             "yosys",
             "-p",
-            f"read -sv -I{INCLUDE_DIR} {hdl_files[i]}; proc; clean; json -o {json_files[i]}",
+            f"read -sv {hdl_files[i]}; proc; clean; json -o {json_files[i]}",
         ]
         run(cmd, cwd=DOCS_DIR)
         cmd = ["netlistsvg", f"{json_files[i]}", "-o", f"{svg_files[i]}"]
@@ -199,11 +158,8 @@ if __name__ == "__main__":
     # Parse input args
     parser = argparse.ArgumentParser()
     arg_list = [
-        "--build",
         "--test",
         "--format",
-        "--format-cpp-cmake",
-        "--format-hdl",
         "--docs",
     ]
     for arg in arg_list:
@@ -226,42 +182,17 @@ if __name__ == "__main__":
                 f"Cannot find project root directory: {PROJECT_ROOT}"
             )
 
-        # Run cmake if --build, --test, --format, --format-hdl, or --format-cpp-cmake
-        run_cmake = any(
-            [
-                ALL,
-                args.build,
-                args.test,
-                args.format,
-                args.format_hdl,
-                args.format_cpp_cmake,
-            ]
-        )
-        if run_cmake:
-            print("\nRunning cmake...", flush=FLUSH)
-            cmake()
+        # Run test if --test
+        if ALL or args.test:
+            print("\nTesting...", flush=FLUSH)
+            test()
 
-            # Run build if --build or --test
-            if ALL or args.build or args.test:
-                print("\nBuilding...", flush=FLUSH)
-                build()
+        # Run format if --format
+        if ALL or args.format:
+            print("\nFormatting...", flush=FLUSH)
+            format_hdl()
 
-                # Run test if --test
-                if ALL or args.test:
-                    print("\nTesting...", flush=FLUSH)
-                    test()
-
-            # Run format_hdl if --format or --format_hdl
-            if ALL or args.format or args.format_hdl:
-                print("\nFormatting HDL...", flush=FLUSH)
-                format_hdl()
-
-            # Run format_cpp_cmake if --format or --format-cpp-cmake
-            if ALL or args.format or args.format_cpp_cmake:
-                print("\nFormatting C++/cmake...", flush=FLUSH)
-                format_cpp_cmake()
-
-        # Run docs is --docs
+        # Run docs if --docs
         if ALL or args.docs:
             print("\nMaking documentation...", flush=FLUSH)
             docs()
