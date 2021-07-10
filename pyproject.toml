@@ -1,6 +1,3 @@
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 log_cli = true
-
-[tool.black]
-line_length=79
