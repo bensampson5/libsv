@@ -57,7 +57,7 @@ RUN git clone --depth 1 --branch "${TAG}" "${REPO}" verilator \
     && cd verilator \
     && autoconf \
     && ./configure \
-    && make -j \
+    && make -j$(nproc) \
     && make install \
     && cd .. \
     && rm -rf verilator
