@@ -185,7 +185,7 @@ def run_generate_hdl_svgs():
 @click.option("--docs", is_flag=True, help="Build documentation")
 def precommit(test, check_format, fix_format, lint, docs):
 
-    # if no flags are provided, then run default configuration (everything but fix format)
+    # if no flags are provided, then run default configuration
     if not any([test, check_format, fix_format, lint, docs]):
         test = True
         check_format = True
@@ -196,7 +196,8 @@ def precommit(test, check_format, fix_format, lint, docs):
     # Check if in docker container
     if not in_docker():
         raise OSError(
-            "Not in a docker container. This script must be run from within a docker container. See README.md for instructions."
+            "Not in a docker container. This script must be run from within a docker"
+            " container. See README.md for instructions."
         )
     else:
 
