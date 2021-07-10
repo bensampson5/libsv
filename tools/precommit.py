@@ -52,7 +52,7 @@ def run_test():
     run(cmd)
 
 
-def find_project_hdl_files(dir=SRC_DIR):
+def find_hdl_files(dir=SRC_DIR):
     # Add all SystemVerilog or Verilog files within project
     hdl_search_patterns = ["**/*.sv", "**/*.v"]
     hdl_files = []
@@ -72,7 +72,7 @@ def run_check_format_hdl():
 
     print("\nChecking HDL formatting...\n", flush=FLUSH)
 
-    hdl_files = find_project_hdl_files()
+    hdl_files = find_hdl_files()
 
     # Make a copy of original HDL code
     hdl_file_code_original = []
@@ -154,13 +154,13 @@ def run_fix_format_hdl(print_output=True):
         with open(verible_verilog_format_yaml, "r") as f:
             yaml_data = yaml.safe_load(f.read())
 
-    format_args = []
-    for k, v in yaml_data.items():
-        format_args.append(f"--{k}={v}")
+        format_args = []
+        for k, v in yaml_data.items():
+            format_args.append(f"--{k}={v}")
 
-    cmd += format_args
+        cmd += format_args
 
-    hdl_files = find_project_hdl_files()
+    hdl_files = find_hdl_files()
     cmd += [str(f) for f in hdl_files]
 
     run(cmd, print_output=print_output)
@@ -175,8 +175,34 @@ def run_fix_format_python():
 
 
 def run_lint():
+    run_lint_hdl()
     run_lint_python()
-    pass
+
+
+def run_lint_hdl():
+    """Run HDL linter"""
+
+    print("\nLinting HDL...\n", flush=FLUSH)
+
+    cmd = ["verible-verilog-lint"]
+
+    # Add options from .verible-verilog-lint.yaml if specified
+    verible_verilog_lint_yaml = PROJECT_ROOT / ".verible-verilog-lint.yaml"
+    yaml_data = None
+    if verible_verilog_lint_yaml.exists():
+        with open(verible_verilog_lint_yaml, "r") as f:
+            yaml_data = yaml.safe_load(f.read())
+
+        format_args = []
+        for k, v in yaml_data.items():
+            format_args.append(f"--{k}={v}")
+
+        cmd += format_args
+
+    hdl_files = find_hdl_files()
+    cmd += [str(f) for f in hdl_files]
+
+    run(cmd)
 
 
 def run_lint_python():
