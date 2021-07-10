@@ -8,7 +8,6 @@ import subprocess
 import yaml
 
 PROJECT_ROOT = Path("/code")
-BUILD_DIR = PROJECT_ROOT / "build"
 SRC_DIR = PROJECT_ROOT / "src"
 DOCS_DIR = PROJECT_ROOT / "docs"
 FLUSH = True
@@ -20,7 +19,7 @@ def in_docker():
         with open("/proc/1/cgroup", "rt") as ifh:
             contents = ifh.read()
             return any([word in contents for word in ["actions_job", "docker"]])
-    except:
+    finally:
         return False
 
 
@@ -46,11 +45,11 @@ def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
 
 def test(flags=None):
 
-    cmd = ["pytest", f"{PROJECT_ROOT}"]
+    cmd = ["pytest"]
     if flags is not None:
         cmd += flags
 
-    run(cmd, cwd=BUILD_DIR)
+    run(cmd, cwd=PROJECT_ROOT)
 
 
 def format_hdl(flags=None):
