@@ -1,5 +1,5 @@
 module onehot_mux #(
-    parameter         DW  /* verilator public_flat_rd */ = 8,
+    parameter integer DW  /* verilator public_flat_rd */ = 8,
     parameter integer N  /* verilator public_flat_rd */  = 4
 ) (
     input  logic [   N-1:0] sel,

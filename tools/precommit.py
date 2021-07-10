@@ -182,22 +182,9 @@ def run_lint():
 def run_lint_hdl():
     """Run HDL linter"""
 
-    print("\nLinting HDL...\n", flush=FLUSH)
+    print("\nLinting HDL...\n", flush= FLUSH)
 
     cmd = ["verible-verilog-lint"]
-
-    # Add options from .verible-verilog-lint.yaml if specified
-    verible_verilog_lint_yaml = PROJECT_ROOT / ".verible-verilog-lint.yaml"
-    yaml_data = None
-    if verible_verilog_lint_yaml.exists():
-        with open(verible_verilog_lint_yaml, "r") as f:
-            yaml_data = yaml.safe_load(f.read())
-
-        format_args = []
-        for k, v in yaml_data.items():
-            format_args.append(f"--{k}={v}")
-
-        cmd += format_args
 
     hdl_files = find_hdl_files()
     cmd += [str(f) for f in hdl_files]
