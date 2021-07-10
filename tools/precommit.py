@@ -19,7 +19,7 @@ def in_docker():
         with open("/proc/1/cgroup", "rt") as ifh:
             contents = ifh.read()
             return any([word in contents for word in ["actions_job", "docker"]])
-    finally:
+    except OSError:
         return False
 
 
