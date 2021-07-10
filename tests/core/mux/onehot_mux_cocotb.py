@@ -9,8 +9,6 @@ async def test_onehot_mux(dut):
     dw = int(dut.DW)
     n = int(dut.N)
 
-    assert 0
-
     # Generate counting pattern on input vectors
     dut_i = 0
     for i in range(n):
