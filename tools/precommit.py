@@ -182,6 +182,8 @@ def run_lint():
 def run_lint_hdl():
     """Run HDL linter"""
 
+    import sys
+
     print("\nLinting HDL...\n", flush=FLUSH)
 
     cmd = ["verible-verilog-lint"]
