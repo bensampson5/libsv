@@ -1,0 +1,10 @@
+black
+click
+colorama
+cocotb
+cocotb-test
+flake8
+pytest
+pyyaml
+sphinx
+sphinx-rtd-theme

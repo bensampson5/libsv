@@ -6,27 +6,31 @@ WORKDIR /tmp
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-                        autoconf \
-                        bc \
-                        bison \
-                        build-essential \
-                        ca-certificates \
-                        ccache \
-                        clang-format \
-                        cmake \
-                        curl \
-                        flex \
-                        git \
-                        gnupg \
-                        libfl-dev \
-                        libgoogle-perftools-dev \
-                        ninja-build \
-                        npm \
-                        perl \
-                        python3 \
-                        python3-pip \
-                        wget \
-                        yosys \
+        autoconf \
+        bc \
+        bison \
+        ca-certificates \
+        ccache \
+        curl \
+        flex \
+        g++ \
+        git \
+        gnupg \
+        libfl2 \
+        libfl-dev \
+        libgoogle-perftools-dev \
+        make \
+        npm \
+        numactl \
+        perl \
+        perl-doc \
+        python3-dev \
+        python3-pip \
+        wget \
+        yosys \
+        zlibc \
+        zlib1g \
+        zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -38,34 +42,25 @@ RUN curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel
 # Install Bazel
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-                        bazel \
+    bazel \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install python packages using pip
-RUN pip3 install cmake_format cmakelint pyyaml sphinx sphinx-rtd-theme
+# Install python packages using pip from requirements.txt
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt
 
-# Build and install Verilator from source using git (use most recent 'stable' release)
+# Build and install Verilator v4.106 from source
 ARG REPO=https://github.com/verilator/verilator
-ARG TAG=stable
+ARG TAG=v4.106
 RUN git clone --depth 1 --branch "${TAG}" "${REPO}" verilator \
     && cd verilator \
     && autoconf \
     && ./configure \
-    && make -j "$(nproc)" \
+    && make -j$(nproc) \
     && make install \
     && cd .. \
     && rm -rf verilator
-
-# Install Catch2 (use v2.x branch)
-ARG REPO=https://github.com/catchorg/Catch2
-ARG TAG=v2.x
-RUN git clone --depth 1 --branch "${TAG}" "${REPO}" Catch2 \
-    && cd Catch2 \
-    && cmake -Bbuild -H. -DBUILD_TESTING=OFF \
-    && cmake --build build/ --target install \
-    && cd .. \
-    && rm -rf Catch2
 
 # Install Verible
 ARG VERIBLE_URL=https://github.com/google/verible/releases/download/v0.0-879-g181c8f3/verible-v0.0-879-g181c8f3-Ubuntu-20.04-focal-x86_64.tar.gz

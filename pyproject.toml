@@ -1,0 +1,7 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+log_cli = true
+norecursedirs = ["tests/utils"]
+
+[tool.black]
+line-length = 88

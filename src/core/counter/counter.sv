@@ -1,5 +1,5 @@
 module counter #(
-    parameter N  /* verilator public_flat_rd */ = 16
+    parameter integer N  /* verilator public_flat_rd */ = 8
 ) (
     input  logic         clk,
     input  logic         aresetn,

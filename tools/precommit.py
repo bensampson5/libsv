@@ -1,31 +1,31 @@
 #!/usr/bin/env python3
 
-import sys
+import click
 from pathlib import Path
 import shutil
-import argparse
 import subprocess
 import yaml
+from difflib import unified_diff
+import colorama
+from colorama import Fore, Style
 
 PROJECT_ROOT = Path("/code")
-BUILD_DIR = PROJECT_ROOT / "build"
 SRC_DIR = PROJECT_ROOT / "src"
 DOCS_DIR = PROJECT_ROOT / "docs"
-INCLUDE_DIR = PROJECT_ROOT / "include"
 FLUSH = True
 
 
 def in_docker():
-    """ Returns: True if running in a docker container, else False """
+    """Returns: True if running in a docker container, else False"""
     try:
         with open("/proc/1/cgroup", "rt") as ifh:
             contents = ifh.read()
             return any([word in contents for word in ["actions_job", "docker"]])
-    except:
+    except OSError:
         return False
 
 
-def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
+def run(cmd, cwd=PROJECT_ROOT, check_exit=True, print_output=True):
     p = subprocess.Popen(
         cmd,
         cwd=cwd,
@@ -39,62 +39,113 @@ def run(cmd, cwd=PROJECT_ROOT, check_exit=True):
         if stdout == "" and p.poll() is not None:
             break
         if stdout:
-            print(stdout, end="", flush=FLUSH)
+            if print_output:
+                print(stdout, end="", flush=FLUSH)
 
     if check_exit and p.returncode != 0:
         raise subprocess.CalledProcessError(p.returncode, " ".join(cmd))
 
 
-def cmake(flags=None):
-
-    # Delete entire build directory if it exists
-    if BUILD_DIR.exists():
-        shutil.rmtree(BUILD_DIR)
-
-    # Create new build directory
-    BUILD_DIR.mkdir()
-
-    # Create cmake command
-    cmd = ["cmake", "-GNinja"]
-    if flags is not None:
-        cmd += flags
-    cmd += [".."]
-
-    run(cmd, cwd=BUILD_DIR)
+def run_test():
+    """Run tests"""
+    cmd = ["pytest"]
+    run(cmd)
 
 
-def build(flags=None):
-
-    if not BUILD_DIR.exists():
-        raise FileNotFoundError("Could not find build directory to run build")
-
-    cmd = ["ninja"]
-    if flags is not None:
-        cmd += flags
-
-    run(cmd, cwd=BUILD_DIR)
+def find_hdl_files(dir=SRC_DIR):
+    # Add all SystemVerilog or Verilog files within project
+    hdl_search_patterns = ["**/*.sv", "**/*.v"]
+    hdl_files = []
+    for sp in hdl_search_patterns:
+        hdl_files += dir.glob(sp)
+    return hdl_files
 
 
-def test(flags=None):
-
-    if not BUILD_DIR.exists():
-        raise FileNotFoundError("Could not find build directory to run tests")
-
-    cmd = ["ninja", "check"]
-    if flags is not None:
-        cmd += flags
-
-    run(cmd, cwd=BUILD_DIR)
+def run_check_format():
+    """Check formatting in all files"""
+    run_check_format_hdl()
+    run_check_format_python()
 
 
-def format_hdl(flags=None):
-    """ Format SystemVerilog and Verilog files """
+def run_check_format_hdl():
+    """Check formatting in HDL files"""
+
+    print("\nChecking HDL formatting...\n", flush=FLUSH)
+
+    hdl_files = find_hdl_files()
+
+    # Make a copy of original HDL code
+    hdl_file_code_original = []
+    for hdl_file in hdl_files:
+        with open(hdl_file, "r") as f:
+            hdl_file_code_original.append(f.readlines())
+
+    # Run hdl formatter
+    run_fix_format_hdl(print_output=False)
+
+    # Make a copy of the formatted HDL code
+    hdl_file_code_formatted = []
+    for hdl_file in hdl_files:
+        with open(hdl_file, "r") as f:
+            hdl_file_code_formatted.append(f.readlines())
+
+    # Do a diff and print diff output in pretty colors
+    colorama.init()
+    is_diff = False
+    for i in range(len(hdl_file_code_original)):
+        original = hdl_file_code_original[i]
+        formatted = hdl_file_code_formatted[i]
+        fname = str(hdl_files[i])
+        diff = list(
+            unified_diff(original, formatted, fromfile=fname, tofile=fname, n=5)
+        )
+        if diff:
+            is_diff = True
+            print_unified_diff_in_color(diff)
+    colorama.deinit()
+
+    # Restore original HDL code
+    for i in range(len(hdl_files)):
+        with open(hdl_files[i], "w") as f:
+            f.write("".join(hdl_file_code_original[i]))
+
+    if is_diff:
+        raise RuntimeError("HDL format check failed")
+
+
+def print_unified_diff_in_color(diff):
+    for line in diff:
+        if line.startswith("---") or line.startswith("+++"):
+            line = f"{Style.BRIGHT}{line}{Style.RESET_ALL}"
+        elif line.startswith("@@"):
+            line = f"{Fore.CYAN}{line}{Style.RESET_ALL}"
+        elif line.startswith("-"):
+            line = f"{Fore.RED}{line}{Style.RESET_ALL}"
+        elif line.startswith("+"):
+            line = f"{Fore.GREEN}{line}{Style.RESET_ALL}"
+        print(line, end="", flush=FLUSH)
+    print()
+
+
+def run_check_format_python():
+    """Check formatting in Python files"""
+    print("\nChecking Python formatting...\n", flush=FLUSH)
+    cmd = ["black", "--diff", "--check", "--color", "."]
+    run(cmd)
+
+
+def run_fix_format():
+    """Fix formatting in all files"""
+    print("\nFixing HDL formatting...\n", flush=FLUSH)
+    run_fix_format_hdl()
+    run_fix_format_python()
+
+
+def run_fix_format_hdl(print_output=True):
+    """Fix formatting in HDL files"""
 
     # Use --inplace flag to overwrite existing files
     cmd = ["verible-verilog-format", "--inplace"]
-
-    if flags is not None:
-        cmd += flags
 
     # Add options from .verible-verilog-format.yaml if specified
     verible_verilog_format_yaml = PROJECT_ROOT / ".verible-verilog-format.yaml"
@@ -103,31 +154,54 @@ def format_hdl(flags=None):
         with open(verible_verilog_format_yaml, "r") as f:
             yaml_data = yaml.safe_load(f.read())
 
-    format_args = []
-    for k, v in yaml_data.items():
-        format_args.append(f"--{k}={v}")
+        format_args = []
+        for k, v in yaml_data.items():
+            format_args.append(f"--{k}={v}")
 
-    cmd += format_args
+        cmd += format_args
 
-    # Add all SystemVerilog or Verilog files in any project directory
-    hdl_search_patterns = ["**/*.sv", "**/*.v"]
-    hdl_files = []
-    for sp in hdl_search_patterns:
-        hdl_files += PROJECT_ROOT.glob(sp)
+    hdl_files = find_hdl_files()
+    cmd += [str(f) for f in hdl_files]
+
+    run(cmd, print_output=print_output)
+
+
+def run_fix_format_python():
+    """Fix formatting in Python files"""
+
+    print("\nFixing Python formatting...\n", flush=FLUSH)
+    cmd = ["black", "."]
+    run(cmd)
+
+
+def run_lint():
+    run_lint_hdl()
+    run_lint_python()
+
+
+def run_lint_hdl():
+    """Run HDL linter"""
+
+    print("\nLinting HDL...\n", flush=FLUSH)
+
+    cmd = ["verible-verilog-lint"]
+
+    hdl_files = find_hdl_files()
     cmd += [str(f) for f in hdl_files]
 
     run(cmd)
 
 
-def format_cpp_cmake():
-    """ Format C++ and cmake files """
+def run_lint_python():
+    """Run Python linter"""
 
-    cmd = ["ninja", "fix-format"]
-    run(cmd, cwd=BUILD_DIR)
+    print("\nLinting Python...\n", flush=FLUSH)
+    cmd = ["flake8", "."]
+    run(cmd)
 
 
-def docs():
-    """ Make documentation """
+def run_docs():
+    """Make documentation"""
 
     DOCS_BUILD_DIR = DOCS_DIR / "build"
 
@@ -139,12 +213,13 @@ def docs():
     DOCS_BUILD_DIR.mkdir()
 
     # Generature SVG block diagram graphics
-    generate_hdl_svgs()
+    run_generate_hdl_svgs()
 
     cmd = ["make", "html"]
     run(cmd, cwd=DOCS_DIR)
 
-def generate_hdl_svgs():
+
+def run_generate_hdl_svgs():
     svg_path = DOCS_DIR / "source" / "svg"
     json_path = DOCS_DIR / "source" / "json"
 
@@ -171,7 +246,7 @@ def generate_hdl_svgs():
     hdl_files = [f for f in hdl_files if f.name not in ignore_hdl_files]
 
     print(hdl_files)
-    
+
     svg_files = []
     json_files = []
     for f in hdl_files:
@@ -180,7 +255,11 @@ def generate_hdl_svgs():
 
     # Run yosys to output jsons and then use netlistsvg to create svgs for each module
     for i in range(len(hdl_files)):
-        cmd = ["yosys", "-p", f"read -sv -I{INCLUDE_DIR} {hdl_files[i]}; proc; clean; json -o {json_files[i]}"]
+        cmd = [
+            "yosys",
+            "-p",
+            f"read -sv {hdl_files[i]}; proc; clean; json -o {json_files[i]}",
+        ]
         run(cmd, cwd=DOCS_DIR)
         cmd = ["netlistsvg", f"{json_files[i]}", "-o", f"{svg_files[i]}"]
         run(cmd, cwd=DOCS_DIR)
@@ -188,29 +267,28 @@ def generate_hdl_svgs():
     # Remove temporary json directory
     shutil.rmtree(json_path)
 
-if __name__ == "__main__":
 
-    # Parse input args
-    parser = argparse.ArgumentParser()
-    arg_list = [
-        "--build",
-        "--test",
-        "--format",
-        "--format-cpp-cmake",
-        "--format-hdl",
-        "--docs",
-    ]
-    for arg in arg_list:
-        parser.add_argument(arg, action="store_true")
-    args = parser.parse_args()
+@click.command()
+@click.option("--test", is_flag=True, help="Run tests")
+@click.option("--check-format", is_flag=True, help="Check formatting")
+@click.option("--fix-format", is_flag=True, help="Fix formatting")
+@click.option("--lint", is_flag=True, help="Run linting")
+@click.option("--docs", is_flag=True, help="Build documentation")
+def precommit(test, check_format, fix_format, lint, docs):
 
-    # If no arguments are passed then do everything
-    ALL = len(sys.argv) == 1
+    # if no flags are provided, then run default configuration
+    if not any([test, check_format, fix_format, lint, docs]):
+        test = True
+        check_format = True
+        fix_format = False
+        lint = True
+        docs = True
 
     # Check if in docker container
     if not in_docker():
         raise OSError(
-            "Not in a docker container. This script must be run from within a docker container. See README.md for instructions."
+            "Not in a docker container. This script must be run from within a docker"
+            " container. See README.md for instructions."
         )
     else:
 
@@ -220,43 +298,26 @@ if __name__ == "__main__":
                 f"Cannot find project root directory: {PROJECT_ROOT}"
             )
 
-        # Run cmake if --build, --test, --format, --format-hdl, or --format-cpp-cmake
-        run_cmake = any(
-            [
-                ALL,
-                args.build,
-                args.test,
-                args.format,
-                args.format_hdl,
-                args.format_cpp_cmake,
-            ]
-        )
-        if run_cmake:
-            print("\nRunning cmake...", flush=FLUSH)
-            cmake()
+        if test:
+            print("\nRunning tests...\n", flush=FLUSH)
+            run_test()
 
-            # Run build if --build or --test
-            if ALL or args.build or args.test:
-                print("\nBuilding...", flush=FLUSH)
-                build()
+        if check_format:
+            print("\nChecking formatting...\n", flush=FLUSH)
+            run_check_format()
 
-                # Run test if --test
-                if ALL or args.test:
-                    print("\nTesting...", flush=FLUSH)
-                    test()
+        if fix_format:
+            print("\nFixing formatting...\n", flush=FLUSH)
+            run_fix_format()
 
-            # Run format_hdl if --format or --format_hdl
-            if ALL or args.format or args.format_hdl:
-                print("\nFormatting HDL...", flush=FLUSH)
-                format_hdl()
+        if lint:
+            print("\nLinting...\n", flush=FLUSH)
+            run_lint()
 
-            # Run format_cpp_cmake if --format or --format-cpp-cmake
-            if ALL or args.format or args.format_cpp_cmake:
-                print("\nFormatting C++/cmake...", flush=FLUSH)
-                format_cpp_cmake()
+        if docs:
+            print("\nBuilding documentation...\n", flush=FLUSH)
+            run_docs()
 
-        # Run docs is --docs
-        if ALL or args.docs:
-            print("\nMaking documentation...", flush=FLUSH)
-            docs()
 
+if __name__ == "__main__":
+    precommit()
