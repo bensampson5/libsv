@@ -5,7 +5,7 @@
 [DOCS]: https://openhdl.readthedocs.io/en/latest/
 [GTKWAVE]: http://gtkwave.sourceforge.net/
 [OPENHDL_DOCKER_HUB]: https://hub.docker.com/repository/docker/bensampson5/openhdl
-[PYTEST]: [https://docs.pytest.org/en/6.2.x/]
+[PYTEST]: [https://github.com/pytest-dev/pytest]
 [SPHINX]: https://www.sphinx-doc.org/en/master/
 [VERIBLE]: https://github.com/google/verible
 [VERILATOR]: https://github.com/verilator/verilator
