@@ -32,7 +32,7 @@ across the software and digital design community:
 The easiest way to get started with OpenHDL is with the publicly available [OpenHDL docker images on Docker Hub][OPENHDL_DOCKER_HUB].
 To use an OpenHDL docker image, first you'll need to install [Docker](https://www.docker.com/get-started), if you don't already have it.
 
-### Running Tests
+## Running Tests
 
 To run OpenHDL tests, first, pull the latest OpenHDL docker image:
 
@@ -54,5 +54,5 @@ Finally, within the Docker container, run `pytest` - That's it!
 pytest
 ```
 
-Each test generates an associated .fst waveform file that is written out to the `build` directory that can be viewed
+Each test generates an associated `.fst` waveform file that is written out to the `build/` directory that can be viewed
 using [GTKWave][GTKWAVE].
