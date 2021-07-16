@@ -22,7 +22,7 @@ across the software and digital design community:
   for easy-to-use, fast logic simulation
 - All testbenches output waveform files in FST format for viewing with [GTKWave][GTKWAVE]
 - [Extensive documention][DOCS] using [Sphinx][SPHINX] that includes circuit schematics for each module
-- Automated formatting and lint checks used [Verible][VERIBLE]
+- Automated formatting and lint checks using [Verible][VERIBLE]
 - [Continuous integration (CI) workflows][CI] integrated with [Docker][DOCKER]
 - [OpenHDL docker images][OPENHDL_DOCKER_HUB] published to [Docker Hub][DOCKER_HUB]
 
