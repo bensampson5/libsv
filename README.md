@@ -5,7 +5,7 @@
 [DOCS]: https://openhdl.readthedocs.io/en/latest/
 [GTKWAVE]: http://gtkwave.sourceforge.net/
 [OPENHDL_DOCKER_HUB]: https://hub.docker.com/repository/docker/bensampson5/openhdl
-[PYTEST]: [https://docs.pytest.org/en/6.2.x/]
+[PYTEST]: [https://github.com/pytest-dev/pytest]
 [SPHINX]: https://www.sphinx-doc.org/en/master/
 [VERIBLE]: https://github.com/google/verible
 [VERILATOR]: https://github.com/verilator/verilator
@@ -22,7 +22,7 @@ across the software and digital design community:
   for easy-to-use, fast logic simulation
 - All testbenches output waveform files in FST format for viewing with [GTKWave][GTKWAVE]
 - [Extensive documention][DOCS] using [Sphinx][SPHINX] that includes circuit schematics for each module
-- Automated formatting and lint checks used [Verible][VERIBLE]
+- Automated formatting and lint checks using [Verible][VERIBLE]
 - [Continuous integration (CI) workflows][CI] integrated with [Docker][DOCKER]
 - [OpenHDL docker images][OPENHDL_DOCKER_HUB] published to [Docker Hub][DOCKER_HUB]
 
