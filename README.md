@@ -20,7 +20,7 @@ OpenHDL is unique in that it takes advantage of open-source, state-of-the-art de
 across the software and digital design community:
 - Python-based, integrated with [pytest][PYTEST], automated testbenches using [Cocotb][COCOTB] + [Verilator][VERILATOR]
   for easy-to-use, fast logic simulation
-- All testbenches output waveform files in FST format for viewing with [GTKWAVE]
+- All testbenches output waveform files in FST format for viewing with [GTKWave][GTKWAVE]
 - [Extensive documention][DOCS] using [Sphinx][SPHINX] that includes circuit schematics for each module
 - Automated formatting and lint checks used [Verible][VERIBLE]
 - [Continuous integration (CI) workflows][CI] integrated with [Docker][DOCKER]
