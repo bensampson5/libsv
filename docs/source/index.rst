@@ -21,7 +21,7 @@ across the software and digital design community:
 * All testbenches output waveform files in FST format for viewing with GTKWave_
 * `Extensive documention <https://openhdl.readthedocs.io/en/latest/>`_ using Sphinx_ that includes circuit schematics for each module
 * Automated formatting and lint checks using Verible_
-* `Continuous integration (CI) workflows <https://github.com/bensampson5/openhdl/actions>_`] integrated with Docker_
+* `Continuous integration (CI) workflows <https://github.com/bensampson5/openhdl/actions>`_ integrated with Docker_
 * `OpenHDL docker images <https://hub.docker.com/repository/docker/bensampson5/openhdl>`_ published to `Docker Hub <https://hub.docker.com/>`_
 
 `Click here to go to OpenHDL's GitHub repository <https://github.com/bensampson5/openhdl>`_
