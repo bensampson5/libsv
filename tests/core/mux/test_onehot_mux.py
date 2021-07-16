@@ -10,7 +10,7 @@ def test_onehot_mux(pytestconfig):
 
 @cocotb.test()
 async def cocotb_test_onehot_mux(dut):
-    """One-hot mux test."""
+    """One-hot mux test"""
 
     dw = int(dut.DW)
     n = int(dut.N)

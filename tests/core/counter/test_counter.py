@@ -11,7 +11,7 @@ def test_counter(pytestconfig):
 
 @cocotb.test()
 async def cocotb_test_counter(dut):
-    """Counter test."""
+    """Counter test"""
 
     n = int(dut.N)
 

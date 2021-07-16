@@ -10,7 +10,7 @@ def test_half_adder(pytestconfig):
 
 @cocotb.test()
 async def cocotb_test_half_adder(dut):
-    """Half adder test."""
+    """Half adder test"""
 
     for i in range(2 ** 2):
         i_a = i & 1
