@@ -7,3 +7,4 @@ Math
     :caption: Modules:
  
     half_adder
+    full_adder
