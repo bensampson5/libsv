@@ -1,6 +1,8 @@
 from cocotb_test.simulator import run
 import os
 from pathlib import Path
+import cocotb
+from cocotb.triggers import Timer
 
 
 def test_onehot_mux(pytestconfig):
@@ -13,7 +15,7 @@ def test_onehot_mux(pytestconfig):
     run(
         verilog_sources=[proj_path / "src" / "core" / "mux" / "onehot_mux.sv"],
         toplevel="onehot_mux",
-        module="onehot_mux_cocotb",
+        module="test_onehot_mux",
         sim_build=build_dir,
         waves=True,
     )
@@ -21,3 +23,22 @@ def test_onehot_mux(pytestconfig):
     wavefile = build_dir / "dump.fst"
     if wavefile.exists():
         wavefile.rename(build_dir / "test_onehot_mux.fst")
+
+
+@cocotb.test()
+async def cocotb_test_onehot_mux(dut):
+    """One-hot mux test."""
+
+    dw = int(dut.DW)
+    n = int(dut.N)
+
+    # Generate counting pattern on input vectors
+    dut_i = 0
+    for i in range(n):
+        dut_i |= (i % dw) << (i * dw)
+    dut.i <= dut_i
+
+    for i in range(n):
+        dut.sel <= 1 << i
+        await Timer(1)
+        assert i % dw == int(dut.o)
