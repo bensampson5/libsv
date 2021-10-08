@@ -7,4 +7,5 @@ Modules
     :caption: Module Categories:
  
     core
+    encode_decode
     math
