@@ -7,3 +7,4 @@ Encode/Decode
     :caption: Modules:
  
     bcd_encoder
+    bcd_decoder
