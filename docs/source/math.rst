@@ -4,7 +4,7 @@ Math
 
 .. toctree::
     :maxdepth: 1
-    :caption: Modules:
+    :caption: Math:
  
     half_adder
     full_adder
