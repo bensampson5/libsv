@@ -8,4 +8,5 @@ Modules
  
     core
     encode_decode
+    latch
     math
