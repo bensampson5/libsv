@@ -1,5 +1,7 @@
 build/
+dist/
 docs/build/
 .vscode/
 *.pyc
 .pytest_cache
+.python_version

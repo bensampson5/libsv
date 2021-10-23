@@ -19,7 +19,7 @@ Inputs/Outputs
 
 Implementation
 --------------
-.. literalinclude:: ../../src/core/counter/counter.sv
+.. literalinclude:: ../../openhdl/core/counter/counter.sv
     :language: systemverilog
     :caption: counter.sv
 

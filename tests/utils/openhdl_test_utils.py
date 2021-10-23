@@ -11,7 +11,7 @@ def pytest_cocotb_run_test(pytestconfig, test_name):
     top_level = test_name.replace("test_", "")
 
     # determine verilog sources from top_level module
-    src_dir = proj_path / "src"
+    src_dir = proj_path / "openhdl"
     top_level_sv = list(src_dir.glob(f"**/{top_level}.sv"))
     if len(top_level_sv) == 1:
         top_level_sv = top_level_sv[0]
@@ -29,7 +29,7 @@ def pytest_cocotb_run_test(pytestconfig, test_name):
         raise RuntimeError("Too many sv top level files")
 
     # determine build directory
-    build_dir = Path(str(top_level_sv.parent).replace("src", "build"))
+    build_dir = Path(str(top_level_sv.parent).replace("openhdl", "build"))
 
     # call to cocotb_test.simulator.run
     run(
