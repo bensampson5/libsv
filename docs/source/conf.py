@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath("."))
 
 # -- Project information -----------------------------------------------------
 
-project = "OpenHDL"
+project = "LibSV"
 copyright = "2021, Ben Sampson"
 author = "Ben Sampson"
 

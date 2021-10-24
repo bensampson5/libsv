@@ -1,9 +1,9 @@
 =====
-Latch
+Muxes
 =====
 
 .. toctree::
     :maxdepth: 1
-    :caption: Latches:
+    :caption: Modules:
  
-    sr_latch
+    onehot_mux

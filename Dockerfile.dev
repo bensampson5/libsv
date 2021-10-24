@@ -1,6 +1,6 @@
 ARG BRANCH=main
 
-FROM bensampson5/openhdl:${BRANCH}
+FROM bensampson5/libsv:${BRANCH}
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \

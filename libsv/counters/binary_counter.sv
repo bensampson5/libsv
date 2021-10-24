@@ -1,4 +1,4 @@
-module counter #(
+module binary_counter #(
     parameter integer N  /* verilator public_flat_rd */ = 8
 ) (
     input  logic         clk,

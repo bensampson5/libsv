@@ -1,3 +1,29 @@
+[tool.poetry]
+name = "libsv"
+version = "0.1.0"
+description = "LibSV is a library of open source, parameterized digital logic IP."
+authors = ["Ben Sampson <bensampson5@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.6.2"
+
+[tool.poetry.dev-dependencies]
+cocotb = "^1.6.0"
+pytest = "^6.2.5"
+Sphinx = "^4.2.0"
+sphinx-rtd-theme = "^1.0.0"
+flake8 = "^4.0.1"
+black = "^21.9b0"
+click = "^8.0.3"
+colorama = "^0.4.4"
+cocotb-test = "^0.2.1"
+PyYAML = "^6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 log_cli = true

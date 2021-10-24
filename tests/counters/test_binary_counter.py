@@ -1,16 +1,16 @@
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import FallingEdge, RisingEdge
-from openhdl_test_utils import pytest_cocotb_run_test
+from utils import pytest_cocotb_run_test
 
 
-def test_counter(pytestconfig):
-    """Pytest fixture for Counter test"""
+def test_binary_counter(pytestconfig):
+    """Pytest fixture for Binary Counter test"""
     pytest_cocotb_run_test(pytestconfig, __name__)
 
 
 @cocotb.test()
-async def cocotb_test_counter(dut):
+async def cocotb_test_binary_counter(dut):
     """Counter test"""
 
     n = int(dut.N)

@@ -46,9 +46,11 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install python packages using pip from requirements.txt
-COPY requirements.txt .
-RUN pip3 install -r requirements.txt
+# Install python packages using poetry
+RUN pip3 install poetry
+COPY poetry.lock pyproject.toml ./
+RUN poetry config virtualenvs.create false
+RUN poetry install -n --no-ansi
 
 # Build and install Verilator v4.106 from source
 ARG REPO=https://github.com/verilator/verilator
