@@ -104,19 +104,19 @@ jobs:
         run: docker pull ${{ steps.docker_meta.outputs.tags }}
 
       - name: Build and run tests
-        run: ${{ env.DOCKER_RUN }} ./precommit.py --test
+        run: ${{ env.DOCKER_RUN }} python3 precommit.py --test
 
       - name: Check format
         run: |
-          ${{ env.DOCKER_RUN }} ./precommit.py --check-format
+          ${{ env.DOCKER_RUN }} python3 precommit.py --check-format
 
       - name: Lint
         run: |
-          ${{ env.DOCKER_RUN }} ./precommit.py --lint
+          ${{ env.DOCKER_RUN }} python3 precommit.py --lint
 
       - name: Build docs
         run: |
-          ${{ env.DOCKER_RUN }} ./precommit.py --docs
+          ${{ env.DOCKER_RUN }} python3 precommit.py --docs
 
       - name: Build package
         run: |
