@@ -19,11 +19,11 @@
   .splitjoinBody {
     fill:#000;
   }</style>
-  <g s:type="add" transform="translate(77,173.5)" s:width="25" s:height="25" id="cell_$add$/code/openhdl/core/counter/counter.sv:11$3">
+  <g s:type="add" transform="translate(77,173.5)" s:width="25" s:height="25" id="cell_$add$/code/openhdl/counters/binary_counter.sv:11$3">
     <s:alias val="$add"/>
-    <circle r="12.5" cx="12.5" cy="12.5" class="cell_$add$/code/openhdl/core/counter/counter.sv:11$3"/>
-    <line x1="7.5" x2="17.5" y1="12.5" y2="12.5" class="cell_$add$/code/openhdl/core/counter/counter.sv:11$3"/>
-    <line x1="12.5" x2="12.5" y1="7.5" y2="17.5" class="cell_$add$/code/openhdl/core/counter/counter.sv:11$3"/>
+    <circle r="12.5" cx="12.5" cy="12.5" class="cell_$add$/code/openhdl/counters/binary_counter.sv:11$3"/>
+    <line x1="7.5" x2="17.5" y1="12.5" y2="12.5" class="cell_$add$/code/openhdl/counters/binary_counter.sv:11$3"/>
+    <line x1="12.5" x2="12.5" y1="7.5" y2="17.5" class="cell_$add$/code/openhdl/counters/binary_counter.sv:11$3"/>
     <g s:x="3" s:y="5" s:pid="A"/>
     <g s:x="3" s:y="20" s:pid="B"/>
     <g s:x="25" s:y="12.5" s:pid="Y"/>

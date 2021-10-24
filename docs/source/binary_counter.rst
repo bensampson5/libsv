@@ -1,8 +1,8 @@
-=======
-Counter
-=======
+==============
+Binary Counter
+==============
 
-This module implements a parameterized counter with an active-low asynchronous reset.
+This module implements a parameterized binary counter with an active-low asynchronous reset.
 
 With every clock rising, the counter's output ``q`` is incremented by 1. And with an 
 assertion of the active-low reset, ``aresetn``, ``q`` is set to 0.
@@ -19,14 +19,14 @@ Inputs/Outputs
 
 Implementation
 --------------
-.. literalinclude:: ../../openhdl/core/counter/counter.sv
+.. literalinclude:: ../../openhdl/counters/binary_counter.sv
     :language: systemverilog
-    :caption: counter.sv
+    :caption: binary_counter.sv
 
 Block Diagram
 -------------
-.. figure:: svg/counter.svg
+.. figure:: svg/binary_counter.svg
     :align: center
     :width: 100 %
 
-    counter.sv
+    binary_counter.sv

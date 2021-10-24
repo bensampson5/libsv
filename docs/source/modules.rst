@@ -6,7 +6,9 @@ Modules
     :maxdepth: 2
     :caption: Module Categories:
  
-    core
-    encode_decode
-    latch
+    counters
+    decoders
+    encoders
+    latches
     math
+    muxes

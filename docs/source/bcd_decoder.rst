@@ -17,7 +17,7 @@ Inputs/Outputs
 
 Implementation
 --------------
-.. literalinclude:: ../../openhdl/encode_decode/bcd_decoder/bcd_decoder.sv
+.. literalinclude:: ../../openhdl/decoders/bcd_decoder.sv
     :language: systemverilog
     :caption: bcd_decoder.sv
 
