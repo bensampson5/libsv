@@ -27,7 +27,7 @@ jobs:
 
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        uses: docker/metadata-action@v3
         with:
           images: bensampson5/libsv
 
@@ -92,16 +92,16 @@ jobs:
 
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        uses: docker/metadata-action@v3
         with:
           images: bensampson5/libsv
 
       - name: Setup GitHub environment
         run: |
-          echo "DOCKER_RUN=docker run --rm -v $(pwd):/code ${{ steps.docker_meta.outputs.tags }}" >> $GITHUB_ENV;
+          echo "DOCKER_RUN=docker run --rm -v $(pwd):/code bensampson5/libsv:${{ steps.docker_meta.outputs.version }}" >> $GITHUB_ENV;
 
       - name: Pull docker image
-        run: docker pull ${{ steps.docker_meta.outputs.tags }}
+        run: docker pull bensampson5/libsv:${{ steps.docker_meta.outputs.version }}
 
       - name: Build and run tests
         run: ${{ env.DOCKER_RUN }} /code/tools/precommit.py --test

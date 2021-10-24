@@ -1,9 +1,23 @@
 [tool.poetry]
 name = "libsv"
 version = "0.1.0"
-description = "LibSV is a library of open source, parameterized digital logic IP."
+description = "An open source parameterized SystemVerilog hardware IP library"
 authors = ["Ben Sampson <bensampson5@gmail.com>"]
+maintainers = ["Ben Sampson <bensampson5@gmail.com>"]
 license = "MIT"
+repository = "https://github.com/bensampson5/libsv"
+homepage = "https://libsv.readthedocs.io/en/latest/"
+documentation = "https://libsv.readthedocs.io/en/latest/"
+keywords = ["SystemVerilog", "Verilog", "Hardware", "IP", "cocotb"]
+readme = "README.rst"
+classifiers = [
+    "Topic :: System :: Hardware",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)"
+]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/bensampson5/libsv/issues"
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
@@ -27,7 +41,6 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 log_cli = true
-norecursedirs = ["tests/utils"]
 
 [tool.black]
 line-length = 88
