@@ -1,6 +1,6 @@
 import cocotb
 from cocotb.triggers import Timer
-from openhdl_test_utils import pytest_cocotb_run_test
+from libsv_test_utils import pytest_cocotb_run_test
 
 
 def test_sr_latch(pytestconfig):

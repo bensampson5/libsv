@@ -10,7 +10,7 @@ import colorama
 from colorama import Fore, Style
 
 PROJECT_ROOT = Path("/code")
-SRC_DIR = PROJECT_ROOT / "openhdl"
+SRC_DIR = PROJECT_ROOT / "libsv"
 DOCS_DIR = PROJECT_ROOT / "docs"
 FLUSH = True
 

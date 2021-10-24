@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "openhdl"
+name = "libsv"
 version = "0.1.0"
-description = "OpenHDL is a library of open source, parameterized digital logic IP."
+description = "LibSV is a library of open source, parameterized digital logic IP."
 authors = ["Ben Sampson <bensampson5@gmail.com>"]
 license = "MIT"
 

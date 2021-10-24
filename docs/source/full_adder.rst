@@ -15,7 +15,7 @@ Inputs/Outputs
 
 Implementation
 --------------
-.. literalinclude:: ../../openhdl/math/full_adder.sv
+.. literalinclude:: ../../libsv/math/full_adder.sv
     :language: systemverilog
     :caption: full_adder.sv
 

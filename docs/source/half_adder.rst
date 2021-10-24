@@ -14,7 +14,7 @@ Inputs/Outputs
 
 Implementation
 --------------
-.. literalinclude:: ../../openhdl/math/half_adder.sv
+.. literalinclude:: ../../libsv/math/half_adder.sv
     :language: systemverilog
     :caption: half_adder.sv
 

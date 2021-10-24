@@ -19,7 +19,7 @@ Inputs/Outputs
 
 Implementation
 --------------
-.. literalinclude:: ../../openhdl/counters/binary_counter.sv
+.. literalinclude:: ../../libsv/counters/binary_counter.sv
     :language: systemverilog
     :caption: binary_counter.sv
 

@@ -18,7 +18,7 @@ Inputs/Outputs
 
 Implementation
 --------------
-.. literalinclude:: ../../openhdl/muxes/onehot_mux.sv
+.. literalinclude:: ../../libsv/muxes/onehot_mux.sv
     :language: systemverilog
     :caption: onehot_mux.sv
 

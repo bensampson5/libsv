@@ -17,7 +17,7 @@ Inputs/Outputs
 
 Implementation
 --------------
-.. literalinclude:: ../../openhdl/latches/sr_latch.sv
+.. literalinclude:: ../../libsv/latches/sr_latch.sv
     :language: systemverilog
     :caption: sr_latch.sv
 
