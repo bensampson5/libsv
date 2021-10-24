@@ -1,7 +1,7 @@
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import FallingEdge, RisingEdge
-from libsv_test_utils import pytest_cocotb_run_test
+from utils import pytest_cocotb_run_test
 
 
 def test_binary_counter(pytestconfig):
