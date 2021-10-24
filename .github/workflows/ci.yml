@@ -120,7 +120,7 @@ jobs:
 
       - name: Build package
         run: |
-          ${{ env.DOCKER_RUN }} bash -c "cd code && poetry build"
+          ${{ env.DOCKER_RUN }} /bin/bash -c "cd /code && poetry build"
 
       - name: Publish package
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
