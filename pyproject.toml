@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "libsv"
-version = "0.1.0"
+version = "0.0.2"
 description = "An open source parameterized SystemVerilog hardware IP library"
 authors = ["Ben Sampson <bensampson5@gmail.com>"]
 maintainers = ["Ben Sampson <bensampson5@gmail.com>"]
