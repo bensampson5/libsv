@@ -98,3 +98,19 @@ match the given substring expression:
 
 Each testbench generates an associated ``.fst`` waveform file that is written to the ``build/`` directory and can be
 viewed using `GTKWave <http://gtkwave.sourceforge.net/>`_.
+
+Bugs/Feature Requests
+---------------------
+
+Please use `LibSV's GitHub issue tracker <https://github.com/bensampson5/libsv/issues>`_ to submit bugs or request features.
+
+Contributing
+------------
+
+Contributions are much welcomed and appreciated! Take a look at the Contributing page to get started.
+
+License
+-------
+
+Distributed under the terms of the `MIT <https://github.com/bensampson5/libsv/blob/main/LICENSE>`_ license, LibSV is free
+and open source software.

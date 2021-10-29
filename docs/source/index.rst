@@ -1,7 +1,3 @@
-.. LibSV documentation master file, created by
-   sphinx-quickstart on Wed Dec 30 22:02:09 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 .. _Cocotb: https://github.com/cocotb/cocotb
 .. _Docker: https://www.docker.com/
 .. _GTKWave: http://gtkwave.sourceforge.net/
@@ -11,7 +7,7 @@
 .. _Verilator: https://github.com/verilator/verilator
 
 Welcome to LibSV's documentation!
-===================================
+=================================
 
 LibSV is a library of open source, parameterized digital logic IP. While other similar libraries do exist,
 LibSV is unique in that it takes advantage of open-source, state-of-the-art development best practices and tools from
@@ -31,6 +27,9 @@ across the software and digital design community:
    :caption: Table of Contents:
 
    modules
+   contributing
+   license
+   contact
 
 Indices and tables
 ==================
