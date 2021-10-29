@@ -19,9 +19,9 @@ async def cocotb_test_onehot_mux(dut):
     dut_i = 0
     for i in range(n):
         dut_i |= (i % dw) << (i * dw)
-    dut.i = dut_i
+    dut.i.value = dut_i
 
     for i in range(n):
-        dut.sel = 1 << i
+        dut.sel.value = 1 << i
         await Timer(1)
         assert i % dw == int(dut.o)
