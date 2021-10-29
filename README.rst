@@ -23,7 +23,7 @@ digital design community:
 * Automated formatting and lint checks using `Verible <https://github.com/google/verible>`_
 * `Continuous integration (CI) workflows <https://github.com/bensampson5/libsv/actions>`_ integrated with 
   `Docker <https://www.docker.com/>`_
-* `LibSV docker images <https://hub.docker.com/repository/docker/bensampson5/libsv>`_ published to
+* `LibSV Docker images <https://hub.docker.com/repository/docker/bensampson5/libsv>`_ published to
   `Docker Hub <https://hub.docker.com/>`_
 
 Getting Started
@@ -50,17 +50,17 @@ Finally, at the top of your design file where you want to use LibSV modules, for
 Running Testbenches
 -------------------
 
-Running the LibSV testbenches require `cocotb <https://github.com/cocotb/cocotb>`_, 
+Running the LibSV testbenches require `Cocotb <https://github.com/cocotb/cocotb>`_, 
 `Verilator <https://github.com/verilator/verilator>`_, and a number of other dependencies to be installed.
 Instead of trying to install everything manually on your machine, the easier and recommended way to run the
 LibSV testbenches is to use the pre-built 
-`LibSV docker images on Docker Hub <https://hub.docker.com/repository/docker/bensampson5/libsv>`__ that have the
+`LibSV Docker images on Docker Hub <https://hub.docker.com/repository/docker/bensampson5/libsv>`__ that have the
 complete set of LibSV developer tools already installed.
 
-To use a LibSV docker image, first you’ll need to install `Docker <https://www.docker.com/get-started>`__, 
+To use a LibSV Docker image, first you’ll need to install `Docker <https://www.docker.com/get-started>`__, 
 if you don’t already have it.
 
-Next, pull the latest LibSV docker image:
+Next, pull the latest LibSV Docker image:
 
 .. code:: bash
 
@@ -69,13 +69,13 @@ Next, pull the latest LibSV docker image:
     --build-arg GID=$(id -g) \
     -t libsv .
 
-Then, start a new docker container using the LibSV image and mount the project folder to the container:
+Then, start a new Docker container using the LibSV image and mount the project folder to the container:
 
 .. code:: bash
 
   docker run --rm -it -v $(pwd):/code libsv
 
-Finally, within the docker container, run ``pytest``:
+Finally, within the Docker container, run ``pytest``:
 
 .. code:: bash
 
@@ -90,7 +90,7 @@ Instead, to list all the available LibSV testbenches, run:
   pytest --co
 
 Then, you can run an individual or subset of testbenches using the ``-k`` flag which will only run tests which
-match the given substring expression
+match the given substring expression:
 
 .. code:: bash
 
