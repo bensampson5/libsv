@@ -5,8 +5,12 @@
 
 ------------------------------------------------------------------------------------------------------------------------
 
-.. image:: https://github.com/bensampson5/libsv/actions/workflows/ci.yml/badge.svg?branch=main
-    :target: https://github.com/bensampson5/libsv/actions/workflows/ci.yml
+.. image:: https://github.com/bensampson5/libsv/actions/workflows/ci.yml/badge.svg
+   :target: https://github.com/bensampson5/libsv/actions/workflows/ci.yml
+
+.. image:: https://readthedocs.org/projects/libsv/badge/?version=latest
+   :target: https://libsv.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
 
 Welcome to LibSV! `Click here to go to LibSV’s
 documentation <https://libsv.readthedocs.io/en/latest/>`_.
