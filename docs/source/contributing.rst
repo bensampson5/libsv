@@ -161,17 +161,17 @@ To prepare a pull request:
 
 #. If you are adding a new SystemVerilog module to the library, you must complete the following checklist:
 
-   #. The new SystemVerilog module should be a single ``.sv`` file with a single ``module`` inside that
+    * The new SystemVerilog module should be a single ``.sv`` file with a single ``module`` inside that
       is added to the right directory within ``libsv/``. File naming convention is all lower-case and
       underscores (i.e. ``example_module.sv``).
-   #. The SystemVerilog module should have a corresponding Python testbench that has the same name as
+    * The SystemVerilog module should have a corresponding Python testbench that has the same name as
       the SystemVerilog source file with a ``test_`` prefix. (i.e. ``test_example_module.sv``). Similarly
       to before, this testbench must be added to the right directory within ``tests/``. Take a look
       at `existing LibSV testbenches <https://github.com/bensampson5/libsv/tree/main/tests>`_ for examples
       on how to write a testbench for LibSV.
-   #. Write a testbench that exercises the SystemVerilog module and checks whether the module meets the
+    * Write a testbench that exercises the SystemVerilog module and checks whether the module meets the
       functional specifications.
-   #. The SystemVerilog module should have a corresponding ``.rst`` documentation file that has the same
+    * The SystemVerilog module should have a corresponding ``.rst`` documentation file that has the same
       name as the SystemVerilog source file (i.e. ``example_module.rst``). Once again, this documentation
       file must be added to the right directory within ``docs/source/``. Take a look at 
       `existing LibSV docs <https://github.com/bensampson5/libsv/tree/main/docs/source>`_ for examples on 
