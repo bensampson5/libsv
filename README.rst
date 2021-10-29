@@ -4,9 +4,6 @@ LibSV
 Welcome to LibSV! `Click here to go to LibSV’s
 documentation <https://libsv.readthedocs.io/en/latest/>`_.
 
-About
------
-
 LibSV is a library of open source, parameterized digital logic IP
 written in SystemVerilog. While other similar libraries do exist, LibSV
 is unique in that it takes advantage of open-source, state-of-the-art
