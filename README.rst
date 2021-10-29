@@ -13,9 +13,13 @@ is unique in that it takes advantage of open-source, state-of-the-art
 development best practices and tools from across the software and
 digital design community:
 
+* Trivial installation. LibSV is hosted on PyPI and can easily be installed using `pip <https://pip.pypa.io/en/stable/>`_
+  or whatever Python package manager of your choice.
+* Easy-to-use. Simply add ```include "libsv/<path>/<to>/<module>.sv"`` to the top of your file and make sure to add the
+  `site-packages/` folder where LibSV was installed as an include directory when you build your design.
 * Python-based, integrated with `pytest <https://github.com/pytest-dev/pytest>`_, automated testbenches using
   `Cocotb <https://github.com/cocotb/cocotb>`_ + `Verilator <https://github.com/verilator/verilator>`_ for 
-  easy-to-use, fast logic simulation
+  simple and fast logic simulation
 * All testbenches output waveform files in FST format for viewing with `GTKWave <http://gtkwave.sourceforge.net/>`_
 * `Extensive documention <https://libsv.readthedocs.io/en/latest/>`_ using `Sphinx <https://www.sphinx-doc.org/en/master/>`_
   that includes circuit schematics for each module
@@ -28,35 +32,71 @@ digital design community:
 Getting Started
 ---------------
 
-The easiest way to get started with LibSV is with the publicly available
-`LibSV docker images on Docker Hub <https://hub.docker.com/repository/docker/bensampson5/libsv>`__.
-To use an LibSV docker image, first you’ll need to install `Docker <https://www.docker.com/get-started>`__, 
+LibSV is very easy to use. First, install the ``libsv`` package from PyPI:
+
+.. code:: bash
+
+  pip install libsv
+
+We recommend using a Python virtual environment so that the installation is project-specific and
+isolated from the rest of your system.
+
+Then add the ``site-packages/`` folder when LibSV was installed to your include path when building your design so
+that your design tools can find LibSV.
+
+Finally, at the top of your design file where you want to use LibSV modules, for each module you want to use, 
+simply add:
+
+.. code SystemVerilog
+
+  `include "libsv/<path>/<to>/<module>.sv"
+
+Running Testbenches
+-------------------
+
+Running the LibSV testbenches require cocotb, Verilator, and a number of other dependencies to be installed.
+Instead of trying to install everything manually on your machine, the easiest and recommended way to run the
+LibSV testbenches is to use the pre-built 
+`LibSV docker images on Docker Hub <https://hub.docker.com/repository/docker/bensampson5/libsv>`__ that have the
+complete set of LibSV developer tools already installed.
+
+To use a LibSV docker image, first you’ll need to install `Docker <https://www.docker.com/get-started>`__, 
 if you don’t already have it.
 
-Running Tests
--------------
-
-To run LibSV tests, first, pull the latest LibSV docker image:
+Next, pull the latest LibSV docker image:
 
 .. code:: bash
 
-   docker build --pull -f Dockerfile.dev \
-       --build-arg UID=$(id -u) \
-       --build-arg GID=$(id -g) \
-       -t libsv .
+  docker build --pull -f Dockerfile.dev \
+    --build-arg UID=$(id -u) \
+    --build-arg GID=$(id -g) \
+    -t libsv .
 
-Then, start a new docker container using the LibSV image and mount the
-project root folder to the container:
-
-.. code:: bash
-
-   docker run --rm -it -v $(pwd):/code libsv
-
-Finally, within the Docker container, run ``pytest`` - That’s it!
+Then, start a new docker container using the LibSV image and mount the project folder to the docker container:
 
 .. code:: bash
 
-   pytest
+  docker run --rm -it -v $(pwd):/code libsv
 
-Each test generates an associated ``.fst`` waveform file that is written out to the ``build/`` directory that can be viewed using
+Finally, within the Docker container, run ``pytest``:
+
+.. code:: bash
+
+  pytest
+
+This will run all the LibSV testbenches for the entire library (Warning: This may take a while!).To list all the
+available LibSV testbenches, run:
+
+.. code:: bash
+
+  pytest --co
+
+Then, you can run an individual or subset of testbenches using the ``-k`` flag which will only run tests which
+match the given substring expression
+
+.. code:: bash
+
+  pytest -k EXPRESSION
+
+Each testbench generates an associated ``.fst`` waveform file that is written to the ``build/`` directory and can be viewed using
 `GTKWave <http://gtkwave.sourceforge.net/>`__.
