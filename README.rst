@@ -1,7 +1,6 @@
 .. image:: https://raw.githubusercontent.com/bensampson5/libsv/issue-67-Write_up_a_contributing_guide/docs/source/svg/libsv_logo.svg
-   :align: left
+   :align: center
    :height: 150
-   :width: 100%
    :alt: LibSV
 
 ------------------------------------------------------------------------------------------------------------------------
