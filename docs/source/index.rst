@@ -120,17 +120,11 @@ Distributed under the terms of the `MIT <https://github.com/bensampson5/libsv/bl
 and open source software.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Table of Contents:
 
    modules
    contributing
    license
+   useful_links
    contact
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
