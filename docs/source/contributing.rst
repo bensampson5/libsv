@@ -155,7 +155,7 @@ To prepare a pull request:
 #. Testbenches are run using either ``pytest`` or ``./tools/precommit.py --test``. This will run all
    LibSV testbenches. To run only a single testbench, we recommend using ``pytest`` with the ``-k`` flag
    
-    ..code-block:: bash
+    .. code-block:: bash
 
         pytest -k TESTBENCH_NAME
 
