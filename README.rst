@@ -16,7 +16,7 @@ digital design community:
 * Trivial installation. LibSV is hosted on PyPI and can easily be installed using `pip <https://pip.pypa.io/en/stable/>`_
   or whatever Python package manager of your choice.
 * Easy-to-use. Simply add ```include "libsv/<path>/<to>/<module>.sv"`` to the top of your file and make sure to add the
-  `site-packages/` folder where LibSV was installed as an include directory when you build your design.
+  ``site-packages/`` folder where LibSV was installed as an include directory when you build your design.
 * Python-based, integrated with `pytest <https://github.com/pytest-dev/pytest>`_, automated testbenches using
   `Cocotb <https://github.com/cocotb/cocotb>`_ + `Verilator <https://github.com/verilator/verilator>`_ for 
   simple and fast logic simulation
@@ -41,20 +41,21 @@ LibSV is very easy to use. First, install the ``libsv`` package from PyPI:
 We recommend using a Python virtual environment so that the installation is project-specific and
 isolated from the rest of your system.
 
-Then add the ``site-packages/`` folder when LibSV was installed to your include path when building your design so
-that your design tools can find LibSV.
+Then add the ``site-packages/`` folder, where LibSV was just installed, to your include path when building your
+project so that your design tools can find LibSV.
 
 Finally, at the top of your design file where you want to use LibSV modules, for each module you want to use, 
 simply add:
 
-.. code SystemVerilog
+.. code-block:: SystemVerilog
 
   `include "libsv/<path>/<to>/<module>.sv"
 
 Running Testbenches
 -------------------
 
-Running the LibSV testbenches require cocotb, Verilator, and a number of other dependencies to be installed.
+Running the LibSV testbenches require `cocotb <https://github.com/cocotb/cocotb>`_, 
+`Verilator <https://github.com/verilator/verilator>`_, and a number of other dependencies to be installed.
 Instead of trying to install everything manually on your machine, the easiest and recommended way to run the
 LibSV testbenches is to use the pre-built 
 `LibSV docker images on Docker Hub <https://hub.docker.com/repository/docker/bensampson5/libsv>`__ that have the
@@ -78,14 +79,14 @@ Then, start a new docker container using the LibSV image and mount the project f
 
   docker run --rm -it -v $(pwd):/code libsv
 
-Finally, within the Docker container, run ``pytest``:
+Finally, within the docker container, run ``pytest``:
 
 .. code:: bash
 
   pytest
 
-This will run all the LibSV testbenches for the entire library (Warning: This may take a while!).To list all the
-available LibSV testbenches, run:
+This will run all the LibSV testbenches for the entire library (*Warning: This may take a while!*). Instead,
+to list all the available LibSV testbenches, run:
 
 .. code:: bash
 
@@ -98,5 +99,5 @@ match the given substring expression
 
   pytest -k EXPRESSION
 
-Each testbench generates an associated ``.fst`` waveform file that is written to the ``build/`` directory and can be viewed using
-`GTKWave <http://gtkwave.sourceforge.net/>`__.
+Each testbench generates an associated ``.fst`` waveform file that is written to the ``build/`` directory and can be
+viewed using `GTKWave <http://gtkwave.sourceforge.net/>`_.
