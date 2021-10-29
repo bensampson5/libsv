@@ -6,6 +6,7 @@
 ------------------------------------------------------------------------------------------------------------------------
 
 .. image:: https://img.shields.io/pypi/v/libsv
+   :target: https://pypi.org/project/libsv/
    :alt: PyPI
 
 .. image:: https://github.com/bensampson5/libsv/actions/workflows/ci.yml/badge.svg
@@ -24,8 +25,8 @@ is unique in that it takes advantage of open-source, state-of-the-art
 development best practices and tools from across the software and
 digital design community, including:
 
-* Trivial installation. LibSV is hosted on PyPI and can easily be installed using `pip <https://pip.pypa.io/en/stable/>`_
-  or whichever Python package manager of your choice.
+* Trivial installation. `LibSV is hosted on PyPI <https://pypi.org/project/libsv/>`_ and can easily be installed using 
+  `pip <https://pip.pypa.io/en/stable/>`_ or whichever Python package manager of your choice.
 * Easy-to-use. Simply add ```include "libsv/<path>/<to>/<module>.sv"`` to the top of your sourcefile and then add the
   ``site-packages/`` folder, where LibSV was installed, to the include path when you go to build your project.
 * Automated testbenches, written in Python, that use `pytest <https://github.com/pytest-dev/pytest>`_ to run
