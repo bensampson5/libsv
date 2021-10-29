@@ -18,8 +18,8 @@ async def cocotb_test_half_adder(dut):
         o_sum = i_a ^ i_b
         o_carry = i_a & i_b
 
-        dut.i_a <= i_a
-        dut.i_b <= i_b
+        dut.i_a.value = i_a
+        dut.i_b.value = i_b
         await Timer(1)
         assert dut.o_sum == o_sum
         assert dut.o_carry == o_carry

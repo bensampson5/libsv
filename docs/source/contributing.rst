@@ -67,14 +67,14 @@ Once you have Docker installed you can build and pull the LibSV Docker image by 
     -t libsv .
 
 By default, this will pull the LibSV Docker image associated with the ``main`` branch, however you can pull a different branch's
-LibSV Docker image by adding the ``BRANCH`` build argument:
+LibSV Docker image (or any tagged version) by adding the ``TAG`` build argument:
 
 .. code-block:: bash
 
   docker build --pull -f Dockerfile.dev \
     --build-arg UID=$(id -u) \
     --build-arg GID=$(id -g) \
-    --build-arg BRANCH=TYPE_BRANCH_NAME_HERE \
+    --build-arg TAG=TAG_NAME \
     -t libsv .
 
 Then, start a new Docker container using the LibSV image and mount the project folder to the container:

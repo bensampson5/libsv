@@ -1,6 +1,6 @@
-ARG BRANCH=main
+ARG TAG=main
 
-FROM bensampson5/libsv:${BRANCH}
+FROM bensampson5/libsv:${TAG}
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \

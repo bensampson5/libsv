@@ -8,7 +8,7 @@ license = "MIT"
 repository = "https://github.com/bensampson5/libsv"
 homepage = "https://libsv.readthedocs.io/en/latest/"
 documentation = "https://libsv.readthedocs.io/en/latest/"
-keywords = ["SystemVerilog", "Verilog", "Hardware", "IP", "cocotb"]
+keywords = ["SystemVerilog", "Verilog", "Hardware", "IP", "Cocotb"]
 readme = "README.rst"
 classifiers = [
     "Topic :: System :: Hardware",
