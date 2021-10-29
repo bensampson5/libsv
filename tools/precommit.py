@@ -272,7 +272,7 @@ def run_generate_hdl_svgs():
 @click.option("--docs", is_flag=True, help="Build documentation")
 def precommit(test, check_format, fix_format, lint, docs):
     """Precommit tool for LibSV. If no options are provided, this
-    tool will run all precommit steps. If one or more options are 
+    tool will run all precommit steps. If one or more options are
     specified then only those precommit steps will be run."""
 
     # if no flags are provided, then run default configuration
