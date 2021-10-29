@@ -1,5 +1,9 @@
-LibSV
-=====
+.. image:: https://raw.githubusercontent.com/bensampson5/libsv/issue-67-Write_up_a_contributing_guide/docs/source/svg/libsv_logo.svg
+   :align: center
+   :height: 200
+   :alt: LibSV
+
+------------------------------------------------------------------------------------------------------------------------
 
 Welcome to LibSV! `Click here to go to LibSV’s
 documentation <https://libsv.readthedocs.io/en/latest/>`_.
