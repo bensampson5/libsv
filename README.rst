@@ -5,6 +5,9 @@
 
 ------------------------------------------------------------------------------------------------------------------------
 
+.. image:: https://github.com/bensampson5/libsv/workflows/main/badge.svg
+    :target: https://github.com/bensampson5/libsv/actions?query=workflow%3Amain
+
 Welcome to LibSV! `Click here to go to LibSV’s
 documentation <https://libsv.readthedocs.io/en/latest/>`_.
 
