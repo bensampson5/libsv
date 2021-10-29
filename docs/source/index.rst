@@ -120,7 +120,7 @@ Distributed under the terms of the `MIT <https://github.com/bensampson5/libsv/bl
 and open source software.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Table of Contents:
 
    modules
