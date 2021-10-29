@@ -10,7 +10,7 @@ Contributions are much welcomed and appreciated!
 
 .. _submitfeedback:
 
-Feature requests and feedback
+Feature Requests and Feedback
 -----------------------------
 
 We'd like to hear about your propositions and suggestions.  Feel free to
@@ -24,7 +24,7 @@ Or create/join a discussion in the `LibSV discussion page <https://github.com/be
 
 .. _report_bugs:
 
-Report bugs
+Report Bugs
 -----------
 
 Report bugs for LibSV in the `issue tracker <https://github.com/bensampson5/libsv/issues>`_.
@@ -45,7 +45,7 @@ fix the bug itself.
 
 .. _setting_up_developers_environment
 
-Setting up the LibSV developer's environment
+Setting Up the LibSV Developer's Environment
 --------------------------------------------
 
 For anything beyond feature requests, reporting bugs, or very simple fixes, it is *strongly* recommended to setup the LibSV
@@ -86,7 +86,7 @@ Then, start a new Docker container using the LibSV image and mount the project f
 
 .. _fix_bugs:
 
-Fix bugs
+Fix Bugs
 --------
 
 Look through the `issue tracker for bugs <https://github.com/bensampson5/libsv/issues?q=is%3Aissue+is%3Aopen+label%3Abug>`_.
@@ -98,7 +98,7 @@ effect in the issue.
 
 .. _implement_features:
 
-Implement features
+Implement Features
 ------------------
 
 Look through the `issue tracker for enhancements <https://github.com/bensampson5/libsv/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement>`_.
@@ -110,7 +110,7 @@ to that effect in the issue.
 
 .. _write_documentation:
 
-Write documentation
+Write Documentation
 -------------------
 
 LibSV could always use more documentation.  What exactly is needed?
@@ -161,21 +161,21 @@ To prepare a pull request:
 
 #. If you are adding a new SystemVerilog module to the library, you must complete the following checklist:
 
-    * The new SystemVerilog module should be a single ``.sv`` file with a single ``module`` inside that
-      is added to the right directory within ``libsv/``. File naming convention is all lower-case and
-      underscores (i.e. ``example_module.sv``).
-    * The SystemVerilog module should have a corresponding Python testbench that has the same name as
-      the SystemVerilog source file with a ``test_`` prefix. (i.e. ``test_example_module.sv``). Similarly
-      to before, this testbench must be added to the right directory within ``tests/``. Take a look
-      at `existing LibSV testbenches <https://github.com/bensampson5/libsv/tree/main/tests>`_ for examples
-      on how to write a testbench for LibSV.
-    * Write a testbench that exercises the SystemVerilog module and checks whether the module meets the
-      functional specifications.
-    * The SystemVerilog module should have a corresponding ``.rst`` documentation file that has the same
-      name as the SystemVerilog source file (i.e. ``example_module.rst``). Once again, this documentation
-      file must be added to the right directory within ``docs/source/``. Take a look at 
-      `existing LibSV docs <https://github.com/bensampson5/libsv/tree/main/docs/source>`_ for examples on 
-      how write documentation for LibSV.
+   * The new SystemVerilog module should be a single ``.sv`` file with a single ``module`` inside that
+     is added to the right directory within ``libsv/``. File naming convention is all lower-case and
+     underscores (i.e. ``example_module.sv``).
+   * The SystemVerilog module should have a corresponding Python testbench that has the same name as
+     the SystemVerilog source file with a ``test_`` prefix. (i.e. ``test_example_module.sv``). Similarly
+     to before, this testbench must be added to the right directory within ``tests/``. Take a look
+     at `existing LibSV testbenches <https://github.com/bensampson5/libsv/tree/main/tests>`_ for examples
+     on how to write a testbench for LibSV.
+   * Write a testbench that exercises the SystemVerilog module and checks whether the module meets the
+     functional specifications.
+   * The SystemVerilog module should have a corresponding ``.rst`` documentation file that has the same
+     name as the SystemVerilog source file (i.e. ``example_module.rst``). Once again, this documentation
+     file must be added to the right directory within ``docs/source/``. Take a look at 
+     `existing LibSV docs <https://github.com/bensampson5/libsv/tree/main/docs/source>`_ for examples on 
+     how write documentation for LibSV.
 
 #. Unless your change is a trivial or a documentation fix (e.g., a typo or reword of a small section),
    please add yourself as a contributor to the ``AUTHORS`` file, in alphabetical order, so we can credit
