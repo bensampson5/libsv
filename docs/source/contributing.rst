@@ -49,11 +49,11 @@ Setting up the LibSV developer's environment
 --------------------------------------------
 
 For anything beyond feature requests, reporting bugs, or very simple fixes, it is *strongly* recommended to setup the LibSV
-developer's environment. Especially if you plan to write any SystemVerilog source code, write and/or Python testbenches, build 
-the html documentation from source, or modify project workflows/tools/configuration.
+developer's environment. Especially if you plan to write any SystemVerilog source code, write and/or run Python testbenches,
+build the html documentation from source, or modify project workflows/tools/configurations.
 
 LibSV provides pre-built Docker images, specifically for this purpose, which are available on 
-`LibSV's Docker Hub page <https://hub.docker.com/repository/docker/bensampson5/libsv>`_>. If you don't already have 
+`LibSV's Docker Hub page <https://hub.docker.com/repository/docker/bensampson5/libsv>`_. If you don't already have 
 `Docker <https://www.docker.com/>`_ installed on your machine, you will need to install it by following the instructions
 `here <https://docs.docker.com/get-docker/>`_.
 
@@ -129,7 +129,7 @@ without using a local copy.  This can be convenient for small fixes.
 
         ./tools/precommit.py --docs
 
-    The built documentation should be available in ``docs/build/html``.
+    The built documentation should be available in ``docs/build/html/``.
 
 
 .. _pull_requests:
@@ -155,9 +155,9 @@ To prepare a pull request:
 #. Testbenches are run using either ``pytest`` or ``./tools/precommit.py --test``. This will run all
    LibSV testbenches. To run only a single testbench, we recommend using ``pytest`` with the ``-k`` flag
    
-   ..code-block:: bash
+..code-block:: bash
 
-        pytest -k TESTBENCH_NAME
+    pytest -k TESTBENCH_NAME
 
 #. If you are adding a new SystemVerilog module to the library, you must complete the following checklist:
     #. The new SystemVerilog module should be a single ``.sv`` file added to the right directory within 
