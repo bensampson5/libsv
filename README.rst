@@ -5,6 +5,9 @@
 
 ------------------------------------------------------------------------------------------------------------------------
 
+.. image:: https://img.shields.io/pypi/v/libsv
+   :alt: PyPI
+
 .. image:: https://github.com/bensampson5/libsv/actions/workflows/ci.yml/badge.svg
    :target: https://github.com/bensampson5/libsv/actions/workflows/ci.yml
 
