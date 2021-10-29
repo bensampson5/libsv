@@ -220,7 +220,7 @@ def run_docs():
 
 
 def run_generate_hdl_svgs():
-    svg_path = DOCS_DIR / "source" / "svg"
+    svg_path = DOCS_DIR / "source" / "circuit_diagrams"
     json_path = DOCS_DIR / "source" / "json"
 
     # Clear everything out of svg directory
@@ -271,6 +271,9 @@ def run_generate_hdl_svgs():
 @click.option("--lint", is_flag=True, help="Run linting")
 @click.option("--docs", is_flag=True, help="Build documentation")
 def precommit(test, check_format, fix_format, lint, docs):
+    """Precommit tool for LibSV. If no options are provided, this
+    tool will run all precommit steps. If one or more options are
+    specified then only those precommit steps will be run."""
 
     # if no flags are provided, then run default configuration
     if not any([test, check_format, fix_format, lint, docs]):

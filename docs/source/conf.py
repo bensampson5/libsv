@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath("."))
 # -- Project information -----------------------------------------------------
 
 project = "LibSV"
-copyright = "2021, Ben Sampson"
+copyright = "2020-2021, Ben Sampson"
 author = "Ben Sampson"
 
 
@@ -50,3 +50,5 @@ html_theme = "sphinx_rtd_theme"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+
+html_logo = "_images/libsv_logo.svg"

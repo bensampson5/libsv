@@ -25,7 +25,7 @@ Implementation
 
 Block Diagram
 -------------
-.. figure:: svg/binary_counter.svg
+.. figure:: circuit_diagramsbinary_counter.svg
     :align: center
     :width: 100 %
 

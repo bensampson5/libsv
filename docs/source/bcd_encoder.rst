@@ -24,7 +24,7 @@ Implementation
 Block Diagram
 -------------
 
-.. figure:: svg/bcd_encoder.svg
+.. figure:: circuit_diagramsbcd_encoder.svg
     :align: center
     :width: 100 %
 

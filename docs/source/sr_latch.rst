@@ -23,7 +23,7 @@ Implementation
 
 Block Diagram
 -------------
-.. figure:: svg/sr_latch.svg
+.. figure:: circuit_diagramssr_latch.svg
     :align: center
     :width: 100 %
 

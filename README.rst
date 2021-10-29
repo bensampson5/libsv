@@ -1,5 +1,9 @@
-LibSV
-=====
+.. image:: https://raw.githubusercontent.com/bensampson5/libsv/issue-67-Write_up_a_contributing_guide/docs/source/_images/libsv_logo.svg
+   :align: center
+   :height: 150
+   :alt: LibSV
+
+------------------------------------------------------------------------------------------------------------------------
 
 Welcome to LibSV! `Click here to go to LibSV’s
 documentation <https://libsv.readthedocs.io/en/latest/>`_.
@@ -31,7 +35,7 @@ Getting Started
 
 LibSV is very easy to use. First, install the ``libsv`` package from PyPI:
 
-.. code:: bash
+.. code-block:: bash
 
   pip install libsv
 
@@ -62,7 +66,7 @@ if you don’t already have it.
 
 Next, pull the latest LibSV Docker image:
 
-.. code:: bash
+.. code-block:: bash
 
   docker build --pull -f Dockerfile.dev \
     --build-arg UID=$(id -u) \
@@ -71,13 +75,13 @@ Next, pull the latest LibSV Docker image:
 
 Then, start a new Docker container using the LibSV image and mount the project folder to the container:
 
-.. code:: bash
+.. code-block:: bash
 
   docker run --rm -it -v $(pwd):/code libsv
 
 Finally, within the Docker container, run ``pytest``:
 
-.. code:: bash
+.. code-block:: bash
 
   pytest
 
@@ -85,16 +89,32 @@ This will run all the LibSV testbenches for the entire library (*Warning: This m
 
 Instead, to list all the available LibSV testbenches, run:
 
-.. code:: bash
+.. code-block:: bash
 
   pytest --co
 
 Then, you can run an individual or subset of testbenches using the ``-k`` flag which will only run tests which
 match the given substring expression:
 
-.. code:: bash
+.. code-block:: bash
 
   pytest -k EXPRESSION
 
 Each testbench generates an associated ``.fst`` waveform file that is written to the ``build/`` directory and can be
 viewed using `GTKWave <http://gtkwave.sourceforge.net/>`_.
+
+Bugs/Feature Requests
+---------------------
+
+Please use `LibSV's GitHub issue tracker <https://github.com/bensampson5/libsv/issues>`_ to submit bugs or request features.
+
+Contributing
+------------
+
+Contributions are much welcomed and appreciated! Take a look at the Contributing page to get started.
+
+License
+-------
+
+Distributed under the terms of the `MIT <https://github.com/bensampson5/libsv/blob/main/LICENSE>`_ license, LibSV is free
+and open source software.

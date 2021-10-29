@@ -21,7 +21,7 @@ Implementation
 Block Diagram
 -------------
 
-.. figure:: svg/half_adder.svg
+.. figure:: circuit_diagramshalf_adder.svg
     :align: center
     :width: 100 %
 
