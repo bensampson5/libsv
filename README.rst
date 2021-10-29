@@ -5,10 +5,10 @@ Welcome to LibSV! `Click here to go to LibSV’s
 documentation <https://libsv.readthedocs.io/en/latest/>`_.
 
 LibSV is a library of open source, parameterized digital logic IP
-written in SystemVerilog. While other similar libraries do exist, LibSV
+written in SystemVerilog. While similar libraries may already exist, LibSV
 is unique in that it takes advantage of open-source, state-of-the-art
 development best practices and tools from across the software and
-digital design community:
+digital design community, including:
 
 * Trivial installation. LibSV is hosted on PyPI and can easily be installed using `pip <https://pip.pypa.io/en/stable/>`_
   or whatever Python package manager of your choice.
