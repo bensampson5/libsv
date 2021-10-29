@@ -176,6 +176,7 @@ To prepare a pull request:
       file must be added to the right directory within ``docs/source/``. Take a look at 
       `existing LibSV docs <https://github.com/bensampson5/libsv/tree/main/docs/source>`_ for examples on 
       how write documentation for LibSV.
+
 #. Unless your change is a trivial or a documentation fix (e.g., a typo or reword of a small section),
    please add yourself as a contributor to the ``AUTHORS`` file, in alphabetical order, so we can credit
    you for your work!
