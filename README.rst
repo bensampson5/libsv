@@ -35,7 +35,7 @@ Getting Started
 
 LibSV is very easy to use. First, install the ``libsv`` package from PyPI:
 
-.. code:: bash
+.. code-block:: bash
 
   pip install libsv
 
@@ -66,7 +66,7 @@ if you don’t already have it.
 
 Next, pull the latest LibSV Docker image:
 
-.. code:: bash
+.. code-block:: bash
 
   docker build --pull -f Dockerfile.dev \
     --build-arg UID=$(id -u) \
@@ -75,13 +75,13 @@ Next, pull the latest LibSV Docker image:
 
 Then, start a new Docker container using the LibSV image and mount the project folder to the container:
 
-.. code:: bash
+.. code-block:: bash
 
   docker run --rm -it -v $(pwd):/code libsv
 
 Finally, within the Docker container, run ``pytest``:
 
-.. code:: bash
+.. code-block:: bash
 
   pytest
 
@@ -89,14 +89,14 @@ This will run all the LibSV testbenches for the entire library (*Warning: This m
 
 Instead, to list all the available LibSV testbenches, run:
 
-.. code:: bash
+.. code-block:: bash
 
   pytest --co
 
 Then, you can run an individual or subset of testbenches using the ``-k`` flag which will only run tests which
 match the given substring expression:
 
-.. code:: bash
+.. code-block:: bash
 
   pytest -k EXPRESSION
 
