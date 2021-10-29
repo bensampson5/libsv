@@ -155,13 +155,14 @@ To prepare a pull request:
 #. Testbenches are run using either ``pytest`` or ``./tools/precommit.py --test``. This will run all
    LibSV testbenches. To run only a single testbench, we recommend using ``pytest`` with the ``-k`` flag
    
-..code-block:: bash
+    ..code-block:: bash
 
-    pytest -k TESTBENCH_NAME
+        pytest -k TESTBENCH_NAME
 
 #. If you are adding a new SystemVerilog module to the library, you must complete the following checklist:
-    #. The new SystemVerilog module should be a single ``.sv`` file added to the right directory within 
-       ``libsv/``. File naming convention is all lower-case and underscores (i.e. ``example_module.sv``).
+    #. The new SystemVerilog module should be a single ``.sv`` file with a single ``module`` inside that
+       is added to the right directory within ``libsv/``. File naming convention is all lower-case and
+       underscores (i.e. ``example_module.sv``).
     #. The SystemVerilog module should have a corresponding Python testbench that has the same name as
        the SystemVerilog source file with a ``test_`` prefix. (i.e. ``test_example_module.sv``). Similarly
        to before, this testbench must be added to the right directory within ``tests/``. Take a look
@@ -171,27 +172,28 @@ To prepare a pull request:
        functional specifications.
     #. The SystemVerilog module should have a corresponding ``.rst`` documentation file that has the same
        name as the SystemVerilog source file (i.e. ``example_module.rst``). Once again, this documentation
-       file must be to the right directory within ``docs/source/``. Take a look at 
+       file must be added to the right directory within ``docs/source/``. Take a look at 
        `existing LibSV docs <https://github.com/bensampson5/libsv/tree/main/docs/source>`_ for examples on 
        how write documentation for LibSV.
 #. Unless your change is a trivial or a documentation fix (e.g., a typo or reword of a small section),
-   please add yourself to the ``AUTHORS`` file, in alphabetical order, so we can credit you for your work!
+   please add yourself as a contributor to the ``AUTHORS`` file, in alphabetical order, so we can credit
+   you for your work!
 #. Commit and push once the precommit script passes and you are happy with your changes:
 
-.. code-block:: bash
+    .. code-block:: bash
 
-    git commit -a -m "<commit message>"
-    git push -u
+        git commit -a -m "<commit message>"
+        git push -u
 
 #. Finally, submit a pull request through GitHub using this data:
 
-.. code-block:: text
+    .. code-block:: text
 
-    head repository: YOUR_GITHUB_USERNAME/libsv
-    compare: your-branch-name
+        head repository: YOUR_GITHUB_USERNAME/libsv
+        compare: your-branch-name
 
-    base repository: bensampson5/libsv
-    base: main
+        base repository: bensampson5/libsv
+        base: main
 
 
 .. _closing_issues:
