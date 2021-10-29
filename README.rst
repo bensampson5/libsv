@@ -1,4 +1,4 @@
-.. image:: https://raw.githubusercontent.com/bensampson5/libsv/issue-67-Write_up_a_contributing_guide/docs/source/svg/libsv_logo.svg
+.. image:: https://raw.githubusercontent.com/bensampson5/libsv/main/docs/source/svg/libsv_logo.svg
    :align: center
    :height: 150
    :alt: LibSV
