@@ -18,9 +18,9 @@ async def cocotb_test_binary_counter(dut):
     cocotb.fork(Clock(dut.clk, 2).start())
 
     # reset
-    dut.aresetn <= 0
+    dut.aresetn = 0
     await FallingEdge(dut.clk)
-    dut.aresetn <= 1
+    dut.aresetn = 1
 
     # increment through all possible counter states
     for i in range(2 ** n):

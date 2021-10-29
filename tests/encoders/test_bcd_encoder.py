@@ -15,6 +15,6 @@ async def cocotb_test_bcd_encoder(dut):
     n = int(dut.N)
 
     for i in range(2 ** n):
-        dut.i_bin <= i
+        dut.i_bin = i
         await Timer(1)
         assert dut.o_bcd == int(str(int(dut.i_bin)), 16)
