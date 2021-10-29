@@ -12,8 +12,8 @@ digital design community:
 
 * Trivial installation. LibSV is hosted on PyPI and can easily be installed using `pip <https://pip.pypa.io/en/stable/>`_
   or whatever Python package manager of your choice.
-* Easy-to-use. Simply add ```include "libsv/<path>/<to>/<module>.sv"`` to the top of your file and make sure to add the
-  ``site-packages/`` folder where LibSV was installed as an include directory when you build your design.
+* Easy-to-use. Simply add ```include "libsv/<path>/<to>/<module>.sv"`` to the top of your sourcefile and then add the
+  ``site-packages/`` folder where LibSV was installed to the include path when you build your project.
 * Python-based, integrated with `pytest <https://github.com/pytest-dev/pytest>`_, automated testbenches using
   `Cocotb <https://github.com/cocotb/cocotb>`_ + `Verilator <https://github.com/verilator/verilator>`_ for 
   simple and fast logic simulation
@@ -41,8 +41,7 @@ isolated from the rest of your system.
 Then add the ``site-packages/`` folder, where LibSV was just installed, to your include path when building your
 project so that your design tools can find LibSV.
 
-Finally, at the top of your design file where you want to use LibSV modules, for each module you want to use, 
-simply add:
+Finally, at the top of your design file where you want to use LibSV modules, for each module you want to use, add:
 
 .. code-block:: SystemVerilog
 
@@ -53,7 +52,7 @@ Running Testbenches
 
 Running the LibSV testbenches require `cocotb <https://github.com/cocotb/cocotb>`_, 
 `Verilator <https://github.com/verilator/verilator>`_, and a number of other dependencies to be installed.
-Instead of trying to install everything manually on your machine, the easiest and recommended way to run the
+Instead of trying to install everything manually on your machine, the easier and recommended way to run the
 LibSV testbenches is to use the pre-built 
 `LibSV docker images on Docker Hub <https://hub.docker.com/repository/docker/bensampson5/libsv>`__ that have the
 complete set of LibSV developer tools already installed.
@@ -70,7 +69,7 @@ Next, pull the latest LibSV docker image:
     --build-arg GID=$(id -g) \
     -t libsv .
 
-Then, start a new docker container using the LibSV image and mount the project folder to the docker container:
+Then, start a new docker container using the LibSV image and mount the project folder to the container:
 
 .. code:: bash
 
@@ -82,8 +81,9 @@ Finally, within the docker container, run ``pytest``:
 
   pytest
 
-This will run all the LibSV testbenches for the entire library (*Warning: This may take a while!*). Instead,
-to list all the available LibSV testbenches, run:
+This will run all the LibSV testbenches for the entire library (*Warning: This may take a while!*).
+
+Instead, to list all the available LibSV testbenches, run:
 
 .. code:: bash
 
