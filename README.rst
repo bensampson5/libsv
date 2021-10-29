@@ -5,7 +5,7 @@
 
 ------------------------------------------------------------------------------------------------------------------------
 
-.. image:: https://github.com/bensampson5/libsv/actions/workflows/ci.yml/badge.svg
+.. image:: https://github.com/bensampson5/libsv/actions/workflows/ci.yml/badge.svg?branch=main
     :target: https://github.com/bensampson5/libsv/actions/workflows/ci.yml
 
 Welcome to LibSV! `Click here to go to LibSV’s
