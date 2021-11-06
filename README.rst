@@ -121,7 +121,8 @@ Please use `LibSV's GitHub issue tracker <https://github.com/bensampson5/libsv/i
 Contributing
 ------------
 
-Contributions are much welcomed and appreciated! Take a look at the Contributing page to get started.
+Contributions are much welcomed and appreciated! Take a look at the 
+`Contributing <https://libsv.readthedocs.io/en/latest/contributing.html>`_ page to get started.
 
 License
 -------
