@@ -103,36 +103,39 @@ def encode_5b6b(i_5b: int, i_rd: int, i_is_control: int) -> Tuple[int, int]:
     i_lookup = (i_rd << 5) | i_5b
     o_lookup = dict_5b6b[i_lookup]
 
-    return o_lookup & 0x3f, o_lookup >> 6
+    return o_lookup & 0x3F, o_lookup >> 6
 
 
 @cocotb.test()
 async def cocotb_test_encoder_5b6b(dut):
     """5B/6B Encoder test"""
 
-    for i_5b in range(2 ** 5):
+    for i_vector in range(2 ** 7):
 
+        i_5b = i_vector & 0x1F
         dut.i_5b.value = i_5b
 
-        for i_rd in range(2):
+        i_rd = (i_vector >> 5) & 0x1
+        dut.i_rd.value = i_rd
 
-            dut.i_rd.value = i_rd
+        i_is_control = (i_vector >> 6) & 0x1
+        dut.i_is_control.value = i_is_control
 
-            for i_is_control in range(2):
+        o_6b, o_rd = encode_5b6b(i_5b, i_rd, i_is_control)
+        await Timer(1)
 
-                dut.i_is_control.value = i_is_control
-
-                o_6b, o_rd = encode_5b6b(i_5b, i_rd, i_is_control)
-                await Timer(1)
-
-                try:
-                    assert int(dut.o_6b) == o_6b
-                    assert int(dut.o_rd) == o_rd
-                except AssertionError as e:
-                    print(
-                        f"Failed: i_5b = {format(i_5b, '#07b')}, i_rd = {format(i_rd, '#03b')}, i_is_control = {format(i_is_control, '#03b')}\n"
-                        f"        dut.i_5b = 0b{dut.i_5b.value}, dut.i_rd = 0b{dut.i_rd.value}, dut.i_is_control = 0b{dut.i_is_control.value}\n"
-                        f"        dut.o_6b = 0b{dut.o_6b.value}, dut.o_rd = 0b{dut.o_rd.value}\n"
-                        f"        o_6b = {format(o_6b, '#08b')}, o_rd = {format(o_rd, '#03b')}\n"
-                    )
-                    raise e
+        try:
+            assert int(dut.o_6b) == o_6b
+            assert int(dut.o_rd) == o_rd
+        except AssertionError as e:
+            print(
+                f"Failed: i_5b = {format(i_5b, '#07b')}, i_rd = {format(i_rd, '#03b')},"
+                f" i_is_control = {format(i_is_control, '#03b')}\n"
+                f"        dut.i_5b = 0b{dut.i_5b.value}, dut.i_rd = 0b{dut.i_rd.value},"
+                f" dut.i_is_control = 0b{dut.i_is_control.value}\n"
+                f"        dut.o_6b = 0b{dut.o_6b.value}, dut.o_rd = 0b{dut.o_rd.value}"
+                f"\n"
+                f"        o_6b = {format(o_6b, '#08b')}, o_rd = {format(o_rd, '#03b')}"
+                f"\n"
+            )
+            raise e
