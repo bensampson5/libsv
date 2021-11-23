@@ -225,13 +225,13 @@ async def cocotb_test_encoder_8b10b(dut):
         # Parse out input values
         i_8b = i & 0xFF
         i_rd = (i >> 8) & 1
-        i_is_control = (i >> 9) & 1
+        i_ctrl = (i >> 9) & 1
 
         # Run the software 8b10b encoder
         py_i_8b = i_8b
         py_i_rd = (i_rd * 2) - 1
-        py_i_is_control = bool(i_is_control)
-        py_o_10b, py_o_rd = encode_8b10b(py_i_8b, py_i_rd, py_i_is_control)
+        py_i_ctrl = bool(i_ctrl)
+        py_o_10b, py_o_rd = encode_8b10b(py_i_8b, py_i_rd, py_i_ctrl)
 
         # Calculate expected dut outputs using software
         # 8b/10b encoder results
@@ -241,7 +241,7 @@ async def cocotb_test_encoder_8b10b(dut):
         # Push inputs to dut
         dut.i_8b.value = i_8b
         dut.i_rd.value = i_rd
-        dut.i_is_control.value = i_is_control
+        dut.i_ctrl.value = i_ctrl
 
         # Step simulation
         await Timer(1)
@@ -253,10 +253,10 @@ async def cocotb_test_encoder_8b10b(dut):
         except AssertionError as e:
             i_8b_s = format(i_8b, "#010b")
             i_rd_s = format(i_rd, "#03b")
-            i_is_ctrl_s = format(i_is_control, "#03b")
+            i_ctrl_s = format(i_ctrl, "#03b")
             d_i_8b_s = "0b" + str(dut.i_8b.value)
             d_i_rd_s = "0b" + str(dut.i_rd.value)
-            d_i_is_ctrl_s = "0b" + str(dut.i_is_control.value)
+            d_i_ctrl_s = "0b" + str(dut.i_ctrl.value)
             d_o_10b_s = "0b" + str(dut.o_10b.value)
             d_o_rd_s = "0b" + str(dut.o_rd.value)
             o_10b_s = format(o_10b, "#012b")
@@ -264,9 +264,9 @@ async def cocotb_test_encoder_8b10b(dut):
             print(
                 f"Error: Actual outputs do not match expected outputs\n"
                 f"    i_8b     = {i_8b_s}, i_rd     = {i_rd_s}, "
-                f"i_is_control     = {i_is_ctrl_s}\n"
+                f"i_ctrl     = {i_ctrl_s}\n"
                 f"    dut.i_8b = {d_i_8b_s}, dut.i_rd = {d_i_rd_s}, "
-                f"dut.i_is_control = {d_i_is_ctrl_s}\n"
+                f"dut.i_ctrl = {d_i_ctrl_s}\n"
                 f"    dut.o_10b = {d_o_10b_s}, dut.o_rd = {d_o_rd_s}\n"
                 f"    o_10b = {o_10b_s}, o_rd = {o_rd_s}\n"
             )

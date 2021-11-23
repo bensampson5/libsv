@@ -1,4 +1,4 @@
-.. image:: _images/libsv_logo.svg
+.. image:: _static/libsv_logo.svg
    :align: center
    :height: 200
    :alt: LibSV

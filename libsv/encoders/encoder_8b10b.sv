@@ -1,7 +1,7 @@
 module encoder_8b10b (
     input  logic [7:0] i_8b,
     input  logic       i_rd,
-    input  logic       i_is_control,
+    input  logic       i_ctrl,
     output logic [9:0] o_10b,
     output logic       o_rd
 );
@@ -9,7 +9,7 @@ module encoder_8b10b (
   // Create lookup table input and output vectors
   logic [ 9:0] i_lut;
   logic [10:0] o_lut;
-  assign i_lut = {i_is_control, i_rd, i_8b};
+  assign i_lut = {i_ctrl, i_rd, i_8b};
   assign o_rd  = o_lut[10];
   assign o_10b = o_lut[9:0];
 
