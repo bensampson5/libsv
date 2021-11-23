@@ -43,7 +43,7 @@ If you can write a demonstration test that currently fails but should pass
 fix the bug itself.
 
 
-.. _setting_up_developers_environment
+.. _setting_up_developers_environment:
 
 Setting Up the LibSV Developer's Environment
 --------------------------------------------

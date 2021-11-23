@@ -22,7 +22,7 @@ Implementation
 Block Diagram
 -------------
 
-.. figure:: circuit_diagramsfull_adder.svg
+.. figure:: circuit_diagrams/full_adder.svg
     :align: center
     :width: 100 %
 
