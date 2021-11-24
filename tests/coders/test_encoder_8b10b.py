@@ -6,7 +6,7 @@ from utils import pytest_cocotb_run_test
 
 
 def test_5b6b_encoder(pytestconfig):
-    """Pytest fixture for BCD Encoder test"""
+    """Pytest fixture for 8B/10B Encoder test"""
     pytest_cocotb_run_test(pytestconfig, __name__)
 
 

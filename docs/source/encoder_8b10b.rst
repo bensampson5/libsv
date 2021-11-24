@@ -134,7 +134,7 @@ Inputs/Outputs
 
 Implementation
 --------------
-.. literalinclude:: ../../libsv/encoders/encoder_8b10b.sv
+.. literalinclude:: ../../libsv/coders/encoder_8b10b.sv
     :language: systemverilog
     :caption: encoder_8b10b.sv
 
