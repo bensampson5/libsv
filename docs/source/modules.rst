@@ -5,9 +5,8 @@ Modules
 .. toctree::
     :maxdepth: 2
  
+    coders
     counters
-    decoders
-    encoders
     latches
     math
     muxes
