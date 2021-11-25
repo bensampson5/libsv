@@ -24,10 +24,3 @@ Source Code
     :linenos:
     :caption: binary_counter.sv
 
-Block Diagram
--------------
-.. figure:: circuit_diagrams/binary_counter.svg
-    :align: center
-    :width: 100 %
-
-    binary_counter.sv

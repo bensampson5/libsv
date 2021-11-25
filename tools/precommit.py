@@ -52,9 +52,25 @@ def run_test():
     run(cmd)
 
 
-def find_hdl_files(dir=SRC_DIR):
-    # Add all SystemVerilog or Verilog files within project
-    hdl_search_patterns = ["**/*.sv", "**/*.v"]
+def run_synthesis():
+
+    # Add all SystemVerilog files in the src directory
+    hdl_files = find_sv_files()
+
+    # Ignore certain hdl files that fail yosys's synthesis even though
+    # they are synthesizeable
+    ignore_hdl_files = ["onehot_mux.sv"]
+    hdl_files = [f for f in hdl_files if f.name not in ignore_hdl_files]
+
+    # Run yosys to make sure each source module is synthesizeable
+    for i in range(len(hdl_files)):
+        cmd = ["yosys", "-p", f"read -sv {hdl_files[i]}; synth -auto-top;"]
+        run(cmd)
+
+
+def find_sv_files(dir=SRC_DIR):
+    # Add all SystemVerilog files within project
+    hdl_search_patterns = ["**/*.sv"]
     hdl_files = []
     for sp in hdl_search_patterns:
         hdl_files += dir.glob(sp)
@@ -72,7 +88,7 @@ def run_check_format_hdl():
 
     print("\nChecking HDL formatting...\n", flush=FLUSH)
 
-    hdl_files = find_hdl_files()
+    hdl_files = find_sv_files()
 
     # Make a copy of original HDL code
     hdl_file_code_original = []
@@ -160,7 +176,7 @@ def run_fix_format_hdl(print_output=True):
 
         cmd += format_args
 
-    hdl_files = find_hdl_files()
+    hdl_files = find_sv_files()
     cmd += [str(f) for f in hdl_files]
 
     run(cmd, print_output=print_output)
@@ -186,7 +202,7 @@ def run_lint_hdl():
 
     cmd = ["verible-verilog-lint"]
 
-    hdl_files = find_hdl_files()
+    hdl_files = find_sv_files()
     cmd += [str(f) for f in hdl_files]
 
     run(cmd)
@@ -212,76 +228,39 @@ def run_docs():
     # Create new docs build directory
     DOCS_BUILD_DIR.mkdir()
 
-    # Generature SVG block diagram graphics
-    run_generate_hdl_svgs()
-
     cmd = ["make", "html"]
     run(cmd, cwd=DOCS_DIR)
 
 
-def run_generate_hdl_svgs():
-    svg_path = DOCS_DIR / "source" / "circuit_diagrams"
-    json_path = DOCS_DIR / "source" / "json"
+def run_build_package():
+    """Builds PyPI package"""
 
-    # Clear everything out of svg directory
-    if svg_path.exists():
-        shutil.rmtree(svg_path)
-    svg_path.mkdir()
-
-    # Create temporary json directory if it doesn't already exist
-    if not json_path.exists():
-        json_path.mkdir()
-
-    # Add all SystemVerilog files in the src directory
-    hdl_search_patterns = ["**/*.sv"]
-    hdl_files = []
-    for sp in hdl_search_patterns:
-        hdl_files += SRC_DIR.glob(sp)
-
-    # Ignore certain hdl files that fails svg generation despite
-    # being synthesizable
-    ignore_hdl_files = ["onehot_mux.sv", "encoder_8b10b.sv", "decoder_8b10b.sv"]
-    hdl_files = [f for f in hdl_files if f.name not in ignore_hdl_files]
-
-    svg_files = []
-    json_files = []
-    for f in hdl_files:
-        svg_files += [svg_path / (f.stem + ".svg")]
-        json_files += [json_path / (f.stem + ".json")]
-
-    # Run yosys to output jsons and then use netlistsvg to create svgs for each module
-    for i in range(len(hdl_files)):
-        cmd = [
-            "yosys",
-            "-p",
-            f"read -sv {hdl_files[i]}; proc; clean; json -o {json_files[i]}",
-        ]
-        run(cmd, cwd=DOCS_DIR)
-        cmd = ["netlistsvg", f"{json_files[i]}", "-o", f"{svg_files[i]}"]
-        run(cmd, cwd=DOCS_DIR)
-
-    # Remove temporary json directory
-    shutil.rmtree(json_path)
+    cmd = ["poetry", "build"]
+    run(cmd)
 
 
 @click.command()
 @click.option("--test", is_flag=True, help="Run tests")
+@click.option("--synthesis", is_flag=True, help="Run synthesis")
 @click.option("--check-format", is_flag=True, help="Check formatting")
 @click.option("--fix-format", is_flag=True, help="Fix formatting")
 @click.option("--lint", is_flag=True, help="Run linting")
 @click.option("--docs", is_flag=True, help="Build documentation")
-def precommit(test, check_format, fix_format, lint, docs):
+@click.option("--build-package", is_flag=True, help="Build package")
+def precommit(test, synthesis, check_format, fix_format, lint, docs, build_package):
     """Precommit tool for LibSV. If no options are provided, this
-    tool will run all precommit steps. If one or more options are
-    specified then only those precommit steps will be run."""
+    tool will run all precommit steps except for --fix-format. If one or more
+    options are specified then only those precommit steps will be run."""
 
     # if no flags are provided, then run default configuration
-    if not any([test, check_format, fix_format, lint, docs]):
+    if not any([test, synthesis, check_format, fix_format, lint, docs, build_package]):
         test = True
+        synthesis = True
         check_format = True
         fix_format = False
         lint = True
         docs = True
+        build_package = True
 
     # Check if in docker container
     if not in_docker():
@@ -301,6 +280,10 @@ def precommit(test, check_format, fix_format, lint, docs):
             print("\nRunning tests...\n", flush=FLUSH)
             run_test()
 
+        if synthesis:
+            print("\nRunning synthesis...\n", flush=FLUSH)
+            run_synthesis()
+
         if check_format:
             print("\nChecking formatting...\n", flush=FLUSH)
             run_check_format()
@@ -316,6 +299,10 @@ def precommit(test, check_format, fix_format, lint, docs):
         if docs:
             print("\nBuilding documentation...\n", flush=FLUSH)
             run_docs()
+
+        if build_package:
+            print("\nBuilding package...\n")
+            run_build_package()
 
 
 if __name__ == "__main__":

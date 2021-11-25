@@ -5,6 +5,10 @@ Full Adder
 A full adder. Takes three inputs, ``i_a``, ``i_b``, and ``i_carry``, and adds them together to generate a sum output, ``o_sum``, 
 and a carry bit output, ``o_carry``.
 
+Parameters
+----------
+- None
+
 Ports
 -----
 - ``i_a`` input a
@@ -19,12 +23,3 @@ Source Code
     :language: systemverilog
     :linenos:
     :caption: full_adder.sv
-
-Block Diagram
--------------
-
-.. figure:: circuit_diagrams/full_adder.svg
-    :align: center
-    :width: 100 %
-
-    full_adder.sv

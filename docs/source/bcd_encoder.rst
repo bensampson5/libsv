@@ -21,12 +21,3 @@ Source Code
     :language: systemverilog
     :linenos:
     :caption: bcd_encoder.sv
-
-Block Diagram
--------------
-
-.. figure:: circuit_diagrams/bcd_encoder.svg
-    :align: center
-    :width: 100 %
-
-    bcd_encoder.sv
