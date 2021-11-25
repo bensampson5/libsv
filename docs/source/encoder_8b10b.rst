@@ -207,8 +207,3 @@ Source Code
     :language: systemverilog
     :linenos:
     :caption: encoder_8b10b.sv
-
-Block Diagram
--------------
-
-Not available.

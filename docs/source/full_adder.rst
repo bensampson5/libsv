@@ -19,12 +19,3 @@ Source Code
     :language: systemverilog
     :linenos:
     :caption: full_adder.sv
-
-Block Diagram
--------------
-
-.. figure:: circuit_diagrams/full_adder.svg
-    :align: center
-    :width: 100 %
-
-    full_adder.sv

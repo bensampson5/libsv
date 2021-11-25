@@ -18,12 +18,3 @@ Source Code
     :language: systemverilog
     :linenos:
     :caption: half_adder.sv
-
-Block Diagram
--------------
-
-.. figure:: circuit_diagrams/half_adder.svg
-    :align: center
-    :width: 100 %
-
-    half_adder.sv

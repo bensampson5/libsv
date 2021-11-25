@@ -212,25 +212,11 @@ def run_docs():
     # Create new docs build directory
     DOCS_BUILD_DIR.mkdir()
 
-    # Generature SVG block diagram graphics
-    run_generate_hdl_svgs()
-
     cmd = ["make", "html"]
     run(cmd, cwd=DOCS_DIR)
 
 
-def run_generate_hdl_svgs():
-    svg_path = DOCS_DIR / "source" / "circuit_diagrams"
-    json_path = DOCS_DIR / "source" / "json"
-
-    # Clear everything out of svg directory
-    if svg_path.exists():
-        shutil.rmtree(svg_path)
-    svg_path.mkdir()
-
-    # Create temporary json directory if it doesn't already exist
-    if not json_path.exists():
-        json_path.mkdir()
+def run_synthesis():
 
     # Add all SystemVerilog files in the src directory
     hdl_search_patterns = ["**/*.sv"]
@@ -238,46 +224,33 @@ def run_generate_hdl_svgs():
     for sp in hdl_search_patterns:
         hdl_files += SRC_DIR.glob(sp)
 
-    # Ignore certain hdl files that fails svg generation despite
-    # being synthesizable
-    ignore_hdl_files = ["onehot_mux.sv", "encoder_8b10b.sv", "decoder_8b10b.sv"]
+    # Ignore certain hdl files that fail yosys's synthesis even though
+    # they are synthesizeable
+    ignore_hdl_files = ["onehot_mux.sv"]
     hdl_files = [f for f in hdl_files if f.name not in ignore_hdl_files]
 
-    svg_files = []
-    json_files = []
-    for f in hdl_files:
-        svg_files += [svg_path / (f.stem + ".svg")]
-        json_files += [json_path / (f.stem + ".json")]
-
-    # Run yosys to output jsons and then use netlistsvg to create svgs for each module
+    # Run yosys to make sure each source module is synthesizeable
     for i in range(len(hdl_files)):
-        cmd = [
-            "yosys",
-            "-p",
-            f"read -sv {hdl_files[i]}; proc; clean; json -o {json_files[i]}",
-        ]
-        run(cmd, cwd=DOCS_DIR)
-        cmd = ["netlistsvg", f"{json_files[i]}", "-o", f"{svg_files[i]}"]
-        run(cmd, cwd=DOCS_DIR)
-
-    # Remove temporary json directory
-    shutil.rmtree(json_path)
+        cmd = ["yosys", "-p", f"read -sv {hdl_files[i]}; synth -auto-top;"]
+        run(cmd)
 
 
 @click.command()
 @click.option("--test", is_flag=True, help="Run tests")
+@click.option("--synthesis", is_flag=True, help="Run synthesis")
 @click.option("--check-format", is_flag=True, help="Check formatting")
 @click.option("--fix-format", is_flag=True, help="Fix formatting")
 @click.option("--lint", is_flag=True, help="Run linting")
 @click.option("--docs", is_flag=True, help="Build documentation")
-def precommit(test, check_format, fix_format, lint, docs):
+def precommit(test, synthesis, check_format, fix_format, lint, docs):
     """Precommit tool for LibSV. If no options are provided, this
     tool will run all precommit steps. If one or more options are
     specified then only those precommit steps will be run."""
 
     # if no flags are provided, then run default configuration
-    if not any([test, check_format, fix_format, lint, docs]):
+    if not any([test, synthesis, check_format, fix_format, lint, docs]):
         test = True
+        synthesis = True
         check_format = True
         fix_format = False
         lint = True
@@ -300,6 +273,10 @@ def precommit(test, check_format, fix_format, lint, docs):
         if test:
             print("\nRunning tests...\n", flush=FLUSH)
             run_test()
+
+        if synthesis:
+            print("\nRunning synthesis...\n", flush=FLUSH)
+            run_synthesis()
 
         if check_format:
             print("\nChecking formatting...\n", flush=FLUSH)

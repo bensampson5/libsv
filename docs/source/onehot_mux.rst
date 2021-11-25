@@ -22,8 +22,3 @@ Source Code
     :language: systemverilog
     :linenos:
     :caption: onehot_mux.sv
-
-Block Diagram
--------------
-
-Not available.

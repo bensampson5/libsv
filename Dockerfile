@@ -20,7 +20,6 @@ RUN apt-get update \
         libfl-dev \
         libgoogle-perftools-dev \
         make \
-        npm \
         numactl \
         perl \
         perl-doc \
@@ -71,9 +70,6 @@ RUN wget ${VERIBLE_URL} -O verible.tar.gz \
     && tar -xf verible.tar.gz -C verible --strip-components=1 \
     && cp -r verible/bin/* /usr/local/bin \
     && rm -rf verible verible.tar.gz
-
-# Install netlistsvg using npm
-RUN npm install -g netlistsvg
 
 WORKDIR /root
 CMD /bin/bash

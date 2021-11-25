@@ -21,11 +21,3 @@ Source Code
     :language: systemverilog
     :linenos:
     :caption: sr_latch.sv
-
-Block Diagram
--------------
-.. figure:: circuit_diagrams/sr_latch.svg
-    :align: center
-    :width: 100 %
-
-    sr_latch.sv
