@@ -23,11 +23,11 @@ The RD always starts at -1.
 
 As the IBM 8b10b coding implementation breaks down the 8b/10b coding into 5b/6b and 3b/4b subcodings, the 
 running disparity is evaluated over each 6b or 4b code as it is transmitted or received. The rules for 
-calculating running disparity are simple:
+calculating running disparity are:
 
   1. If the disparity of the 6b or 4b codeword is 0 (equal number of 1s and 0s) then the output running
      disparity is equal to the input running disparity (i.e. -1 -> -1, +1 -> +1).
-  2. If the disparity of the 6b or 4b codeword is not 0 (±2, ±4, ±6) then the output running disparity
+  2. If the disparity of the 6b or 4b codeword is not 0 (i.e. ±2, ±4, ±6) then the output running disparity
      is equal to the complement of the input running disparity (i.e. -1 -> +1, +1 -> -1)
 
 In almost all use-cases, the user is required to keep track of the running disparity over a given 

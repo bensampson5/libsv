@@ -27,11 +27,11 @@ The RD always starts at -1.
 
 As the IBM 8b10b coding implementation breaks down the 8b/10b coding into 5b/6b and 3b/4b subcodings, the 
 running disparity is evaluated over each 6b or 4b code as it is transmitted or received. The rules for 
-calculating running disparity are simple:
+calculating running disparity are:
 
   1. If the disparity of the 6b or 4b codeword is 0 (equal number of 1s and 0s) then the output running
      disparity is equal to the input running disparity (i.e. -1 -> -1, +1 -> +1).
-  2. If the disparity of the 6b or 4b codeword is not 0 (±2, ±4, ±6) then the output running disparity
+  2. If the disparity of the 6b or 4b codeword is not 0 (i.e. ±2, ±4, ±6) then the output running disparity
      is equal to the complement of the input running disparity (i.e. -1 -> +1, +1 -> -1)
 
 In almost all use-cases, the user is required to keep track of the running disparity over a given 
@@ -47,10 +47,9 @@ so both are provided to the user to allow them to handle the two error types sep
 to.
 
 IBM's 8B/10B implementation is defined by partitioning the coder into 5B/6B and 3B/4B subordinate coders
-as described in the tables below. Using these tables, a given input 8-bit value, ``HGFEDCBA``, along
-with the input running disparity and a control symbol select bit, can be encoded to its corresponding
-unique 10-bit value, ``jhgfiedcba``. The decoder implementation reverses these tables to recover the
-original 8-bit value.
+as described in the tables below. Using these tables, a given input 10-bit value, ``jhgfiedcba``, along
+with the input running disparity, can be decoded to its corresponding 8-bit value, ``HGFEDCBA``, along
+with an indication if the received symbol is a control or data symbol.
 
 
 .. table:: 5B/6B Coding Table
