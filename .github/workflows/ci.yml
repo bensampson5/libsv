@@ -106,6 +106,9 @@ jobs:
       - name: Build and run tests
         run: ${{ env.DOCKER_RUN }} /code/tools/precommit.py --test
 
+      - name: Run synthesis
+        run: ${{ env.DOCKER_RUN }} /code/tools/precommit.py --synthesis
+
       - name: Check format
         run: |
           ${{ env.DOCKER_RUN }} /code/tools/precommit.py --check-format
