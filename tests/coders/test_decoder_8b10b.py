@@ -1,7 +1,6 @@
 import cocotb
 from cocotb.triggers import Timer
 from typing import Tuple
-import re
 from utils import pytest_cocotb_run_test
 
 
