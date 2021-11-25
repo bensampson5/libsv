@@ -97,8 +97,7 @@ jobs:
           images: bensampson5/libsv
 
       - name: Setup GitHub environment
-        run: |
-          echo "DOCKER_RUN=docker run --rm -v $(pwd):/code bensampson5/libsv:${{ steps.docker_meta.outputs.version }}" >> $GITHUB_ENV;
+        run: echo "DOCKER_RUN=docker run --rm -v $(pwd):/code bensampson5/libsv:${{ steps.docker_meta.outputs.version }}" >> $GITHUB_ENV;
 
       - name: Pull docker image
         run: docker pull bensampson5/libsv:${{ steps.docker_meta.outputs.version }}
@@ -110,20 +109,16 @@ jobs:
         run: ${{ env.DOCKER_RUN }} /code/tools/precommit.py --synthesis
 
       - name: Check format
-        run: |
-          ${{ env.DOCKER_RUN }} /code/tools/precommit.py --check-format
+        run: ${{ env.DOCKER_RUN }} /code/tools/precommit.py --check-format
 
       - name: Lint
-        run: |
-          ${{ env.DOCKER_RUN }} /code/tools/precommit.py --lint
+        run: ${{ env.DOCKER_RUN }} /code/tools/precommit.py --lint
 
       - name: Build docs
-        run: |
-          ${{ env.DOCKER_RUN }} /code/tools/precommit.py --docs
+        run: ${{ env.DOCKER_RUN }} /code/tools/precommit.py --docs
 
       - name: Build package
-        run: |
-          ${{ env.DOCKER_RUN }} /bin/bash -c "cd /code && poetry build"
+        run: ${{ env.DOCKER_RUN }} /code/tools/precommit.py --build-package
 
       - name: Publish package
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
