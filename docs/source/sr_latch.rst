@@ -8,6 +8,10 @@ While ``s`` (set) and ``r`` (reset) are both low, ``q``  and ``q_n`` are maintai
 the complement of ``q``.If ``s`` goes high while ``r`` is held low, then ``q`` is forced high. Similarly, if ``r`` goes high
 while ``s`` is held low, then ``q`` is forced low. Having both ``s`` and ``r`` high (``1``) is a restricted combination.
 
+Parameters
+----------
+- None
+
 Ports
 -----
 - ``s`` set
