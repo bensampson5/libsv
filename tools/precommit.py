@@ -240,7 +240,7 @@ def run_generate_hdl_svgs():
 
     # Ignore certain hdl files that fails svg generation despite
     # being synthesizable
-    ignore_hdl_files = ["onehot_mux.sv", "encoder_8b10b.sv"]
+    ignore_hdl_files = ["onehot_mux.sv", "encoder_8b10b.sv", "decoder_8b10b.sv"]
     hdl_files = [f for f in hdl_files if f.name not in ignore_hdl_files]
 
     svg_files = []

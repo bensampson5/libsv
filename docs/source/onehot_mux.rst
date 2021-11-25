@@ -10,16 +10,17 @@ Parameters
 - ``DW`` data width (per input vector)
 - ``N`` number of inputs
 
-Inputs/Outputs
---------------
+Ports
+-----
 - ``sel`` select (N bits)
 - ``in`` concatenated input vector (DW*N bits)
 - ``out`` output vector (DW bits)
 
-Implementation
---------------
+Source Code
+-----------
 .. literalinclude:: ../../libsv/muxes/onehot_mux.sv
     :language: systemverilog
+    :linenos:
     :caption: onehot_mux.sv
 
 Block Diagram

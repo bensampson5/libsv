@@ -10,15 +10,16 @@ Parameters
 ----------
 - ``N`` number of digits in BCD input
 
-Inputs/Outputs
---------------
+Ports
+-----
 - ``i_bcd`` input BCD value
 - ``o_bin`` output binary value
 
-Implementation
---------------
+Source Code
+-----------
 .. literalinclude:: ../../libsv/coders/bcd_decoder.sv
     :language: systemverilog
+    :linenos:
     :caption: bcd_decoder.sv
 
 Block Diagram

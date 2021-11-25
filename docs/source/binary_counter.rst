@@ -11,16 +11,17 @@ Parameters
 ----------
 - ``N`` number of bits
 
-Inputs/Outputs
---------------
+Ports
+-----
 - ``clk`` clock
 - ``aresetn`` asynchoronous active-low reset
 - ``q`` count (N bits)
 
-Implementation
---------------
+Source Code
+-----------
 .. literalinclude:: ../../libsv/counters/binary_counter.sv
     :language: systemverilog
+    :linenos:
     :caption: binary_counter.sv
 
 Block Diagram
