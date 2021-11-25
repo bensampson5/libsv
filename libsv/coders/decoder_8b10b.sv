@@ -8,11 +8,11 @@ module decoder_8b10b (
     output logic       o_disp_err
 );
 
-    // Placeholder implementation for testbench development (will fail)
-    assign o_8b = '0;
-    assign o_disp = '0;
-    assign o_ctrl = '0;
-    assign o_code_err = '0;
-    assign o_disp_err = '0;
+  // Placeholder implementation for testbench development (will fail)
+  assign o_8b       = '0;
+  assign o_disp     = '0;
+  assign o_ctrl     = '0;
+  assign o_code_err = '0;
+  assign o_disp_err = '0;
 
 endmodule

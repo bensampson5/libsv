@@ -25,23 +25,23 @@ def decode_5b6b(i_6b: int, i_disp: int) -> Tuple[int, int, bool, bool]:
     # lookup table maps iedcba to EDBCA
     lut_6b5b = {
         # iebcba:   EDCBA
-        0b000000: None,     # Illegal code
-        0b000001: None,     # Illegal code
-        0b000010: None,     # Illegal code
+        0b000000: None,  # Illegal code
+        0b000001: None,  # Illegal code
+        0b000010: None,  # Illegal code
         0b000011: 0b11100,  # K.28+
-        0b000100: None,     # Illegal code
+        0b000100: None,  # Illegal code
         0b000101: 0b01111,  # D.15+
         0b000110: 0b00000,  # D.0+
         0b000111: 0b00111,  # D.7-
-        0b001000: None,     # Illegal code
+        0b001000: None,  # Illegal code
         0b001001: 0b10000,  # D.16+
         0b001010: 0b11111,  # D.31+
         0b001011: 0b01011,  # D.11
         0b001100: 0b11000,  # D.24+
         0b001101: 0b01101,  # D.13
         0b001110: 0b01110,  # D.14
-        0b001111: None,     # Illegal code (not used)
-        0b010000: None,     # Illegal code
+        0b001111: None,  # Illegal code (not used)
+        0b010000: None,  # Illegal code
         0b010001: 0b00001,  # D.01+
         0b010010: 0b00010,  # D.02+
         0b010011: 0b10011,  # D.19
@@ -56,8 +56,8 @@ def decode_5b6b(i_6b: int, i_disp: int) -> Tuple[int, int, bool, bool]:
         0b011100: 0b11100,  # D.28
         0b011101: 0b11101,  # D.29-
         0b011110: 0b11110,  # D.30-
-        0b011111: None,     # Illegal code
-        0b100000: None,     # Illegal code
+        0b011111: None,  # Illegal code
+        0b100000: None,  # Illegal code
         0b100001: 0b11110,  # D.30+
         0b100010: 0b11101,  # D.29+
         0b100011: 0b00011,  # D.03
@@ -72,30 +72,30 @@ def decode_5b6b(i_6b: int, i_disp: int) -> Tuple[int, int, bool, bool]:
         0b101100: 0b01100,  # D.12
         0b101101: 0b00010,  # D.02-
         0b101110: 0b00001,  # D.01-
-        0b101111: None,     # Illegal code
-        0b110000: None,     # Illegal code (not used) 
+        0b101111: None,  # Illegal code
+        0b110000: None,  # Illegal code (not used)
         0b110001: 0b10001,  # D.17
         0b110010: 0b10010,  # D.18
         0b110011: 0b11000,  # D.24-
         0b110100: 0b10100,  # D.20
         0b110101: 0b11111,  # D.31-
         0b110110: 0b10000,  # D.16-
-        0b110111: None,     # Illegal code
+        0b110111: None,  # Illegal code
         0b111000: 0b00111,  # D.07+
         0b111001: 0b00000,  # D.00-
         0b111010: 0b01111,  # D.15-
-        0b111011: None,     # Illegal code
+        0b111011: None,  # Illegal code
         0b111100: 0b11100,  # K.28-
-        0b111101: None,     # Illegal code
-        0b111110: None,     # Illegal code
-        0b111111: None,     # Illegal code
+        0b111101: None,  # Illegal code
+        0b111110: None,  # Illegal code
+        0b111111: None,  # Illegal code
     }
 
     o_5b = lut_6b5b[i_6b]  # lookup 5b/6b value
     o_disp = 0  # initialize output disparity
     o_code_err = False  # initialize code error flag
     o_disp_err = False  # initialize disparity error flag
-    
+
     if o_5b is None:  # check if illegal code
         o_code_err = True
         o_5b = 0
@@ -107,16 +107,19 @@ def decode_5b6b(i_6b: int, i_disp: int) -> Tuple[int, int, bool, bool]:
     codeword_disp = num_ones - num_zeros
 
     if codeword_disp != 0:
-        
+
         # regardless of whether there is a disparity error or not
         # the output disparity should always get flipped if it's
         # not equal to zero
         o_disp = -i_disp
 
         # Check for disparity error
-        if codeword_disp >= 3 or codeword_disp <= -3 or \
-            (i_disp == -1 and codeword_disp == -2) or \
-            (i_disp == 1 and codeword_disp == 2):
+        if (
+            codeword_disp >= 3
+            or codeword_disp <= -3
+            or (i_disp == -1 and codeword_disp == -2)
+            or (i_disp == 1 and codeword_disp == 2)
+        ):
             o_disp_err = True
 
     else:  # if codeword disparity is 0 then output disparity is the input disparity
@@ -140,7 +143,7 @@ def decode_3b4b(i_4b: int, i_disp: int, i_ctrl: bool) -> Tuple[int, int]:
     # lookup table maps jhgf to HGF
     lut_4b3b_data = {
         # jhgf:   HGF
-        0b0000: None,   # Illegal code
+        0b0000: None,  # Illegal code
         0b0001: 0b111,  # D.x.A7+
         0b0010: 0b000,  # D.x.0+
         0b0011: 0b011,  # D.x.3-
@@ -155,30 +158,30 @@ def decode_3b4b(i_4b: int, i_disp: int, i_ctrl: bool) -> Tuple[int, int]:
         0b1100: 0b011,  # D.x.3+
         0b1101: 0b000,  # D.x.0-
         0b1110: 0b111,  # D.x.A7-
-        0b1111: None,   # Illegal code
+        0b1111: None,  # Illegal code
     }
 
     lut_4b3b_control = {
         # jhgf:   HGF
-        0b0000: None,   # Illegal code
+        0b0000: None,  # Illegal code
         0b0001: 0b111,  # K.x.7+
         0b0010: 0b000,  # K.x.0+
         0b0011: 0b011,  # K.x.3-
         0b0100: 0b100,  # K.x.4+
-        0b0101: -1,     # K.x.5+ / K.x.2- (must be handled using input disparity)
-        0b0110: -1,     # K.x.6+ / K.x.1- (must be handled using input disparity)
-        0b0111: None,   # Illegal code
-        0b1000: None,   # Illegal code
-        0b1001: -1,     # K.x.6- / K.x.1+ (must be handled using input disparity)
-        0b1010: -1,     # K.x.5- / K.x.2+ (must be handled using input disparity)
+        0b0101: -1,  # K.x.5+ / K.x.2- (must be handled using input disparity)
+        0b0110: -1,  # K.x.6+ / K.x.1- (must be handled using input disparity)
+        0b0111: None,  # Illegal code
+        0b1000: None,  # Illegal code
+        0b1001: -1,  # K.x.6- / K.x.1+ (must be handled using input disparity)
+        0b1010: -1,  # K.x.5- / K.x.2+ (must be handled using input disparity)
         0b1011: 0b100,  # K.x.4-
         0b1100: 0b011,  # K.x.3+
         0b1101: 0b000,  # K.x.0-
         0b1110: 0b111,  # K.x.7-
-        0b1111: None,   # Illegal code
+        0b1111: None,  # Illegal code
     }
 
-     # lookup 3b/4b value
+    # lookup 3b/4b value
     o_3b = 0
     if i_ctrl:
         o_3b = lut_4b3b_control[i_4b]
@@ -186,17 +189,17 @@ def decode_3b4b(i_4b: int, i_disp: int, i_ctrl: bool) -> Tuple[int, int]:
         if i_4b == 0b0101:  # check weird case #1
             if i_disp == -1:
                 o_3b = 0b010  # K.x.2-
-            else:           
+            else:
                 o_3b = 0b101  # K.x.5+
         elif i_4b == 0b0110:  # check weird case #2
             if i_disp == -1:
                 o_3b = 0b001  # K.x.1-
-            else:             # K.x.6+
+            else:  # K.x.6+
                 o_3b = 0b110
         elif i_4b == 0b1001:  # check weird case #3
             if i_disp == -1:
                 o_3b = 0b110  # K.x.6-
-            else:           
+            else:
                 o_3b = 0b001  # K.x.1+
         elif i_4b == 0b1010:  # check weird case #4
             if i_disp == -1:
@@ -221,16 +224,19 @@ def decode_3b4b(i_4b: int, i_disp: int, i_ctrl: bool) -> Tuple[int, int]:
     codeword_disp = num_ones - num_zeros
 
     if codeword_disp != 0:
-        
+
         # regardless of whether there is a disparity error or not
         # the output disparity should always get flipped if it's
         # not equal to zero
         o_disp = -i_disp
 
         # Check for disparity error
-        if codeword_disp >= 3 or codeword_disp <= -3 or \
-            (i_disp == -1 and codeword_disp == -2) or \
-            (i_disp == 1 and codeword_disp == 2):
+        if (
+            codeword_disp >= 3
+            or codeword_disp <= -3
+            or (i_disp == -1 and codeword_disp == -2)
+            or (i_disp == 1 and codeword_disp == 2)
+        ):
             o_disp_err = True
 
     else:  # if codeword disparity is 0 then output disparity is the input disparity
@@ -257,12 +263,14 @@ def decode_8b10b(i_10b, i_disp):
         0b0001011101,  # K.29.7-
         0b0001011110,  # K.30.7-
     ]
-    control_symbols = control_symbols_rdm1 + [(~s) & 0x3ff for s in control_symbols_rdm1]
+    control_symbols = control_symbols_rdm1 + [
+        (~s) & 0x3FF for s in control_symbols_rdm1
+    ]
     is_ctrl = i_10b in control_symbols
 
     # Parse out 6b and 4b inputs
-    i_6b = i_10b & 0x3f
-    i_4b = (i_10b >> 6) & 0xf
+    i_6b = i_10b & 0x3F
+    i_4b = (i_10b >> 6) & 0xF
 
     # Decode 6b
     o_5b, o_disp_5, o_code_err_5, o_disp_err_5 = decode_5b6b(i_6b, i_disp)
@@ -286,14 +294,15 @@ async def cocotb_test_decoder_8b10b(dut):
     for i in range(2 ** 11):
 
         # Parse out input values
-        i_10b = i & 0x3ff
+        i_10b = i & 0x3FF
         i_disp = (i >> 10) & 1
 
         # Run the software 8b10b encoder
         py_i_10b = i_10b
         py_i_disp = (i_disp * 2) - 1
-        py_o_8b, py_o_disp, py_o_ctrl, py_o_code_err, py_o_disp_err = \
-            decode_8b10b(py_i_10b, py_i_disp)
+        py_o_8b, py_o_disp, py_o_ctrl, py_o_code_err, py_o_disp_err = decode_8b10b(
+            py_i_10b, py_i_disp
+        )
 
         # Calculate expected dut outputs using software
         # 8b/10b decoder results
