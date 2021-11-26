@@ -28,9 +28,9 @@ module decoder_8b10b (
   //     * HGFEDCBA   = output 8b value
   always_comb begin
     case (i_lut)
-      //  rjhgfiedbca:             ZYXRHGFEDCBA
       // verilog_lint: waive-start line-length  // Lines are too long but this is what is wanted so disable lint checks
       // verilog_format: off // don't format this because it breaks each case into multiple lines
+      //  rjhgfiedbca:             ZYXRHGFEDCBA
       11'b00000000000: o_lut = 12'b110000000000; // D.00.0, i_disp = 0, o_disp = 0, o_ctrl = 0, o_code_err = 1, o_disp_err = 1
       11'b00000000001: o_lut = 12'b110000000000; // D.00.0, i_disp = 0, o_disp = 0, o_ctrl = 0, o_code_err = 1, o_disp_err = 1
       11'b00000000010: o_lut = 12'b110000000000; // D.00.0, i_disp = 0, o_disp = 0, o_ctrl = 0, o_code_err = 1, o_disp_err = 1
@@ -2081,7 +2081,7 @@ module decoder_8b10b (
       11'b11111111111: o_lut = 12'b110100000000; // D.00.0, i_disp = 1, o_disp = 1, o_ctrl = 0, o_code_err = 1, o_disp_err = 1
       default: o_lut = 12'b110100000000; // D.00.0, i_disp = 1, o_disp = 1, o_ctrl = 0, o_code_err = 1, o_disp_err = 1
       // verilog_format: on
-      // verilog_lint: waive-stop line-length  // Lines are too long but this is what is wanted so disable lint checks
+      // verilog_lint: waive-stop line-length
     endcase
   end
 
