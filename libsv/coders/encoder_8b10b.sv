@@ -28,7 +28,7 @@ module encoder_8b10b (
       // and running disparity
       o_10b      <= o_10b;
       rd         <= rd;
-      o_code_err <= 1'b0;
+      o_code_err <= o_code_err;
 
     end else begin
 
