@@ -1,5 +1,6 @@
 import cocotb
-from cocotb.triggers import Timer
+from cocotb.clock import Clock
+from cocotb.triggers import FallingEdge
 from typing import Tuple
 from utils import pytest_cocotb_run_test
 
@@ -290,6 +291,46 @@ def decode_8b10b(i_10b, i_disp):
 async def cocotb_test_decoder_8b10b(dut):
     """8B/10B Decoder test"""
 
+    # Create clock
+    cocotb.fork(Clock(dut.i_clk, 2).start())
+
+    # Assert reset and check output and
+    # internal running disparity
+    dut.i_reset_n.value = 0
+    await FallingEdge(dut.i_clk)
+    assert int(dut.o_8b) == 0
+    assert int(dut.o_ctrl) == 0
+    assert int(dut.o_code_err) == 0
+    assert int(dut.o_disp_err) == 0
+    assert int(dut.rd) == 0
+
+    # Check that enable doesn't change outputs when disabled
+    dut.i_reset_n.value = 1  # de-assert reset
+    dut.i_en.value = 1  # enable 8b10b decoder
+    dut.i_10b.value = 0b1001001101  # D.13.1
+    await FallingEdge(dut.i_clk)  # 1 clock tick
+    prev_o_8b = int(dut.o_8b)  # capture 8b output
+    prev_o_ctrl = int(dut.o_ctrl)  # capture control symbol flag
+    prev_o_code_err = int(dut.o_code_err)  # capture code error
+    prev_o_disp_err = int(dut.o_disp_err)  # capture disparity error
+    prev_rd = int(dut.rd)  # capture running disparity
+    dut.i_en.value = 0  # disable 8b10b decoder
+
+    # Pick a value that after the first 10b value would change both
+    # the output 8b value, internal running disparity, and generate
+    # both a code error and disparity error
+    dut.i_10b.value = 0b0000000111  # Illegal code
+
+    await FallingEdge(dut.i_clk)  # 1 clock tick
+    assert prev_o_8b == int(dut.o_8b)  # output should not have changed
+    assert prev_o_ctrl == int(dut.o_ctrl)  # control flag should not have changed
+    assert prev_o_code_err == int(dut.o_code_err)  # code error should not have changed
+    assert prev_o_disp_err == int(dut.o_disp_err)  # disp error should not have changed
+    assert prev_rd == int(dut.rd)  # running disparity should not have changed
+
+    # Test 8b/10b decoding look-up table
+    dut.i_reset_n.value = 1
+    dut.i_en.value = 1
     for i in range(2 ** 11):
 
         # Parse out input values
@@ -311,45 +352,48 @@ async def cocotb_test_decoder_8b10b(dut):
         o_code_err = int(py_o_code_err)
         o_disp_err = int(py_o_disp_err)
 
-        # Push inputs to dut
+        # Push input to dut
         dut.i_10b.value = i_10b
-        dut.i_disp.value = i_disp
 
-        # Step simulation
-        await Timer(1)
+        # Force internal running disparity to specific value
+        dut.rd.value = i_disp
+
+        d_prev_rd = int(dut.rd)  # save previous RD value
+
+        # Step 1 clock tick
+        await FallingEdge(dut.i_clk)  # 1 clock tick
 
         # Check actual outputs vs expected outputs
         try:
             assert int(dut.o_8b) == o_8b
-            assert int(dut.o_disp) == o_disp
             assert int(dut.o_ctrl) == o_ctrl
             assert int(dut.o_code_err) == o_code_err
             assert int(dut.o_disp_err) == o_disp_err
         except AssertionError as e:
             i_10b_s = format(i_10b, "#012b")
-            i_disp_s = format(i_disp, "#03b")
             d_i_10b_s = "0b" + str(dut.i_10b.value)
-            d_i_disp_s = "0b" + str(dut.i_disp.value)
+            d_prev_rd_s = format(d_prev_rd, "#03b")
+            d_rd_s = "0b" + str(dut.rd.value)
             d_o_8b_s = "0b" + str(dut.o_8b.value)
-            d_o_disp_s = "0b" + str(dut.o_disp.value)
             d_o_ctrl_s = "0b" + str(dut.o_ctrl.value)
             d_o_code_err_s = "0b" + str(dut.o_code_err.value)
             d_o_disp_err_s = "0b" + str(dut.o_disp_err.value)
+            d_o_code_err_s = "0b" + str(dut.o_code_err.value)
             o_8b_s = format(o_8b, "#010b")
-            o_disp_s = format(o_disp, "#03b")
             o_ctrl_s = format(o_ctrl, "#03b")
             o_code_err_s = format(o_code_err, "#03b")
             o_disp_err_s = format(o_disp_err, "#03b")
 
             print(
                 f"Error: Actual outputs do not match expected outputs\n"
-                f"    i_10b     = {i_10b_s}, i_disp     = {i_disp_s}\n"
-                f"    dut.i_10b = {d_i_10b_s}, dut.i_disp = {d_i_disp_s}\n"
-                f"    dut.o_8b  =   {d_o_8b_s}, dut.o_disp = {d_o_disp_s}, "
-                f"dut.o_ctrl = {d_o_ctrl_s}, dut.o_code_err = {d_o_code_err_s}, "
+                f"    i_10b     = {i_10b_s}\n"
+                f"    dut.i_10b = {d_i_10b_s}\n"
+                f"    dut.o_8b  =   {d_o_8b_s}, dut.o_ctrl = {d_o_ctrl_s}, "
+                f"dut.o_code_err = {d_o_code_err_s}, "
                 f"dut.o_disp_err = {d_o_disp_err_s}\n"
-                f"    o_8b      =   {o_8b_s}, o_disp     = {o_disp_s}, "
-                f"o_ctrl     = {o_ctrl_s}, o_code_err     = {o_code_err_s}, "
+                f"    previous dut.rd =    {d_prev_rd_s}, current dut.rd = {d_rd_s}\n"
+                f"    o_8b      =   {o_8b_s}, o_ctrl     = {o_ctrl_s}, "
+                f"o_code_err     = {o_code_err_s}, "
                 f"o_disp_err     = {o_disp_err_s}\n"
             )
             raise e

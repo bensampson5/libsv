@@ -1,31 +1,67 @@
 module decoder_8b10b (
+    input  logic       i_clk,
+    input  logic       i_reset_n,
+    input  logic       i_en,
     input  logic [9:0] i_10b,
-    input  logic       i_disp,
     output logic [7:0] o_8b,
-    output logic       o_disp,
     output logic       o_ctrl,
     output logic       o_code_err,
     output logic       o_disp_err
 );
 
-  // Create lookup table input and output vectors
-  logic [10:0] i_lut;
-  logic [11:0] o_lut;
-  assign i_lut      = {i_disp, i_10b};
-  assign o_8b       = o_lut[7:0];
-  assign o_disp     = o_lut[8];
-  assign o_ctrl     = o_lut[9];
-  assign o_code_err = o_lut[10];
-  assign o_disp_err = o_lut[11];
+  logic        rd;  // running disparity
+  logic [10:0] i_lut;  // input vector to 8b/10b decoding look-up table
+  logic [11:0] o_lut;  // output vector from 8b/10b encoding look-up table
 
-  // Mapping is rjhgfiedcba: ZYXRHGFEDCBA, where:
-  //     * r          = input disparity (0 = -1, 1 = +1)
+  always_ff @(posedge i_clk or negedge i_reset_n) begin
+
+    if (!i_reset_n) begin
+
+      // if in reset set all outputs to 0 and reset running disparity
+      // to 0 (-1)
+      o_8b       <= 8'b0;
+      o_ctrl     <= 1'b0;
+      o_code_err <= 1'b0;
+      o_disp_err <= 1'b0;
+      rd         <= 1'b0;
+
+    end
+    else if (!i_en) begin
+
+      // if not enabled, then maintain current output
+      // and running disparity
+      o_8b       <= o_8b;
+      o_ctrl     <= o_ctrl;
+      o_code_err <= o_code_err;
+      o_disp_err <= o_disp_err;
+      rd         <= rd;
+
+    end
+    else begin
+
+      // if enabled and not in reset, then get the 8b output and
+      // updated running disparity from the 8b10b decoding look-up table
+      o_8b       <= o_lut[7:0];
+      rd         <= o_lut[8];
+      o_ctrl     <= o_lut[9];
+      o_code_err <= o_lut[10];
+      o_disp_err <= o_lut[11];
+
+    end
+
+  end
+
+  // 8b/10b decoding look-up table
+  // ------------------------------------------------------------
+  // The mapping is rjhgfiedcba: ZYXRHGFEDCBA, where:
+  //     * r          = input running disparity (0 = -1, 1 = +1)
   //     * jhgfiedcba = input 10b value
-  //     * Z          = output disparity error bit
-  //     * Y          = output code error bit
+  //     * Z          = output disparity error
+  //     * Y          = output code error
   //     * X          = output control symbol flag
   //     * R          = output disparity (0 = -1, 1 = +1)
   //     * HGFEDCBA   = output 8b value
+  assign i_lut = {rd, i_10b};  // Form input look-up table vector
   always_comb begin
     case (i_lut)
       // verilog_lint: waive-start line-length  // Lines are too long but this is what is wanted so disable lint checks
