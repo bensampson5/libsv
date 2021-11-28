@@ -25,8 +25,7 @@ module decoder_8b10b (
       o_disp_err <= 1'b0;
       rd         <= 1'b0;
 
-    end
-    else if (!i_en) begin
+    end else if (!i_en) begin
 
       // if not enabled, then maintain current output
       // and running disparity
@@ -36,8 +35,7 @@ module decoder_8b10b (
       o_disp_err <= o_disp_err;
       rd         <= rd;
 
-    end
-    else begin
+    end else begin
 
       // if enabled and not in reset, then get the 8b output and
       // updated running disparity from the 8b10b decoding look-up table
