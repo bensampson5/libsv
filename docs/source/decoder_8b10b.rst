@@ -4,42 +4,39 @@
 
 8B/10B is a line code that maps 8-bit words to 10-bit symbols to achieve DC-balance and bounded
 disparity, while at the same time provide enough state changes to allow reasonable clock recovery. This 
-8B/10B decoder implementation is a combinatorial circuit that takes a 10-bit binary input, ``i_10b``, and
-outputs an 8-bit binary value, ``o_8b``, according to 
-`IBM's 8B/10B implementation <https://en.wikipedia.org/wiki/8b/10b_encoding#IBM_implementation>`_.
+8B/10B decoder design implements 
+`IBM's 8B/10B coding scheme <https://en.wikipedia.org/wiki/8b/10b_encoding#IBM_implementation>`_.
 
-The input disparity is required via the ``i_disp`` input where ``0`` equals a disparity of -1
-and ``1`` equals a disparity of +1. Additionally, this module provides other output signals:
-
-  - ``o_disp`` is the output disparity where ``0`` = -1 and ``1`` = +1.
-  - ``o_ctrl`` is the control symbol indicator bit where ``0`` means the decoded value is a data symbol
-    and ``1`` means it is a control symbol.
-  - ``o_code_err`` is the output code error bit where ``0`` means that the received 10b code is not an
-    illegal code and ``1`` means the received 10b code is an illegal code.
-  - ``o_disp_err`` is the output disparity error bit where ``0`` means there is not a disparity error in
-    the received 10b code and ``1`` means there is a disparity error.
-
-To achieve DC-free 8b10b coding, the long-term ratio of ones and zeros transmitted is exactly 50%. To 
+DC-free 8b/10b coding requires that the long-term ratio of ones and zeros transmitted is exactly 50%. To 
 achieve this, the difference between the number of 1s and 0s transmitted is always limited to ±2, so 
-the running disparity at the end of each symbol will always be either +1 or -1. This difference is known
-as the *running disparity* (RD). This scheme needs only two states for the running disparity of -1 and +1.
-The RD always starts at -1.
+the difference at the end of each symbol will always be either +1 or -1. This difference is known
+as the *running disparity* (RD). The IBM implementation needs only two states for the running disparity,
+-1 and +1, where the RD always starts at -1.
 
-As the IBM 8b10b coding implementation breaks down the 8b/10b coding into 5b/6b and 3b/4b subcodings, the 
-running disparity is evaluated over each 6b or 4b code as it is transmitted or received. The rules for 
-calculating running disparity are:
+To simplify the coding algorithm, the IBM 8b/10b coding implementation breaks down the 8b/10b coding
+into 5b/6b and 3b/4b subcodings. Then, the running disparity is evaluated over each 6b or 4b code as
+it is transmitted or received. The rules for calculating running disparity are:
 
-  1. If the disparity of the 6b or 4b codeword is 0 (equal number of 1s and 0s) then the output running
-     disparity is equal to the input running disparity (i.e. -1 -> -1, +1 -> +1).
-  2. If the disparity of the 6b or 4b codeword is not 0 (i.e. ±2, ±4, ±6) then the output running disparity
-     is equal to the complement of the input running disparity (i.e. -1 -> +1, +1 -> -1)
+    1. If the disparity of the 6b or 4b codeword is 0 (equal number of 1s and 0s) then the output running
+       disparity is equal to the input running disparity (i.e. -1 -> -1, +1 -> +1).
+    2. If the disparity of the 6b or 4b codeword is not 0 (i.e. ±2, ±4, ±6) then the output running disparity
+       is equal to the complement of the input running disparity (i.e. -1 -> +1, +1 -> -1)
 
-In almost all use-cases, the user is required to keep track of the running disparity over a given 
-data stream being decoded but this feature is not handled by this module as it is a purely combinatorial
-implementation. Instead, this is left to the user to implement in the parent module that instantiates
-this module although the ``o_disp`` output signal is provided for convenience. For example, a simple
-implementation that would maintain the running disparity over an input data stream would be registering
-``o_disp`` and then feeding the output of that register back into this module as ``i_disp``.
+This core keeps track of the running disparity internally so the user does not need to implement any 
+additional logic to determine it. The user can, however, control the running disparity by asserting
+the active-low reset signal ``i_reset_n`` to reset the running disparity to -1.
+
+Additional control and error status features are provided with this design and are described below:
+
+    * ``i_en`` is an input enable signal that controls whether or not to perform 8b/10b 
+      decoding. While deasserted, the core will ignore any further input, maintain current outputs, 
+      and maintain the current running disparity.
+    * ``o_ctrl`` is an output control symbol flag which the decoder uses to indicate whether a received
+      10b value is a control symbol (K.x.y, ``o_ctrl`` = 1) or a data symbol (D.x.y, ``o_ctrl`` = 0).
+    * ``o_code_err`` is an error status signal that indicates when an illegal 8b/10b code is received by
+      the decoder.
+    * ``o_disp_err`` is an error status signal that indicates when a disparity error is detected in the
+      10b value received by the decoder.
 
 Two error output signals, ``o_code_err`` and ``o_disp_err``, are provided for the decoder as there are
 certain input combinations that may only generate one of the two error types in decoding 10b values -
@@ -48,7 +45,7 @@ to.
 
 IBM's 8B/10B implementation is defined by partitioning the coder into 5B/6B and 3B/4B subordinate coders
 as described in the tables below. Using these tables, a given input 10-bit value, ``jhgfiedcba``, along
-with the input running disparity, can be decoded to its corresponding 8-bit value, ``HGFEDCBA``, along
+with the current running disparity, can be decoded to its corresponding 8-bit value, ``HGFEDCBA``, along
 with an indication if the received symbol is a control or data symbol.
 
 
@@ -204,11 +201,12 @@ Parameters
 
 Ports
 -----
+- ``i_clk`` : input clock
+- ``i_reset_n`` : input asynchronous active-low reset
+- ``i_en`` : input active-high enable
 - ``i_10b`` : input 10-bit binary value (bit-order is ``jhgfiedcba`` where ``a`` is the lsb)
-- ``i_disp`` : input disparity (``0`` = -1, ``1`` = +1)
 - ``o_8b`` : output 8-bit binary value (bit-order is ``HGFEDCBA`` where ``A`` is the lsb)
-- ``o_disp`` : output disparity (``0`` = -1, ``1`` = +1)
-- ``o_ctrl`` : output control symbol indicator bit (``0`` = data symbol, ``1`` = control symbol)
+- ``o_ctrl`` : output control symbol indicator flag (``0`` = data symbol, ``1`` = control symbol)
 - ``o_code_err`` : output code error bit (``0`` = no code error, ``1`` = code error)
 - ``o_disp_err`` : output disparity error bit (``0`` = no disparity error, ``1`` = disparity error)
 
