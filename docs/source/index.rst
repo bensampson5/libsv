@@ -22,7 +22,7 @@ software and digital design community, including:
   simple and fast logic simulation
 * All testbenches output waveform files in FST format for viewing with `GTKWave <http://gtkwave.sourceforge.net/>`_
 * `Extensive documention <https://libsv.readthedocs.io/en/latest/>`_ using `Sphinx <https://www.sphinx-doc.org/en/master/>`_
-  that includes circuit schematics for each module
+* Each module is tested for synthesizeability using `yosys <https://github.com/YosysHQ/yosys>`_
 * Automated formatting and lint checks using `Verible <https://github.com/google/verible>`_
 * `Continuous integration (CI) workflows <https://github.com/bensampson5/libsv/actions>`_ integrated with 
   `Docker <https://www.docker.com/>`_
