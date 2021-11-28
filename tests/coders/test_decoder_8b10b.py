@@ -347,7 +347,6 @@ async def cocotb_test_decoder_8b10b(dut):
         # Calculate expected dut outputs using software
         # 8b/10b decoder results
         o_8b = py_o_8b
-        o_disp = (py_o_disp + 1) // 2
         o_ctrl = int(py_o_ctrl)
         o_code_err = int(py_o_code_err)
         o_disp_err = int(py_o_disp_err)
