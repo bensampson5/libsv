@@ -1,6 +1,6 @@
 module encoder_8b10b (
     input  logic       i_clk,  // input clock
-    input  logic       i_aresetn,  // input asynchronous active-low reset
+    input  logic       i_reset_n,  // input asynchronous active-low reset
     input  logic       i_en,  // input enable
     input  logic [7:0] i_8b,  // input 8-bit value
     input  logic       i_ctrl,  // input control symbol select
@@ -12,19 +12,19 @@ module encoder_8b10b (
   logic [ 9:0] i_lut;  // input vector to 8b/10b encoding look-up table
   logic [11:0] o_lut;  // output vector from 8b/10b encoding look-up table
 
-  always_ff @(posedge i_clk or negedge i_aresetn) begin
+  always_ff @(posedge i_clk or negedge i_reset_n) begin
 
-    if (!i_aresetn) begin
+    if (!i_reset_n) begin
 
-      // if in reset set 10b output to 0 and running
-      // disparity to 0 (-1)
+      // if in reset set all outputs to 0 and reset running disparity
+      // to 0 (-1)
       o_10b      <= 10'b0;
       rd         <= 1'b0;
       o_code_err <= 1'b0;
 
     end else if (!i_en) begin
 
-      // if not enabled, then maintain current 10b output
+      // if not enabled, then maintain current output
       // and running disparity
       o_10b      <= o_10b;
       rd         <= rd;

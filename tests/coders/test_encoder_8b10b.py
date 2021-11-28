@@ -256,33 +256,36 @@ async def cocotb_test_encoder_8b10b(dut):
 
     # Assert reset and check output and
     # internal running disparity
-    dut.i_aresetn.value = 0
+    dut.i_reset_n.value = 0
     await FallingEdge(dut.i_clk)
     assert int(dut.o_10b) == 0
+    assert int(dut.o_code_err) == 0
     assert int(dut.rd) == 0
 
-    # Check that enable doesn't change outputs
-    dut.i_aresetn.value = 1  # de-assert reset
+    # Check that enable doesn't change outputs when disabled
+    dut.i_reset_n.value = 1  # de-assert reset
     dut.i_en.value = 1  # enable 8b10b encoder
     dut.i_8b.value = 0  # D.00.0
     dut.i_ctrl.value = 0  # data symbol
     await FallingEdge(dut.i_clk)  # 1 clock tick
     prev_o_10b = int(dut.o_10b)  # capture 10b output
+    prev_o_code_err = int(dut.o_code_err)  # capture code error
     prev_rd = int(dut.rd)  # capture running disparity
     dut.i_en.value = 0  # disable 8b10b encoder
 
     # Pick a value that after the first 8b value would change both
-    # the output 10b value and internal running disparity
-    dut.i_8b.value = 0b00000011  # D.03.0
+    # the output 10b value, internal running disparity, and generate
+    # a code error
+    dut.i_ctrl.value = 1  # control symbol
+    dut.i_8b.value = 0b00000011  # K.03.0
 
     await FallingEdge(dut.i_clk)  # 1 clock tick
-    curr_o_10b = int(dut.o_10b)  # capture 10b output
-    curr_rd = int(dut.rd)  # capture running disparity
-    assert prev_o_10b == curr_o_10b  # output should not have changed
-    assert prev_rd == curr_rd  # running disparity should not have changed
+    assert prev_o_10b == int(dut.o_10b)  # output should not have changed
+    assert prev_o_code_err == int(dut.o_code_err)  # code error should not have changed
+    assert prev_rd == int(dut.rd)  # running disparity should not have changed
 
     # Test 8b/10b encoding look-up table
-    dut.i_aresetn.value = 1
+    dut.i_reset_n.value = 1
     dut.i_en.value = 1
     for i in range(2 ** 10):
 
@@ -305,8 +308,10 @@ async def cocotb_test_encoder_8b10b(dut):
 
         # Push inputs to dut
         dut.i_8b.value = i_8b
-        dut.rd.value = i_disp
         dut.i_ctrl.value = i_ctrl
+
+        # Force internal running disparity to specific value
+        dut.rd.value = i_disp
 
         d_prev_rd = int(dut.rd)  # save previous RD value
 
@@ -331,9 +336,9 @@ async def cocotb_test_encoder_8b10b(dut):
             o_code_err_s = format(o_code_err, "#03b")
             print(
                 f"Error: Actual outputs do not match expected outputs\n"
-                f"    i_8b      = {i_8b_s},   i_ctrl         = {i_ctrl_s}\n"
-                f"    dut.i_8b  = {d_i_8b_s},   dut.i_ctrl     = {d_i_ctrl_s}\n"
-                f"    prev RD   = {d_prev_rd_s},          curr RD        = {d_rd_s}\n"
+                f"    i_8b      =   {i_8b_s}, i_ctrl         = {i_ctrl_s}\n"
+                f"    dut.i_8b  =   {d_i_8b_s}, dut.i_ctrl     = {d_i_ctrl_s}\n"
+                f"    previous dut.rd =    {d_prev_rd_s}, current dut.rd = {d_rd_s}\n"
                 f"    dut.o_10b = {d_o_10b_s}, dut.o_code_err = {d_o_code_err_s}\n"
                 f"    o_10b     = {o_10b_s}, o_code_err     = {o_code_err_s}\n"
             )

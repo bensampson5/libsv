@@ -24,7 +24,7 @@ it is transmitted or received. The rules for calculating running disparity are:
 
 This core keeps track of the running disparity internally so the user does not need to implement any 
 additional logic to determine it. The user can, however, control the running disparity by asserting
-the active-low reset signal ``i_aresetn`` to reset the running disparity to -1.
+the active-low reset signal ``i_reset_n`` to reset the running disparity to -1.
 
 Additional control and error status features are provided with this design and are described below:
 
@@ -198,7 +198,7 @@ Parameters
 Ports
 -----
 - ``i_clk`` : input clock
-- ``i_aresetn`` : input asynchronous active-low reset
+- ``i_reset_n`` : input asynchronous active-low reset
 - ``i_en`` : input active-high enable
 - ``i_8b`` : input 8-bit value (bit-order is ``HGFEDCBA`` where ``A`` is the lsb)
 - ``i_ctrl`` : input control symbol select (``0`` = data symbol, ``1`` = control symbol)
