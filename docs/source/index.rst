@@ -15,8 +15,8 @@ software and digital design community, including:
 
 * Trivial installation. `LibSV is hosted on PyPI <https://pypi.org/project/libsv/>`_ and can easily be installed using
   `pip <https://pip.pypa.io/en/stable/>`_ or whichever Python package manager of your choice.
-* Easy-to-use. Simply add ```include "libsv/<path>/<to>/<module>.sv"`` to the top of your sourcefile and then add the
-  ``site-packages/`` folder, where LibSV was installed, to the include path when you go to build your project.
+* Easy-to-use. Simply add ```include "libsv/<path>/<to>/<module>.sv"`` to where you want to use a LibSV module and then add the
+  ``site-packages/`` folder, where LibSV was installed, to the include path when building your project.
 * Automated testbenches, written in Python, that use `pytest <https://github.com/pytest-dev/pytest>`_ to run
   `Cocotb <https://github.com/cocotb/cocotb>`_ + `Verilator <https://github.com/verilator/verilator>`_ under the hood for 
   simple and fast logic simulation
