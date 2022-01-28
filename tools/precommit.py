@@ -63,6 +63,7 @@ def run_synthesis():
         "onehot_mux.sv",
         "priority_encoder.sv",
         "onehot_priority_encoder.sv",
+        "rotate.sv",
     ]
     hdl_files = [f for f in hdl_files if f.name not in ignore_hdl_files]
 
