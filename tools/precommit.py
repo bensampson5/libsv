@@ -59,7 +59,11 @@ def run_synthesis():
 
     # Ignore certain hdl files that fail yosys's synthesis even though
     # they are synthesizeable
-    ignore_hdl_files = ["onehot_mux.sv", "priority_encoder.sv"]
+    ignore_hdl_files = [
+        "onehot_mux.sv",
+        "priority_encoder.sv",
+        "onehot_priority_encoder.sv",
+    ]
     hdl_files = [f for f in hdl_files if f.name not in ignore_hdl_files]
 
     # Run yosys to make sure each source module is synthesizeable
