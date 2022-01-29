@@ -1,3 +1,6 @@
+`ifndef LIBSV_CODERS_BCD_ENCODER
+`define LIBSV_CODERS_BCD_ENCODER
+
 module bcd_encoder #(
     parameter integer N  /* verilator public_flat_rd */ = 8
 ) (
@@ -16,3 +19,5 @@ module bcd_encoder #(
   end
 
 endmodule
+
+`endif  /* LIBSV_CODERS_BCD_ENCODER */

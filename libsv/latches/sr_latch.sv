@@ -1,3 +1,6 @@
+`ifndef LIBSV_LATCHES_SR_LATCH
+`define LIBSV_LATCHES_SR_LATCH
+
 module sr_latch (
     input  logic                                 s,
     input  logic                                 r,
@@ -9,3 +12,5 @@ module sr_latch (
   assign q_n = ~(s | q);
 
 endmodule
+
+`endif  /* LIBSV_LATCHES_SR_LATCH */

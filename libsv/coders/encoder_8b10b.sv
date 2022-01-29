@@ -1,3 +1,6 @@
+`ifndef LIBSV_CODERS_ENCODER_8B10B
+`define LIBSV_CODERS_ENCODER_8B10B
+
 module encoder_8b10b (
     input  logic       i_clk,  // input clock
     input  logic       i_reset_n,  // input asynchronous active-low reset
@@ -1089,3 +1092,5 @@ module encoder_8b10b (
   end
 
 endmodule
+
+`endif  /* LIBSV_CODERS_ENCODER_8B10B */

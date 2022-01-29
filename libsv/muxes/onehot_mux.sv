@@ -1,3 +1,6 @@
+`ifndef LIBSV_MUXES_ONEHOT_MUX
+`define LIBSV_MUXES_ONEHOT_MUX
+
 module onehot_mux #(
     parameter integer DW  /* verilator public_flat_rd */ = 8,
     parameter integer N  /* verilator public_flat_rd */  = 4
@@ -13,4 +16,6 @@ module onehot_mux #(
     for (j = 0; j < N; j = j + 1) o[DW-1:0] |= {(DW) {sel[j]}} & i[((j+1)*DW-1)-:DW];
   end
 
-endmodule  // onehot_mux
+endmodule : onehot_mux
+
+`endif  /* LIBSV_MUXES_ONEHOT_MUX */

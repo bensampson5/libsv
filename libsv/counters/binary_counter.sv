@@ -1,3 +1,6 @@
+`ifndef LIBSV_COUNTERS_BINARY_COUNTER
+`define LIBSV_COUNTERS_BINARY_COUNTER
+
 module binary_counter #(
     parameter integer N  /* verilator public_flat_rd */ = 8
 ) (
@@ -11,3 +14,5 @@ module binary_counter #(
     else q <= q + 1;
 
 endmodule
+
+`endif  /* LIBSV_COUNTERS_BINARY_COUNTER */
