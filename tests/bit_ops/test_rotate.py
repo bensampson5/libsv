@@ -47,4 +47,6 @@ async def cocotb_test_rotate(dut):
 def do_rotate(value: int, amt: int, width: int):
     width_mask = 2 ** width - 1
     adj_amt = amt % width  # adjust amount if greater than width
-    return ((value << adj_amt) & width_mask) | ((value >> (width - adj_amt)) & width_mask)
+    return ((value << adj_amt) & width_mask) | (
+        (value >> (width - adj_amt)) & width_mask
+    )

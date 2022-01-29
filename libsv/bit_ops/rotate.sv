@@ -19,4 +19,4 @@ module rotate #(
 
 endmodule : rotate
 
-`endif /* LIBSV_BIT_OPS_ROTATE */
+`endif  /* LIBSV_BIT_OPS_ROTATE */

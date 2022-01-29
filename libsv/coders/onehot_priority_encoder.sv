@@ -26,4 +26,4 @@ module onehot_priority_encoder #(
 
 endmodule : onehot_priority_encoder
 
-`endif /* LIBSV_CODERS_ONEHOT_PRIORITY_ENCODER */
+`endif  /* LIBSV_CODERS_ONEHOT_PRIORITY_ENCODER */
