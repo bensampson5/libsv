@@ -1,3 +1,6 @@
+`ifndef LIBSV_CODERS_DECODER_8B10B
+`define LIBSV_CODERS_DECODER_8B10B
+
 module decoder_8b10b (
     input  logic       i_clk,
     input  logic       i_reset_n,
@@ -2120,3 +2123,5 @@ module decoder_8b10b (
   end
 
 endmodule
+
+`endif  /* LIBSV_CODERS_DECODER_8B10B */

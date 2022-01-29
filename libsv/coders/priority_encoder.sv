@@ -1,3 +1,6 @@
+`ifndef LIBSV_CODERS_PRIORITY_ENCODER
+`define LIBSV_CODERS_PRIORITY_ENCODER
+
 module priority_encoder #(
     parameter integer IW  /* verilator public_flat_rd */ = 4
 ) (
@@ -22,3 +25,5 @@ module priority_encoder #(
   end
 
 endmodule
+
+`endif  /* LIBSV_CODERS_PRIORITY_ENCODER */

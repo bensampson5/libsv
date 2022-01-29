@@ -1,3 +1,6 @@
+`ifndef LIBSV_MATH_FULL_ADDER
+`define LIBSV_MATH_FULL_ADDER
+
 module full_adder (
     input  logic i_a,
     input  logic i_b,
@@ -10,3 +13,5 @@ module full_adder (
   assign o_carry = ((i_a | i_b) & i_carry) | (i_a & i_b);
 
 endmodule
+
+`endif  /* LIBSV_MATH_FULL_ADDER */
