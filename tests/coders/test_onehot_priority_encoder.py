@@ -12,26 +12,21 @@ def test_onehot_priority_encoder(pytestconfig):
 async def cocotb_test_onehot_priority_encoder(dut):
     """One-hot Priority Encoder test"""
 
-    iw = int(dut.IW)
+    width = int(dut.WIDTH)
 
-    for i in range(2 ** iw):
+    for i in range(2 ** width):
         dut.i_in.value = i  # drive input
 
         await Timer(1)
 
-        # check valid signal
-        if i == 0:
-            assert dut.o_valid == 0
-        else:
-            result = onehot_priority_encode(i, iw)
-            assert dut.o_valid == 1
-            assert dut.o_out == result  # check output
+        result = onehot_priority_encode(i, width)
+        assert dut.o_out == result  # check output
 
 
-def onehot_priority_encode(x: int, iw: int) -> int:
+def onehot_priority_encode(x: int, width: int) -> int:
 
     test = 0
-    for shift_amt in range(iw):
+    for shift_amt in range(width):
 
         test = x & (1 << shift_amt)
 
