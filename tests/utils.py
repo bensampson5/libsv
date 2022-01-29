@@ -7,7 +7,7 @@ def pytest_cocotb_run_test(pytestconfig, test_name):
     os.environ["SIM"] = "verilator"  # always use verilator as HDL simulator
     proj_path = Path(pytestconfig.rootpath)  # capture top-level project path
 
-    # get top level mode name from file test name
+    # get top level module name from file test name
     top_level = test_name.replace("test_", "")
 
     # determine verilog sources from top_level module
@@ -36,6 +36,7 @@ def pytest_cocotb_run_test(pytestconfig, test_name):
         verilog_sources=[top_level_sv],
         toplevel=top_level,
         module=test_name,
+        includes=[proj_path],
         sim_build=build_dir,
         waves=True,
     )

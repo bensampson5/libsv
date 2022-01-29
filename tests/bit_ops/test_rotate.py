@@ -16,10 +16,11 @@ async def cocotb_test_rotate(dut):
     log = SimLog("cocotb.test_rotate")
 
     width = int(dut.WIDTH.value)
+    amt_bits = len(dut.i_amt.value)
 
     for value in range(2 ** width):
 
-        for amt in range(width):
+        for amt in range(2 ** amt_bits):
 
             dut.i_in.value = value
             dut.i_amt.value = amt
@@ -45,4 +46,5 @@ async def cocotb_test_rotate(dut):
 
 def do_rotate(value: int, amt: int, width: int):
     width_mask = 2 ** width - 1
-    return ((value << amt) & width_mask) | ((value >> (width - amt)) & width_mask)
+    adj_amt = amt % width  # adjust amount if greater than width
+    return ((value << adj_amt) & width_mask) | ((value >> (width - adj_amt)) & width_mask)

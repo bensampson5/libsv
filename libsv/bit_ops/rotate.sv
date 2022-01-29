@@ -1,3 +1,6 @@
+`ifndef LIBSV_BIT_OPS_ROTATE
+`define LIBSV_BIT_OPS_ROTATE
+
 module rotate #(
     parameter int WIDTH  /* verilator public_flat_rd */ = 8
 ) (
@@ -9,8 +12,11 @@ module rotate #(
   always_comb begin : rotate
     o_out = '0;
     for (int i = 0; i < WIDTH; ++i) begin
-      o_out[i_amt+i[$bits(i_amt)-1:0]] = i_in[i];
+      int rotate_amt = (int'(i_amt) + i) % WIDTH;
+      o_out[$bits(i_amt)'(rotate_amt)] = i_in[i];
     end
   end : rotate
 
-endmodule
+endmodule : rotate
+
+`endif /* LIBSV_BIT_OPS_ROTATE */
