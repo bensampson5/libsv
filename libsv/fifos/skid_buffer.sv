@@ -12,7 +12,9 @@ module skid_buffer #(
     input  logic                  i_output_ready,
     output logic [DATA_WIDTH-1:0] o_data,
     output logic                  o_output_valid,
-    output logic                  o_input_ready
+    output logic                  o_input_ready,
+    output logic                  o_accept,
+    output logic                  o_transmit
 );
 
   // CONTROL PATH -----------------------------
@@ -26,6 +28,9 @@ module skid_buffer #(
   state_t state, next_state;  // state variables
   logic accept, transmit;  // handshake flags on each interface
   logic [DATA_WIDTH-1:0] buffer;  // the "skid" buffer
+
+  assign o_accept   = accept;
+  assign o_transmit = transmit;
 
   always_comb begin : next_state_logic
     accept     = i_input_valid && o_input_ready;  // check for input handshake
