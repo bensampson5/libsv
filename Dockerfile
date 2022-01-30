@@ -63,7 +63,7 @@ RUN git clone --depth 1 --branch "${TAG}" "${REPO}" verilator \
     && rm -rf verilator
 
 # Install Verible
-ARG VERIBLE_URL=https://github.com/google/verible/releases/download/v0.0-879-g181c8f3/verible-v0.0-879-g181c8f3-Ubuntu-20.04-focal-x86_64.tar.gz
+ARG VERIBLE_URL=https://github.com/chipsalliance/verible/releases/download/v0.0-1854-g0834c7f8/verible-v0.0-1854-g0834c7f8-Ubuntu-20.04-focal-x86_64.tar.gz
 RUN wget ${VERIBLE_URL} -O verible.tar.gz \
     && mkdir verible \
     && tar -xf verible.tar.gz -C verible --strip-components=1 \
