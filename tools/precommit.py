@@ -52,29 +52,6 @@ def run_test():
     run(cmd)
 
 
-def run_synthesis():
-
-    # Add all SystemVerilog files in the src directory
-    hdl_files = find_sv_files()
-
-    # Ignore certain hdl files that fail yosys's synthesis even though
-    # they are synthesizeable
-    ignore_hdl_files = [
-        "onehot_mux.sv",
-        "priority_encoder.sv",
-        "onehot_priority_encoder.sv",
-        "rotate.sv",
-        "skid_buffer.sv",
-        "ring_arbiter.sv",
-    ]
-    hdl_files = [f for f in hdl_files if f.name not in ignore_hdl_files]
-
-    # Run yosys to make sure each source module is synthesizeable
-    for i in range(len(hdl_files)):
-        cmd = ["yosys", "-p", f"read -sv {hdl_files[i]}; synth -auto-top;"]
-        run(cmd)
-
-
 def find_sv_files(dir=SRC_DIR):
     # Add all SystemVerilog files within project
     hdl_search_patterns = ["**/*.sv"]
@@ -248,21 +225,19 @@ def run_build_package():
 
 @click.command()
 @click.option("--test", is_flag=True, help="Run tests")
-@click.option("--synthesis", is_flag=True, help="Run synthesis")
 @click.option("--check-format", is_flag=True, help="Check formatting")
 @click.option("--fix-format", is_flag=True, help="Fix formatting")
 @click.option("--lint", is_flag=True, help="Run linting")
 @click.option("--docs", is_flag=True, help="Build documentation")
 @click.option("--build-package", is_flag=True, help="Build package")
-def precommit(test, synthesis, check_format, fix_format, lint, docs, build_package):
+def precommit(test, check_format, fix_format, lint, docs, build_package):
     """Precommit tool for LibSV. If no options are provided, this
     tool will run all precommit steps except for --fix-format. If one or more
     options are specified then only those precommit steps will be run."""
 
     # if no flags are provided, then run default configuration
-    if not any([test, synthesis, check_format, fix_format, lint, docs, build_package]):
+    if not any([test, check_format, fix_format, lint, docs, build_package]):
         test = True
-        synthesis = True
         check_format = True
         fix_format = False
         lint = True
@@ -286,10 +261,6 @@ def precommit(test, synthesis, check_format, fix_format, lint, docs, build_packa
         if test:
             print("\nRunning tests...\n", flush=FLUSH)
             run_test()
-
-        if synthesis:
-            print("\nRunning synthesis...\n", flush=FLUSH)
-            run_synthesis()
 
         if check_format:
             print("\nChecking formatting...\n", flush=FLUSH)
