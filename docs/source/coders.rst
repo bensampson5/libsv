@@ -10,3 +10,4 @@ Coders
     decoder_8b10b
     encoder_8b10b
     onehot_priority_encoder
+    priority_encoder
