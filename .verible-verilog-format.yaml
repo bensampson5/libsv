@@ -11,7 +11,25 @@ case_items_alignment: align
 
 # class_member_variables_alignment - Format class member variables:
 # {align,flush-left,preserve,infer}; default: infer;
-class_member_variables_alignment: align
+class_member_variable_alignment: align
+
+# column_limit (Target line length limit to stay under when formatting.); default: 100;
+column_limit: 100
+
+# compact_indexing_and_selections - Use compact binary expressions inside indexing / bit selection
+# operators; default: true;
+compact_indexing_and_selections: true
+
+# distribution_items_alignment Align distribution items: {align,flush-left,preserve,infer});
+# default: infer;
+distribution_items_alignment: align
+
+# enum_assignment_statement_alignment (Format assignments with enums: {align,flush-left,preserve,infer});
+# default: infer;
+enum_assignment_statement_alignment: align
+
+# expand_coverpoints (If true, always expand coverpoints.); default: false;
+expand_coverpoints: false
 
 # failsafe_success - If true, always exit with 0 status, even if there were input errors or
 # internal errors. In all error conditions, the original text is always preserved. This is
@@ -26,9 +44,19 @@ formal_parameters_alignment: align
 # formal_parameters_indentation - Indent formal parameters: {indent,wrap}; default: wrap;
 formal_parameters_indentation: wrap
 
+# indentation_spaces (Each indentation level adds this many spaces.); default: 2;
+indentation_spaces: 4
+
+# line_break_penalty (Penalty added to solution for each introduced line break.); default: 2;
+line_break_penalty: 2
+
 # max_search_states - Limits the number of search states explored during line wrap
 # optimization.; default: 100000;
 max_search_states: 100000
+
+# module_net_variable_alignment (Format net/variable declarations: {align,flush-left,preserve,infer});
+# default: infer;
+module_net_variable_alignment: align
 
 # named_parameter_alignment - Format named actual parameters: {align,flush-left,preserve,infer};
 # default: infer;
@@ -45,9 +73,10 @@ named_port_alignment: align
 # named_port_indentation - Indent named port connections: {indent,wrap}; default: wrap;
 named_port_indentation: wrap
 
-# net_variable_alignment - Format net/variable declarations: {align,flush-left,preserve,infer};
-# default: infer;
-net_variable_alignment: align
+# over_column_limit_penalty (For penalty minimization, this represents the baseline penalty value
+# of exceeding the column limit. Additional penalty of 1 is incurred for each character over this
+# limit); default: 100;
+over_column_limit_penalty: 100
 
 # port_declarations_alignment - Format port declarations: {align,flush-left,preserve,infer};
 # default: infer;
@@ -55,6 +84,14 @@ port_declarations_alignment: align
 
 # port_declarations_indentation - Indent port declarations: {indent,wrap}; default: wrap;
 port_declarations_indentation: wrap
+
+# port_declarations_right_align_packed_dimensions (If true, packed dimensions in contexts
+# with enabled alignment are aligned to the right.); default: false;
+port_declarations_right_align_packed_dimensions: false
+
+# port_declarations_right_align_unpacked_dimensions (If true, unpacked dimensions in contexts
+# with enabled alignment are aligned to the right.); default: false;
+port_declarations_right_align_unpacked_dimensions: false
 
 # show_equally_optimal_wrappings - If true, print when multiple optimal solutions are found
 # (stderr), but continue to operate normally.; default: false;
@@ -72,6 +109,10 @@ show_largest_token_partitions: 0
 # exit without formatting output.; default: false;
 show_token_partition_tree: false
 
+# struct_union_members_alignment (Format struct/union members: {align,flush-left,preserve,infer});
+# default: infer;
+struct_union_members_alignment: align
+
 # try_wrap_long_lines - If true, let the formatter attempt to optimize line wrapping decisions
 # where wrapping is needed, else leave them unformatted. This is a short-term measure to reduce
 # risk-of-harm.; default: false;
@@ -81,3 +122,8 @@ try_wrap_long_lines: false
 # re-formatting the formatted output yields no further changes, i.e. formatting is convergent.;
 # default: true;
 verify_convergence: true
+
+# wrap_spaces (Each wrap level adds this many spaces. This applies when the first element after
+# an open-group section is wrapped. Otherwise, the indentation level is set to the column position
+# of the open-group operator.); default: 4;
+wrap_spaces: 4

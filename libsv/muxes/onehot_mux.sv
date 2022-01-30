@@ -10,12 +10,12 @@ module onehot_mux #(
     output logic [      DATA_WIDTH-1:0] o_data
 );
 
-  always_comb begin
-    o_data = '0;
-    for (int i = 0; i < PORTS; ++i) begin
-      o_data |= {(DATA_WIDTH) {i_select[i]}} & i_data[((i+1)*DATA_WIDTH-1)-:DATA_WIDTH];
+    always_comb begin
+        o_data = '0;
+        for (int i = 0; i < PORTS; ++i) begin
+            o_data |= {(DATA_WIDTH) {i_select[i]}} & i_data[((i+1)*DATA_WIDTH-1)-:DATA_WIDTH];
+        end
     end
-  end
 
 endmodule : onehot_mux
 

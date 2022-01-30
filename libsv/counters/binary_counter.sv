@@ -9,9 +9,9 @@ module binary_counter #(
     output logic [N-1:0] q
 );
 
-  always_ff @(posedge clk or negedge aresetn)
-    if (!aresetn) q <= 0;
-    else q <= q + 1;
+    always_ff @(posedge clk or negedge aresetn)
+        if (!aresetn) q <= 0;
+        else q <= q + 1;
 
 endmodule
 
