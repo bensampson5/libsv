@@ -2,12 +2,6 @@
 # Generated from `verible-verilog-format --helpfull` output and
 # then formatted into a yaml file for convenience.
 
-column_limit: 100
-indentation_spaces: 4
-line_break_penalty: 2
-over_column_limit_penalty: 100
-wrap_spaces: 4
-
 # assignment_statement_alignment - Format various assignments: {align,flush-left,preserve,infer};
 # default: infer;
 assignment_statement_alignment: align
@@ -18,6 +12,9 @@ case_items_alignment: align
 # class_member_variables_alignment - Format class member variables:
 # {align,flush-left,preserve,infer}; default: infer;
 class_member_variable_alignment: align
+
+# column_limit (Target line length limit to stay under when formatting.); default: 100;
+column_limit: 100
 
 # compact_indexing_and_selections - Use compact binary expressions inside indexing / bit selection
 # operators; default: true;
@@ -47,6 +44,12 @@ formal_parameters_alignment: align
 # formal_parameters_indentation - Indent formal parameters: {indent,wrap}; default: wrap;
 formal_parameters_indentation: wrap
 
+# indentation_spaces (Each indentation level adds this many spaces.); default: 2;
+indentation_spaces: 4
+
+# line_break_penalty (Penalty added to solution for each introduced line break.); default: 2;
+line_break_penalty: 2
+
 # max_search_states - Limits the number of search states explored during line wrap
 # optimization.; default: 100000;
 max_search_states: 100000
@@ -69,6 +72,11 @@ named_port_alignment: align
 
 # named_port_indentation - Indent named port connections: {indent,wrap}; default: wrap;
 named_port_indentation: wrap
+
+# over_column_limit_penalty (For penalty minimization, this represents the baseline penalty value
+# of exceeding the column limit. Additional penalty of 1 is incurred for each character over this
+# limit); default: 100;
+over_column_limit_penalty: 100
 
 # port_declarations_alignment - Format port declarations: {align,flush-left,preserve,infer};
 # default: infer;
@@ -114,3 +122,8 @@ try_wrap_long_lines: false
 # re-formatting the formatted output yields no further changes, i.e. formatting is convergent.;
 # default: true;
 verify_convergence: true
+
+# wrap_spaces (Each wrap level adds this many spaces. This applies when the first element after
+# an open-group section is wrapped. Otherwise, the indentation level is set to the column position
+# of the open-group operator.); default: 4;
+wrap_spaces: 4
