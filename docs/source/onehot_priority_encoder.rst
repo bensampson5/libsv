@@ -21,4 +21,4 @@ Source Code
 .. literalinclude:: ../../libsv/coders/onehot_priority_encoder.sv
     :language: systemverilog
     :linenos:
-    :caption: eonehot_priority_encoder.sv
+    :caption: onehot_priority_encoder.sv
