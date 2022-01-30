@@ -8,8 +8,8 @@ module sr_latch (
     output logic                                 q_n
 );
 
-  assign q   = ~(r | q_n);
-  assign q_n = ~(s | q);
+    assign q   = ~(r | q_n);
+    assign q_n = ~(s | q);
 
 endmodule
 

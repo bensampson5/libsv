@@ -8,8 +8,8 @@ module half_adder (
     output logic o_carry
 );
 
-  assign o_sum   = i_a ^ i_b;
-  assign o_carry = i_a & i_b;
+    assign o_sum   = i_a ^ i_b;
+    assign o_carry = i_a & i_b;
 
 endmodule
 

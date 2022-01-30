@@ -2,63 +2,63 @@
 `define LIBSV_CODERS_ENCODER_8B10B
 
 module encoder_8b10b (
-    input  logic       i_clk,  // input clock
+    input  logic       i_clk,      // input clock
     input  logic       i_reset_n,  // input asynchronous active-low reset
-    input  logic       i_en,  // input enable
-    input  logic [7:0] i_8b,  // input 8-bit value
-    input  logic       i_ctrl,  // input control symbol select
-    output logic [9:0] o_10b,  // output 10-bit value
+    input  logic       i_en,       // input enable
+    input  logic [7:0] i_8b,       // input 8-bit value
+    input  logic       i_ctrl,     // input control symbol select
+    output logic [9:0] o_10b,      // output 10-bit value
     output logic       o_code_err  // output code error
 );
 
-  logic        rd;  // running disparity
-  logic [ 9:0] i_lut;  // input vector to 8b/10b encoding look-up table
-  logic [11:0] o_lut;  // output vector from 8b/10b encoding look-up table
+    logic        rd;  // running disparity
+    logic [ 9:0] i_lut;  // input vector to 8b/10b encoding look-up table
+    logic [11:0] o_lut;  // output vector from 8b/10b encoding look-up table
 
-  always_ff @(posedge i_clk or negedge i_reset_n) begin
+    always_ff @(posedge i_clk or negedge i_reset_n) begin
 
-    if (!i_reset_n) begin
+        if (!i_reset_n) begin
 
-      // if in reset set all outputs to 0 and reset running disparity
-      // to 0 (-1)
-      o_10b      <= 10'b0;
-      rd         <= 1'b0;
-      o_code_err <= 1'b0;
+            // if in reset set all outputs to 0 and reset running disparity
+            // to 0 (-1)
+            o_10b      <= 10'b0;
+            rd         <= 1'b0;
+            o_code_err <= 1'b0;
 
-    end else if (!i_en) begin
+        end else if (!i_en) begin
 
-      // if not enabled, then maintain current output
-      // and running disparity
-      o_10b      <= o_10b;
-      rd         <= rd;
-      o_code_err <= o_code_err;
+            // if not enabled, then maintain current output
+            // and running disparity
+            o_10b      <= o_10b;
+            rd         <= rd;
+            o_code_err <= o_code_err;
 
-    end else begin
+        end else begin
 
-      // if enabled and not in reset, then get the 10b output and
-      // updated running disparity from the 8b10b encoding look-up table
-      o_10b      <= o_lut[9:0];
-      rd         <= o_lut[10];
-      o_code_err <= o_lut[11];
+            // if enabled and not in reset, then get the 10b output and
+            // updated running disparity from the 8b10b encoding look-up table
+            o_10b      <= o_lut[9:0];
+            rd         <= o_lut[10];
+            o_code_err <= o_lut[11];
 
+        end
     end
-  end
 
-  // 8b/10b encoding look-up table
-  // ------------------------------------------------------------
-  // The mapping is XRHGFEDCBA: rjhgfiedcba, where:
-  //     * X          = input control symbol select
-  //     * R          = input running disparity (0 = -1, 1 = +1)
-  //     * HGFEDCBA   = input 8b value
-  //     * y          = output code error
-  //     * r          = output running disparity (0 = -1, 1 = +1)
-  //     * jhgfiedcba = output 10b value
-  assign i_lut = {i_ctrl, rd, i_8b};  // Form input look-up table vector
-  always_comb begin
+    // 8b/10b encoding look-up table
+    // ------------------------------------------------------------
+    // The mapping is XRHGFEDCBA: rjhgfiedcba, where:
+    //     * X          = input control symbol select
+    //     * R          = input running disparity (0 = -1, 1 = +1)
+    //     * HGFEDCBA   = input 8b value
+    //     * y          = output code error
+    //     * r          = output running disparity (0 = -1, 1 = +1)
+    //     * jhgfiedcba = output 10b value
+    assign i_lut = {i_ctrl, rd, i_8b};  // Form input look-up table vector
+    always_comb begin
 
-    case (i_lut)
-      // verilog_lint: waive-start line-length  // Lines are too long but this is what is wanted so disable lint checks
-      // verilog_format: off // don't format this because it breaks each case into multiple lines
+        case (i_lut)
+            // verilog_lint: waive-start line-length  // Lines are too long but this is what is wanted so disable lint checks
+            // verilog_format: off // don't format this because it breaks each case into multiple lines
       //  XRHGFEDCBA:             yrjhgfiedbca
       10'b0000000000: o_lut = 12'b000010111001; // D.00.0, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
       10'b0000000001: o_lut = 12'b000010101110; // D.01.0, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
@@ -1086,10 +1086,10 @@ module encoder_8b10b (
       10'b1111111111: o_lut = 12'b111110001010; // K.31.7, i_disp = 1, i_ctrl = 1 o_disp = 1, o_code_err = 1
       default: o_lut = 12'b111110001010; // K.31.7, i_disp = 1, i_ctrl = 1 o_disp = 1, o_code_err = 1
       // verilog_format: on
-      // verilog_lint: waive-stop line-length
-    endcase
+            // verilog_lint: waive-stop line-length
+        endcase
 
-  end
+    end
 
 endmodule
 

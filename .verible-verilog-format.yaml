@@ -2,6 +2,12 @@
 # Generated from `verible-verilog-format --helpfull` output and
 # then formatted into a yaml file for convenience.
 
+column_limit: 100
+indentation_spaces: 4
+line_break_penalty: 2
+over_column_limit_penalty: 100
+wrap_spaces: 4
+
 # assignment_statement_alignment - Format various assignments: {align,flush-left,preserve,infer};
 # default: infer;
 assignment_statement_alignment: align
@@ -11,7 +17,22 @@ case_items_alignment: align
 
 # class_member_variables_alignment - Format class member variables:
 # {align,flush-left,preserve,infer}; default: infer;
-class_member_variables_alignment: align
+class_member_variable_alignment: align
+
+# compact_indexing_and_selections - Use compact binary expressions inside indexing / bit selection
+# operators; default: true;
+compact_indexing_and_selections: true
+
+# distribution_items_alignment Align distribution items: {align,flush-left,preserve,infer});
+# default: infer;
+distribution_items_alignment: align
+
+# enum_assignment_statement_alignment (Format assignments with enums: {align,flush-left,preserve,infer});
+# default: infer;
+enum_assignment_statement_alignment: align
+
+# expand_coverpoints (If true, always expand coverpoints.); default: false;
+expand_coverpoints: false
 
 # failsafe_success - If true, always exit with 0 status, even if there were input errors or
 # internal errors. In all error conditions, the original text is always preserved. This is
@@ -30,6 +51,10 @@ formal_parameters_indentation: wrap
 # optimization.; default: 100000;
 max_search_states: 100000
 
+# module_net_variable_alignment (Format net/variable declarations: {align,flush-left,preserve,infer});
+# default: infer;
+module_net_variable_alignment: align
+
 # named_parameter_alignment - Format named actual parameters: {align,flush-left,preserve,infer};
 # default: infer;
 named_parameter_alignment: align
@@ -45,16 +70,20 @@ named_port_alignment: align
 # named_port_indentation - Indent named port connections: {indent,wrap}; default: wrap;
 named_port_indentation: wrap
 
-# net_variable_alignment - Format net/variable declarations: {align,flush-left,preserve,infer};
-# default: infer;
-net_variable_alignment: align
-
 # port_declarations_alignment - Format port declarations: {align,flush-left,preserve,infer};
 # default: infer;
 port_declarations_alignment: align
 
 # port_declarations_indentation - Indent port declarations: {indent,wrap}; default: wrap;
 port_declarations_indentation: wrap
+
+# port_declarations_right_align_packed_dimensions (If true, packed dimensions in contexts
+# with enabled alignment are aligned to the right.); default: false;
+port_declarations_right_align_packed_dimensions: false
+
+# port_declarations_right_align_unpacked_dimensions (If true, unpacked dimensions in contexts
+# with enabled alignment are aligned to the right.); default: false;
+port_declarations_right_align_unpacked_dimensions: false
 
 # show_equally_optimal_wrappings - If true, print when multiple optimal solutions are found
 # (stderr), but continue to operate normally.; default: false;
@@ -71,6 +100,10 @@ show_largest_token_partitions: 0
 # show_token_partition_tree - If true, print diagnostics after token partitioning and then
 # exit without formatting output.; default: false;
 show_token_partition_tree: false
+
+# struct_union_members_alignment (Format struct/union members: {align,flush-left,preserve,infer});
+# default: infer;
+struct_union_members_alignment: align
 
 # try_wrap_long_lines - If true, let the formatter attempt to optimize line wrapping decisions
 # where wrapping is needed, else leave them unformatted. This is a short-term measure to reduce

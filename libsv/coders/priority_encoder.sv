@@ -9,20 +9,20 @@ module priority_encoder #(
     output logic                  o_valid
 );
 
-  always_comb begin
-    bit stop;
-    o_out   = '0;
-    o_valid = 1'b0;
-    stop    = 1'b0;
+    always_comb begin
+        bit stop;
+        o_out   = '0;
+        o_valid = 1'b0;
+        stop    = 1'b0;
 
-    for (int i = 0; i < IW; ++i) begin
-      if (i_in[i] == 1'b1 && !stop) begin
-        o_out   = i[$clog2(IW)-1:0];
-        o_valid = 1'b1;
-        stop    = 1'b1;
-      end
+        for (int i = 0; i < IW; ++i) begin
+            if (i_in[i] == 1'b1 && !stop) begin
+                o_out   = i[$clog2(IW)-1:0];
+                o_valid = 1'b1;
+                stop    = 1'b1;
+            end
+        end
     end
-  end
 
 endmodule
 
