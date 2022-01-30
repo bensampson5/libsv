@@ -27,20 +27,20 @@ async def cocotb_test_ring_arbiter(dut):
     dut.i_aresetn.value = 1
 
     # setup i_data
-    i_data_array = [ports-i-1 for i in range(ports)]
+    i_data_array = [ports - i - 1 for i in range(ports)]
     i_data = 0
     for i in range(ports):
-        i_data |= (ports-i-1) << (data_width*(ports-i-1))
-    log.info(f"i_data = 0x" + format(i_data, f"0{ports*data_width//4}x"))
+        i_data |= (ports - i - 1) << (data_width * (ports - i - 1))
+    log.info("i_data = 0x" + format(i_data, f"0{ports*data_width//4}x"))
     log.info(f"i_data_array = {i_data_array}")
     dut.i_data.value = i_data
-    dut.i_input_valid.value = 2**ports - 1
+    dut.i_input_valid.value = 2 ** ports - 1
 
     # Scenario 1: Have all ports have data ready for the arbiter and
     # have output interface be ready to receive data from arbiter. This
     # will test the ring arbiter at max throughput
     dut.i_output_ready.value = 1
-    for i in range(4*ports):
+    for i in range(4 * ports):
         await FallingEdge(dut.i_clock)
         if i > 0:
             assert (int(dut.o_data.value) + 1) % ports == i % ports
