@@ -65,6 +65,7 @@ def run_synthesis():
         "onehot_priority_encoder.sv",
         "rotate.sv",
         "skid_buffer.sv",
+        "ring_arbiter.sv",
     ]
     hdl_files = [f for f in hdl_files if f.name not in ignore_hdl_files]
 

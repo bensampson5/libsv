@@ -12,16 +12,16 @@ def test_onehot_mux(pytestconfig):
 async def cocotb_test_onehot_mux(dut):
     """One-hot mux test"""
 
-    dw = int(dut.DW)
-    n = int(dut.N)
+    ports = int(dut.PORTS)
+    data_width = int(dut.DATA_WIDTH)
 
     # Generate counting pattern on input vectors
-    dut_i = 0
-    for i in range(n):
-        dut_i |= (i % dw) << (i * dw)
-    dut.i.value = dut_i
+    dut_i_data = 0
+    for i in range(ports):
+        dut_i_data |= (i % data_width) << (i * data_width)
+    dut.i_data.value = dut_i_data
 
-    for i in range(n):
-        dut.sel.value = 1 << i
+    for i in range(ports):
+        dut.i_select.value = 1 << i
         await Timer(1)
-        assert i % dw == int(dut.o)
+        assert i % data_width == int(dut.o_data)

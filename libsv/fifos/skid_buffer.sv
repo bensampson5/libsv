@@ -6,12 +6,15 @@ module skid_buffer #(
 ) (
     input  logic                  i_clock,
     input  logic                  i_aresetn,
+    input  logic                  i_clear,
     input  logic [DATA_WIDTH-1:0] i_data,
     input  logic                  i_input_valid,
     input  logic                  i_output_ready,
     output logic [DATA_WIDTH-1:0] o_data,
     output logic                  o_output_valid,
-    output logic                  o_input_ready
+    output logic                  o_input_ready,
+    output logic                  o_accept,
+    output logic                  o_transmit
 );
 
   // CONTROL PATH -----------------------------
@@ -21,13 +24,17 @@ module skid_buffer #(
     BUSY  = 3'b010,
     FULL  = 3'b100
   } state_t;
-  state_t state, next_state;
 
-  // Next state logic
+  state_t state, next_state;  // state variables
   logic accept, transmit;  // handshake flags on each interface
+  logic [DATA_WIDTH-1:0] buffer;  // the "skid" buffer
+
+  assign o_accept   = accept;
+  assign o_transmit = transmit;
+
   always_comb begin : next_state_logic
-    accept     = i_input_valid && o_input_ready;  // successful upstream handshake
-    transmit   = o_output_valid && i_output_ready;  // successful downstream handshake
+    accept     = i_input_valid && o_input_ready;  // check for input handshake
+    transmit   = o_output_valid && i_output_ready;  // check for output handshake
     next_state = EMPTY;
     unique case (state)
       EMPTY: begin
@@ -47,63 +54,47 @@ module skid_buffer #(
     endcase
   end : next_state_logic
 
-  // Update state
-  always_ff @(posedge i_clock, negedge i_aresetn) begin : update_state
-    if (!i_aresetn) state <= EMPTY;
-    else state <= next_state;
-  end : update_state
+  always_ff @(posedge i_clock, negedge i_aresetn) begin : update_state_logic
+    if (!i_aresetn || i_clear) begin
+      state          <= EMPTY;
+      o_input_ready  <= 1'b0;
+      o_output_valid <= 1'b0;
+    end else begin
+      state          <= next_state;
+      o_input_ready  <= next_state != FULL;
+      o_output_valid <= next_state != EMPTY;
+    end
+  end : update_state_logic
 
-  // set o_input_ready (ready for input interface)
-  // As long as we're not FULL, data can be accepted
-  always_ff @(posedge i_clock, negedge i_aresetn) begin : o_input_ready_logic
-    if (!i_aresetn) o_input_ready <= 1'b0;
-    else o_input_ready <= next_state != FULL;
-  end : o_input_ready_logic
-
-  // set o_output_valid (valid for output interface)
-  // As long as we're not EMPTY, data can be transmitted
-  always_ff @(posedge i_clock, negedge i_aresetn) begin : o_output_valid_logic
-    if (!i_aresetn) o_output_valid <= 1'b0;
-    else o_output_valid <= next_state != EMPTY;
-  end : o_output_valid_logic
-
-  // Datapath control signals
   logic buffer_write_en, o_data_write_en;
-
-  always_comb begin : buffer_write_en_logic
+  always_comb begin : write_en_logic
     buffer_write_en = state == BUSY && accept && !transmit;
-  end : buffer_write_en_logic
-
-  always_comb begin : o_data_write_en_logic
     o_data_write_en = (state == EMPTY && accept && !transmit)
                       || (state == BUSY && accept && transmit)
                       || (state == FULL && !accept && transmit);
-  end : o_data_write_en_logic
+  end : write_en_logic
 
   // END OF CONTROL PATH ----------------------
 
   // DATA PATH --------------------------------
 
-  // The skid buffer, buffer, is only used when the current
-  // state is BUSY but another transaction is being accepted.
-  // The buffer and o_data are controlled using write enables
-  // and the current state.
-  logic [DATA_WIDTH-1:0] buffer;
+  always_ff @(posedge i_clock, negedge i_aresetn) begin : o_data_and_buffer_logic
+    if (!i_aresetn || i_clear) begin
+      o_data <= '0;
+      buffer <= '0;
+    end else begin
 
-  // o_data logic
-  always_ff @(posedge i_clock, negedge i_aresetn) begin
-    if (!i_aresetn) o_data <= '0;
-    else if (o_data_write_en) begin
-      if (state == FULL) o_data <= buffer;
-      else o_data <= i_data;
+      if (o_data_write_en) begin
+        if (state == FULL) o_data <= buffer;
+        else o_data <= i_data;
+      end
+
+      if (buffer_write_en) begin
+        buffer <= i_data;
+      end
+
     end
-  end
-
-  // buffer reg logic
-  always_ff @(posedge i_clock, negedge i_aresetn) begin
-    if (!i_aresetn) buffer <= '0;
-    else if (buffer_write_en) buffer <= i_data;
-  end
+  end : o_data_and_buffer_logic
 
   // END OF DATA PATH -------------------------
 
