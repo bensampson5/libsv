@@ -5,6 +5,7 @@ Modules
 .. toctree::
     :maxdepth: 2
  
+    arbiters
     bit_ops
     coders
     counters
