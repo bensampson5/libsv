@@ -21,7 +21,7 @@ the last accepted input port. Therefore, the prev_accepted register is only writ
 :ref:`skid-buffer` indicates that it has accepted a new transaction from an input port.
 
 The datapath for the ring arbiter consists of a :ref:`one-hot-mux` and a :ref:`skid-buffer`. The
-:ref:`one-hot-mux` selects the data from the input port that has been decided by the control path so that th
+:ref:`one-hot-mux` selects the data from the input port that has been decided by the control path so that the
 :ref:`skid-buffer` sees the correct input port's data at its input. On the output, the :ref:`skid-buffer`'s
 output is connected directly to the output interface. The :ref:`skid-buffer` is used here because it provides
 the back-to-back transfers needed on a pipelined interface in a fairly lightweight manner.
