@@ -26,6 +26,9 @@ The datapath for the ring arbiter consists of a :ref:`one-hot-mux` and a :ref:`s
 output is connected directly to the output interface. The :ref:`skid-buffer` is used here because it provides
 the back-to-back transfers needed on a pipelined interface in a fairly lightweight manner.
 
+Note that the ``i_clock``, ``i_aresetn``, and ``i_clear`` signals are omitted from the block diagram below
+to make it easier to read and understand the ring arbiter design.
+
 .. image:: _static/ring_arbiter.svg
    :align: center
    :width: 80%
