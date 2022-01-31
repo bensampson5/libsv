@@ -7,6 +7,7 @@ Modules
  
     coders
     counters
+    fifos
     latches
     math
     muxes
