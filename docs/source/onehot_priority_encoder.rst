@@ -1,3 +1,5 @@
+.. _one-hot-priority-encoder:
+
 ========================
 One-hot Priority Encoder
 ========================

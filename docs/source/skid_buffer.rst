@@ -1,3 +1,5 @@
+.. _skid-buffer:
+
 ===========
 Skid Buffer
 ===========

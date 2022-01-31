@@ -49,7 +49,7 @@ module ring_arbiter #(
         .o_data(pre_rotate_out)
     );
 
-    // onehot priority encoder selects highest priority queue
+    // onehot priority encoder selects the current highest priority input port
     onehot_priority_encoder #(PORTS) ohpe (
         .i_data(pre_rotate_out),
         .o_data(ohpe_out)
@@ -82,12 +82,14 @@ module ring_arbiter #(
         end
     end : rotate_controller
 
+    assign is_any_input_valid = |i_input_valid;
+    assign o_input_ready      = {PORTS{input_ready}} & post_rotate_out;
+    assign o_accept           = accept;
+    assign o_transmit         = transmit;
+
     // END OF CONTROL PATH ------------------------
 
     // DATA PATH ----------------------------------
-
-    assign is_any_input_valid = |i_input_valid;
-    assign o_input_ready      = {PORTS{input_ready}} & post_rotate_out;
 
     onehot_mux #(
         .PORTS     (PORTS),
@@ -111,9 +113,6 @@ module ring_arbiter #(
         .o_accept      (accept),
         .o_transmit    (transmit)
     );
-
-    assign o_accept   = accept;
-    assign o_transmit = transmit;
 
     // END OF DATA PATH ---------------------------
 
