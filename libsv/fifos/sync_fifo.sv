@@ -3,7 +3,7 @@
 
 module sync_fifo #(
     parameter int DATA_WIDTH  /* verilator public_flat_rd */ = 8,
-    parameter int FIFO_DEPTH  /* verilator public_flat_rd */ = 5
+    parameter int FIFO_DEPTH  /* verilator public_flat_rd */ = 4
 ) (
     input  logic                  i_clock,
     input  logic                  i_aresetn,
