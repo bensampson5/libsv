@@ -2,16 +2,15 @@
 `define LIBSV_SYNCHRONIZERS_SYNCHRONIZER
 
 module synchronizer #(
-    parameter int DATA_WIDTH  /* verilator public_flat_rd */ = 1,
-    parameter int FF_STAGES  /* verilator public_flat_rd */  = 2
+    parameter int FF_STAGES  /* verilator public_flat_rd */ = 2
 ) (
-    input  logic                  i_clock,
-    input  logic                  i_aresetn,
-    input  logic [DATA_WIDTH-1:0] i_data,
-    output logic [DATA_WIDTH-1:0] o_data
+    input  logic i_clock,
+    input  logic i_aresetn,
+    input  logic i_data,
+    output logic o_data
 );
 
-    logic [FF_STAGES-1:0][DATA_WIDTH-1:0] sync_mem;
+    logic [FF_STAGES-1:0] sync_mem;
 
     always_ff @(posedge i_clock, negedge i_aresetn) begin
         if (!i_aresetn) begin

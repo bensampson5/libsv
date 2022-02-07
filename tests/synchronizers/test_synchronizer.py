@@ -13,7 +13,6 @@ def test_synchonrizer(pytestconfig):
 async def cocotb_test_synchonrizer(dut):
     """Synchronizer test"""
 
-    data_width = int(dut.DATA_WIDTH)
     ff_stages = int(dut.FF_STAGES)
 
     cocotb.fork(Clock(dut.i_clock, 2).start())
@@ -22,7 +21,7 @@ async def cocotb_test_synchonrizer(dut):
     await FallingEdge(dut.i_clock)
     dut.i_aresetn.value = 1
 
-    sync_value = 1 % (2 ** data_width)
+    sync_value = 1
     dut.i_data.value = sync_value
     for _ in range(ff_stages):
         assert dut.o_data.value != sync_value
