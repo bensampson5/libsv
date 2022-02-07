@@ -1,6 +1,6 @@
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import FallingEdge
+from cocotb.triggers import FallingEdge, Timer
 from utils import pytest_cocotb_run_test
 
 
@@ -16,8 +16,10 @@ async def cocotb_test_async_fifo(dut):
     data_width = int(dut.DATA_WIDTH)
     fifo_depth = int(dut.FIFO_DEPTH)
 
-    cocotb.fork(Clock(dut.i_wr_clock, 2).start())
-    cocotb.fork(Clock(dut.i_rd_clock, 2).start())
+    # Create two clocks with same frequency but different phase
+    cocotb.fork(Clock(dut.i_wr_clock, 4).start())
+    await Timer(1)
+    cocotb.fork(Clock(dut.i_rd_clock, 4).start())
 
     # reset
     dut.i_aresetn.value = 0
