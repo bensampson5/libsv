@@ -78,14 +78,14 @@ module async_fifo #(
     );
 
     generate
-        for (genvar i = 0; i < $bits(rd_addr_gray); ++i) begin
+        for (genvar i = 0; i < $bits(rd_addr_gray); ++i) begin : gen_rd_addr_sync_gray
             synchronizer #(2) rd_addr_to_wr_domain (
-                .i_clock(i_rd_clock),
+                .i_clock  (i_rd_clock),
                 .i_aresetn(i_aresetn),
-                .i_data(rd_addr_gray[i]),
-                .o_data(rd_addr_sync_gray[i])
+                .i_data   (rd_addr_gray[i]),
+                .o_data   (rd_addr_sync_gray[i])
             );
-        end
+        end : gen_rd_addr_sync_gray
     endgenerate
 
     // END OF WRITE CLOCK DOMAIN ----------------------------------------------
@@ -148,14 +148,14 @@ module async_fifo #(
     );
 
     generate
-        for (genvar i = 0; i < $bits(wr_addr_gray); ++i) begin
+        for (genvar i = 0; i < $bits(wr_addr_gray); ++i) begin : gen_wr_addr_sync_gray
             synchronizer #(2) wr_addr_to_rd_domain (
-                .i_clock(i_rd_clock),
+                .i_clock  (i_rd_clock),
                 .i_aresetn(i_aresetn),
-                .i_data(wr_addr_gray[i]),
-                .o_data(wr_addr_sync_gray[i])
+                .i_data   (wr_addr_gray[i]),
+                .o_data   (wr_addr_sync_gray[i])
             );
-        end
+        end : gen_wr_addr_sync_gray
     endgenerate
 
     // END OF READ CLOCK DOMAIN -----------------------------------------------
