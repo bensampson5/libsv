@@ -77,15 +77,16 @@ module async_fifo #(
         .o_bin (rd_addr_sync)
     );
 
-    synchronizer #(
-        .DATA_WIDTH($bits(rd_addr_gray)),
-        .FF_STAGES (2)
-    ) rd_addr_to_wr_domain (
-        .i_clock  (i_wr_clock),
-        .i_aresetn(i_aresetn),
-        .i_data   (rd_addr_gray),
-        .o_data   (rd_addr_sync_gray)
-    );
+    generate
+        for (genvar i = 0; i < $bits(rd_addr_gray); ++i) begin
+            synchronizer #(2) rd_addr_to_wr_domain (
+                .i_clock(i_rd_clock),
+                .i_aresetn(i_aresetn),
+                .i_data(rd_addr_gray[i]),
+                .o_data(rd_addr_sync_gray[i])
+            );
+        end
+    endgenerate
 
     // END OF WRITE CLOCK DOMAIN ----------------------------------------------
 
@@ -146,15 +147,16 @@ module async_fifo #(
         .o_bin (wr_addr_sync)
     );
 
-    synchronizer #(
-        .DATA_WIDTH($bits(wr_addr_gray)),
-        .FF_STAGES (2)
-    ) wr_addr_to_rd_domain (
-        .i_clock  (i_rd_clock),
-        .i_aresetn(i_aresetn),
-        .i_data   (wr_addr_gray),
-        .o_data   (wr_addr_sync_gray)
-    );
+    generate
+        for (genvar i = 0; i < $bits(wr_addr_gray); ++i) begin
+            synchronizer #(2) wr_addr_to_rd_domain (
+                .i_clock(i_rd_clock),
+                .i_aresetn(i_aresetn),
+                .i_data(wr_addr_gray[i]),
+                .o_data(wr_addr_sync_gray[i])
+            );
+        end
+    endgenerate
 
     // END OF READ CLOCK DOMAIN -----------------------------------------------
 
