@@ -54,7 +54,7 @@ RUN poetry install -n --no-ansi
 # Build and install Verilator v5.024 from source
 ARG REPO=https://github.com/verilator/verilator
 ARG TAG=v5.024
-RUN git clone --depth 1 --branch "${TAG}" "${REPO}" verilator \
+RUN git clone --depth 2 --branch "${TAG}" "${REPO}" verilator \
     && cd verilator \
     && autoconf \
     && ./configure \
