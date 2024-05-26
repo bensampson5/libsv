@@ -45,7 +45,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-#  Install python packages using poetry
+# Install python packages using poetry
 RUN pip3 install poetry
 COPY pyproject.toml ./
 RUN poetry config virtualenvs.create false
