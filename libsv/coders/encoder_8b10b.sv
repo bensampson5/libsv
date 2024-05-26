@@ -88,7 +88,7 @@ module encoder_8b10b (
             10'b0000011001: o_lut = 12'b011101011001; // D.25.0, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0000011010: o_lut = 12'b011101011010; // D.26.0, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0000011011: o_lut = 12'b000010011011; // D.27.0, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
-            10'b0000011100: o_lut = 12'b011101001110; // D.28.0, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
+            10'b0000011100: o_lut = 12'b011101011100; // D.28.0, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0000011101: o_lut = 12'b000010011101; // D.29.0, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0000011110: o_lut = 12'b000010011110; // D.30.0, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0000011111: o_lut = 12'b000010110101; // D.31.0, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
@@ -120,7 +120,7 @@ module encoder_8b10b (
             10'b0000111001: o_lut = 12'b001001011001; // D.25.1, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0000111010: o_lut = 12'b001001011010; // D.26.1, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0000111011: o_lut = 12'b011001011011; // D.27.1, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
-            10'b0000111100: o_lut = 12'b001001001110; // D.28.1, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
+            10'b0000111100: o_lut = 12'b001001011100; // D.28.1, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0000111101: o_lut = 12'b011001011101; // D.29.1, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0000111110: o_lut = 12'b011001011110; // D.30.1, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0000111111: o_lut = 12'b011001110101; // D.31.1, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
@@ -152,7 +152,7 @@ module encoder_8b10b (
             10'b0001011001: o_lut = 12'b001010011001; // D.25.2, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0001011010: o_lut = 12'b001010011010; // D.26.2, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0001011011: o_lut = 12'b011010011011; // D.27.2, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
-            10'b0001011100: o_lut = 12'b001010001110; // D.28.2, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
+            10'b0001011100: o_lut = 12'b001010011100; // D.28.2, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0001011101: o_lut = 12'b011010011101; // D.29.2, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0001011110: o_lut = 12'b011010011110; // D.30.2, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0001011111: o_lut = 12'b011010110101; // D.31.2, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
@@ -184,7 +184,7 @@ module encoder_8b10b (
             10'b0001111001: o_lut = 12'b000011011001; // D.25.3, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0001111010: o_lut = 12'b000011011010; // D.26.3, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0001111011: o_lut = 12'b011100011011; // D.27.3, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
-            10'b0001111100: o_lut = 12'b000011001110; // D.28.3, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
+            10'b0001111100: o_lut = 12'b000011011100; // D.28.3, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0001111101: o_lut = 12'b011100011101; // D.29.3, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0001111110: o_lut = 12'b011100011110; // D.30.3, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0001111111: o_lut = 12'b011100110101; // D.31.3, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
@@ -216,7 +216,7 @@ module encoder_8b10b (
             10'b0010011001: o_lut = 12'b011011011001; // D.25.4, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0010011010: o_lut = 12'b011011011010; // D.26.4, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0010011011: o_lut = 12'b000100011011; // D.27.4, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
-            10'b0010011100: o_lut = 12'b011011001110; // D.28.4, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
+            10'b0010011100: o_lut = 12'b011011011100; // D.28.4, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0010011101: o_lut = 12'b000100011101; // D.29.4, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0010011110: o_lut = 12'b000100011110; // D.30.4, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0010011111: o_lut = 12'b000100110101; // D.31.4, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
@@ -248,7 +248,7 @@ module encoder_8b10b (
             10'b0010111001: o_lut = 12'b000101011001; // D.25.5, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0010111010: o_lut = 12'b000101011010; // D.26.5, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0010111011: o_lut = 12'b010101011011; // D.27.5, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
-            10'b0010111100: o_lut = 12'b000101001110; // D.28.5, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
+            10'b0010111100: o_lut = 12'b000101011100; // D.28.5, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0010111101: o_lut = 12'b010101011101; // D.29.5, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0010111110: o_lut = 12'b010101011110; // D.30.5, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0010111111: o_lut = 12'b010101110101; // D.31.5, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
@@ -280,7 +280,7 @@ module encoder_8b10b (
             10'b0011011001: o_lut = 12'b000110011001; // D.25.6, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0011011010: o_lut = 12'b000110011010; // D.26.6, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0011011011: o_lut = 12'b010110011011; // D.27.6, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
-            10'b0011011100: o_lut = 12'b000110001110; // D.28.6, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
+            10'b0011011100: o_lut = 12'b000110011100; // D.28.6, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0011011101: o_lut = 12'b010110011101; // D.29.6, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0011011110: o_lut = 12'b010110011110; // D.30.6, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0011011111: o_lut = 12'b010110110101; // D.31.6, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
@@ -312,7 +312,7 @@ module encoder_8b10b (
             10'b0011111001: o_lut = 12'b010111011001; // D.25.7, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0011111010: o_lut = 12'b010111011010; // D.26.7, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0011111011: o_lut = 12'b001000011011; // D.27.7, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
-            10'b0011111100: o_lut = 12'b010111001110; // D.28.7, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
+            10'b0011111100: o_lut = 12'b010111011100; // D.28.7, i_disp = 0, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0011111101: o_lut = 12'b001000011101; // D.29.7, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0011111110: o_lut = 12'b001000011110; // D.30.7, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0011111111: o_lut = 12'b001000110101; // D.31.7, i_disp = 0, i_ctrl = 0 o_disp = 0, o_code_err = 0
@@ -344,7 +344,7 @@ module encoder_8b10b (
             10'b0100011001: o_lut = 12'b000010011001; // D.25.0, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0100011010: o_lut = 12'b000010011010; // D.26.0, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0100011011: o_lut = 12'b011101100100; // D.27.0, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
-            10'b0100011100: o_lut = 12'b000010001110; // D.28.0, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
+            10'b0100011100: o_lut = 12'b000010011100; // D.28.0, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0100011101: o_lut = 12'b011101100010; // D.29.0, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0100011110: o_lut = 12'b011101100001; // D.30.0, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0100011111: o_lut = 12'b011101001010; // D.31.0, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
@@ -376,7 +376,7 @@ module encoder_8b10b (
             10'b0100111001: o_lut = 12'b011001011001; // D.25.1, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0100111010: o_lut = 12'b011001011010; // D.26.1, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0100111011: o_lut = 12'b001001100100; // D.27.1, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
-            10'b0100111100: o_lut = 12'b011001001110; // D.28.1, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
+            10'b0100111100: o_lut = 12'b011001011100; // D.28.1, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0100111101: o_lut = 12'b001001100010; // D.29.1, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0100111110: o_lut = 12'b001001100001; // D.30.1, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0100111111: o_lut = 12'b001001001010; // D.31.1, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
@@ -408,7 +408,7 @@ module encoder_8b10b (
             10'b0101011001: o_lut = 12'b011010011001; // D.25.2, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0101011010: o_lut = 12'b011010011010; // D.26.2, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0101011011: o_lut = 12'b001010100100; // D.27.2, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
-            10'b0101011100: o_lut = 12'b011010001110; // D.28.2, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
+            10'b0101011100: o_lut = 12'b011010011100; // D.28.2, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0101011101: o_lut = 12'b001010100010; // D.29.2, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0101011110: o_lut = 12'b001010100001; // D.30.2, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0101011111: o_lut = 12'b001010001010; // D.31.2, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
@@ -440,7 +440,7 @@ module encoder_8b10b (
             10'b0101111001: o_lut = 12'b011100011001; // D.25.3, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0101111010: o_lut = 12'b011100011010; // D.26.3, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0101111011: o_lut = 12'b000011100100; // D.27.3, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
-            10'b0101111100: o_lut = 12'b011100001110; // D.28.3, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
+            10'b0101111100: o_lut = 12'b011100011100; // D.28.3, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0101111101: o_lut = 12'b000011100010; // D.29.3, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0101111110: o_lut = 12'b000011100001; // D.30.3, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0101111111: o_lut = 12'b000011001010; // D.31.3, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
@@ -472,7 +472,7 @@ module encoder_8b10b (
             10'b0110011001: o_lut = 12'b000100011001; // D.25.4, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0110011010: o_lut = 12'b000100011010; // D.26.4, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0110011011: o_lut = 12'b011011100100; // D.27.4, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
-            10'b0110011100: o_lut = 12'b000100001110; // D.28.4, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
+            10'b0110011100: o_lut = 12'b000100011100; // D.28.4, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0110011101: o_lut = 12'b011011100010; // D.29.4, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0110011110: o_lut = 12'b011011100001; // D.30.4, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0110011111: o_lut = 12'b011011001010; // D.31.4, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
@@ -504,7 +504,7 @@ module encoder_8b10b (
             10'b0110111001: o_lut = 12'b010101011001; // D.25.5, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0110111010: o_lut = 12'b010101011010; // D.26.5, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0110111011: o_lut = 12'b000101100100; // D.27.5, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
-            10'b0110111100: o_lut = 12'b010101001110; // D.28.5, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
+            10'b0110111100: o_lut = 12'b010101011100; // D.28.5, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0110111101: o_lut = 12'b000101100010; // D.29.5, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0110111110: o_lut = 12'b000101100001; // D.30.5, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0110111111: o_lut = 12'b000101001010; // D.31.5, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
@@ -536,7 +536,7 @@ module encoder_8b10b (
             10'b0111011001: o_lut = 12'b010110011001; // D.25.6, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0111011010: o_lut = 12'b010110011010; // D.26.6, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0111011011: o_lut = 12'b000110100100; // D.27.6, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
-            10'b0111011100: o_lut = 12'b010110001110; // D.28.6, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
+            10'b0111011100: o_lut = 12'b010110011100; // D.28.6, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0111011101: o_lut = 12'b000110100010; // D.29.6, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0111011110: o_lut = 12'b000110100001; // D.30.6, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0111011111: o_lut = 12'b000110001010; // D.31.6, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
@@ -568,7 +568,7 @@ module encoder_8b10b (
             10'b0111111001: o_lut = 12'b001000011001; // D.25.7, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0111111010: o_lut = 12'b001000011010; // D.26.7, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0111111011: o_lut = 12'b010111100100; // D.27.7, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
-            10'b0111111100: o_lut = 12'b001000001110; // D.28.7, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
+            10'b0111111100: o_lut = 12'b001000011100; // D.28.7, i_disp = 1, i_ctrl = 0 o_disp = 0, o_code_err = 0
             10'b0111111101: o_lut = 12'b010111100010; // D.29.7, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0111111110: o_lut = 12'b010111100001; // D.30.7, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0
             10'b0111111111: o_lut = 12'b010111001010; // D.31.7, i_disp = 1, i_ctrl = 0 o_disp = 1, o_code_err = 0

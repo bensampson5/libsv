@@ -25,7 +25,7 @@ def encode_5b6b(i_5b: int, i_disp: int, i_ctrl: bool) -> Tuple[int, int]:
 
     # lookup table maps EDBCA to iedcba for RD = -1
     lut_5b6b_rdm1 = {
-        # EDCBA:   iebcba
+        # EDCBA:   iedcba
         0b00000: 0b111001,  # D.00-
         0b00001: 0b101110,  # D.01-
         0b00010: 0b101101,  # D.02-
@@ -54,7 +54,7 @@ def encode_5b6b(i_5b: int, i_disp: int, i_ctrl: bool) -> Tuple[int, int]:
         0b11001: 0b011001,  # D.25-
         0b11010: 0b011010,  # D.26-
         0b11011: 0b011011,  # D.27-
-        0b11100: 0b001110,  # D.28-
+        0b11100: 0b011100,  # D.28-
         0b11101: 0b011101,  # D.29-
         0b11110: 0b011110,  # D.30-
         0b11111: 0b110101,  # D.31-
