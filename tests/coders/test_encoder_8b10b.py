@@ -252,7 +252,7 @@ async def cocotb_test_encoder_8b10b(dut):
     """8B/10B Encoder test"""
 
     # Create clock
-    cocotb.fork(Clock(dut.i_clk, 2).start())
+    cocotb.start_soon(Clock(dut.i_clk, 2).start())
 
     # Assert reset and check output and
     # internal running disparity

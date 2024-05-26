@@ -15,7 +15,7 @@ async def cocotb_test_binary_counter(dut):
 
     n = int(dut.N)
 
-    cocotb.fork(Clock(dut.clk, 2).start())
+    cocotb.start_soon(Clock(dut.clk, 2).start())
 
     # reset
     dut.aresetn.value = 0

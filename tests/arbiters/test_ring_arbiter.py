@@ -19,7 +19,7 @@ async def cocotb_test_ring_arbiter(dut):
     ports = int(dut.PORTS)
     data_width = int(dut.DATA_WIDTH)
 
-    cocotb.fork(Clock(dut.i_clock, 2).start())
+    cocotb.start_soon(Clock(dut.i_clock, 2).start())
 
     # reset
     dut.i_aresetn.value = 0
