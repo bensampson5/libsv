@@ -20,7 +20,7 @@ classifiers = [
 "Bug Tracker" = "https://github.com/bensampson5/libsv/issues"
 
 [tool.poetry.dependencies]
-python = "^3.6.2"
+python = "^3.7,<4.0.0"
 
 [tool.poetry.dev-dependencies]
 cocotb = "^1.6.0"
@@ -28,12 +28,11 @@ pytest = "^6.2.5"
 Sphinx = "^4.2.0"
 sphinx-rtd-theme = "^1.0.0"
 flake8 = "^4.0.1"
-black = "^21.9b0"
+black = "^22.3.0"
 click = "^8.0.3"
 colorama = "^0.4.4"
 cocotb-test = "^0.2.1"
 PyYAML = "^6.0"
-cloud_sptheme = "^1.10.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

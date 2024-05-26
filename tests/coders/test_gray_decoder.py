@@ -17,7 +17,7 @@ async def cocotb_test_gray_decoder(dut):
 
     data_width = int(dut.DATA_WIDTH)
 
-    for i in range(2 ** data_width):
+    for i in range(2**data_width):
 
         dut.i_gray.value = i
         await Timer(1)

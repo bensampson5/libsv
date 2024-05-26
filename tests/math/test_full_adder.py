@@ -12,7 +12,7 @@ def test_full_adder(pytestconfig):
 async def cocotb_test_full_adder(dut):
     """Full adder test"""
 
-    for i in range(2 ** 3):
+    for i in range(2**3):
         i_a = i & 1
         i_b = (i >> 1) & 1
         i_carry = (i >> 2) & 1

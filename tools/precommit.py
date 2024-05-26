@@ -17,12 +17,7 @@ FLUSH = True
 
 def in_docker():
     """Returns: True if running in a docker container, else False"""
-    try:
-        with open("/proc/1/cgroup", "rt") as ifh:
-            contents = ifh.read()
-            return any([word in contents for word in ["actions_job", "docker"]])
-    except OSError:
-        return False
+    return Path("/.dockerenv").exists()
 
 
 def run(cmd, cwd=PROJECT_ROOT, check_exit=True, print_output=True):

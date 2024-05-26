@@ -14,7 +14,7 @@ async def cocotb_test_priority_encoder(dut):
 
     data_width = int(dut.DATA_WIDTH)
 
-    for i in range(2 ** data_width):
+    for i in range(2**data_width):
         dut.i_data.value = i  # drive input
 
         await Timer(1)

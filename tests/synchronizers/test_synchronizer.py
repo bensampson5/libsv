@@ -15,7 +15,7 @@ async def cocotb_test_synchonrizer(dut):
 
     ff_stages = int(dut.FF_STAGES)
 
-    cocotb.fork(Clock(dut.i_clock, 2).start())
+    cocotb.start_soon(Clock(dut.i_clock, 2).start())
 
     dut.i_aresetn.value = 0
     await FallingEdge(dut.i_clock)

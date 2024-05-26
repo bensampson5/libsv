@@ -15,7 +15,7 @@ async def cocotb_test_skid_buffer(dut):
 
     data_width = int(dut.DATA_WIDTH)
 
-    cocotb.fork(Clock(dut.i_clock, 2).start())
+    cocotb.start_soon(Clock(dut.i_clock, 2).start())
 
     # reset
     dut.i_aresetn.value = 0
@@ -35,7 +35,7 @@ async def cocotb_test_skid_buffer(dut):
         await FallingEdge(dut.i_clock)
         o_data = i_data
         assert int(dut.o_data.value) == o_data  # check output data
-        i_data = (i_data + 1) % (2 ** data_width)
+        i_data = (i_data + 1) % (2**data_width)
         dut.i_data.value = i_data  # drive next input data
 
     # disable output ready so that skid buffer gets full
@@ -62,7 +62,7 @@ async def cocotb_test_skid_buffer(dut):
         await FallingEdge(dut.i_clock)
         o_data = i_data
         assert int(dut.o_data.value) == o_data  # check output data
-        i_data = (i_data + 1) % (2 ** data_width)
+        i_data = (i_data + 1) % (2**data_width)
         dut.i_data.value = i_data  # drive next input data
 
     await FallingEdge(dut.i_clock)

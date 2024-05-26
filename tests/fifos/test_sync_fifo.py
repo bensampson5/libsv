@@ -16,7 +16,7 @@ async def cocotb_test_sync_fifo(dut):
     data_width = int(dut.DATA_WIDTH)
     fifo_depth = int(dut.FIFO_DEPTH)
 
-    cocotb.fork(Clock(dut.i_clock, 2).start())
+    cocotb.start_soon(Clock(dut.i_clock, 2).start())
 
     # reset
     dut.i_aresetn.value = 0
