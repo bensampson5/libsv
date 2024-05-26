@@ -64,7 +64,7 @@ RUN git clone --depth 1 --branch "${TAG}" "${REPO}" verilator \
     && rm -rf verilator
 
 # Install Verible
-ARG VERIBLE_URL=https://github.com/chipsalliance/verible/releases/download/v0.0-3648-g5ef1624a/verible-v0.0-3648-g5ef1624a-linux-static-arm64.tar.gz
+ARG VERIBLE_URL=https://github.com/chipsalliance/verible/releases/download/v0.0-3648-g5ef1624a/verible-v0.0-3648-g5ef1624a-linux-static-x86_64.tar.gz
 RUN wget ${VERIBLE_URL} -O verible.tar.gz \
     && mkdir verible \
     && tar -xf verible.tar.gz -C verible --strip-components=1 \
