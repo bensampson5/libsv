@@ -47,7 +47,7 @@ RUN apt-get update \
 
 # Install python packages using poetry
 RUN pip3 install poetry
-COPY poetry.lock pyproject.toml ./
+COPY pyproject.toml ./
 RUN poetry config virtualenvs.create false
 RUN poetry install -n --no-ansi
 
