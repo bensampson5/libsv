@@ -20,7 +20,7 @@ classifiers = [
 "Bug Tracker" = "https://github.com/bensampson5/libsv/issues"
 
 [tool.poetry.dependencies]
-python = "^3.6.2"
+python = "^3.7,<4.0.0"
 
 [tool.poetry.dev-dependencies]
 cocotb = "^1.6.0"
