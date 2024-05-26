@@ -50,8 +50,6 @@ with an indication if the received symbol is a control or data symbol.
 
 
 .. table:: 5B/6B Coding Table
-    :header-alignment: cccccccc
-    :column-alignment: cccccccc
 
     +--------------+---------+----------+----------------+---------+----------+
     |     Input    | RD = −1 | RD = +1  |      Input     | RD = −1 | RD = +1  |
@@ -99,8 +97,6 @@ with an indication if the received symbol is a control or data symbol.
 
 
 .. table:: 3B/4B Coding Table
-    :header-alignment: cccccccc
-    :column-alignment: cccccccc
 
     +----------------+---------+----------+---------------+---------+----------+
     |      Input     | RD = −1 | RD = +1  |     Input     | RD = −1 | RD = +1  |
@@ -149,8 +145,6 @@ symbols are used is defined by the protocol standard (i.e. Ethernet, Fibre Chann
 
 
 .. table:: Control Symbols
-    :header-alignment: cccccc
-    :column-alignment: cccccc
 
     +----------------------------------+-------------+-------------+
     |               Input              |   RD = −1   |   RD = +1   |
