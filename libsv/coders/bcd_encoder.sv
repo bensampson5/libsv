@@ -12,10 +12,13 @@ module bcd_encoder #(
 
     always_comb begin
         o_bcd = {{(N - 4) / 3 + 1{1'b0}}, i_bin};  // initialize with input vector in lower bits
-        for (i = 0; i <= N - 4; i = i + 1)  // iterate on structure depth
-            for (j = 0; j <= i / 3; j = j + 1)  // iterate on structure width
-                if (o_bcd[N-i+4*j-:4] > 4)  // if > 4
+        for (i = 0; i <= N - 4; i = i + 1) begin  // iterate on structure depth
+            for (j = 0; j <= i / 3; j = j + 1) begin  // iterate on structure width
+                if (o_bcd[N-i+4*j-:4] > 4) begin  // if > 4
                     o_bcd[N-i+4*j-:4] = o_bcd[N-i+4*j-:4] + 4'd3;  // add 3
+                end
+            end
+        end
     end
 
 endmodule

@@ -287,7 +287,7 @@ async def cocotb_test_encoder_8b10b(dut):
     # Test 8b/10b encoding look-up table
     dut.i_reset_n.value = 1
     dut.i_en.value = 1
-    for i in range(2 ** 10):
+    for i in range(2**10):
 
         # Parse out input values
         i_8b = i & 0xFF

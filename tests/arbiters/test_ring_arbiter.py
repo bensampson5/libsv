@@ -27,14 +27,14 @@ async def cocotb_test_ring_arbiter(dut):
     dut.i_aresetn.value = 1
 
     # setup i_data
-    i_data_array = [i & (2 ** data_width - 1) for i in range(ports)]
+    i_data_array = [i & (2**data_width - 1) for i in range(ports)]
     i_data = 0
     for i in range(ports):
         i_data |= i << (data_width * i)
     log.info("i_data = 0x" + format(i_data, f"0{ports*data_width//4}x"))
     log.info(f"i_data_array = {i_data_array}")
     dut.i_data.value = i_data
-    dut.i_input_valid.value = 2 ** ports - 1
+    dut.i_input_valid.value = 2**ports - 1
 
     # Scenario 1: Have all ports have data ready for the arbiter and
     # have output interface be ready to receive data from arbiter. This
@@ -50,7 +50,7 @@ async def cocotb_test_ring_arbiter(dut):
 
     # Scenario 2: Have a port drop out but still maintain max throughput
     # of output interface
-    dut.i_input_valid.value = 2 ** ports - 2  # port 0 drops out
+    dut.i_input_valid.value = 2**ports - 2  # port 0 drops out
     i_data_array_s2 = i_data_array[1:]
     for i in range(4 * (ports - 1)):
         await FallingEdge(dut.i_clock)

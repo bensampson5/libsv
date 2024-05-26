@@ -331,7 +331,7 @@ async def cocotb_test_decoder_8b10b(dut):
     # Test 8b/10b decoding look-up table
     dut.i_reset_n.value = 1
     dut.i_en.value = 1
-    for i in range(2 ** 11):
+    for i in range(2**11):
 
         # Parse out input values
         i_10b = i & 0x3FF

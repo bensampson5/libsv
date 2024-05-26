@@ -18,9 +18,9 @@ async def cocotb_test_rotate(dut):
     data_width = int(dut.DATA_WIDTH.value)
     amt_bits = len(dut.i_amt.value)
 
-    for value in range(2 ** data_width):
+    for value in range(2**data_width):
 
-        for amt in range(2 ** amt_bits):
+        for amt in range(2**amt_bits):
 
             dut.i_data.value = value
             dut.i_amt.value = amt
@@ -45,7 +45,7 @@ async def cocotb_test_rotate(dut):
 
 
 def do_rotate(value: int, amt: int, data_width: int):
-    data_width_mask = 2 ** data_width - 1
+    data_width_mask = 2**data_width - 1
     adj_amt = amt % data_width  # adjust amount if greater than data_width
     return ((value << adj_amt) & data_width_mask) | (
         (value >> (data_width - adj_amt)) & data_width_mask
